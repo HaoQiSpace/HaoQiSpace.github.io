@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    前端面试题汇总 |  集技术与娱乐于一体的博客天地
+    JavaScript 新语法规范 |  集技术与娱乐于一体的博客天地
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-前端面试题汇总"
+  id="post-JavaScript-新语法规范"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,18 +60,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  前端面试题汇总
+  JavaScript 新语法规范
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" class="article-date">
-  <time datetime="2020-08-24T12:51:57.000Z" itemprop="datePublished">2020-08-24</time>
+      <a href="/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2020-09-06T06:14:17.000Z" itemprop="datePublished">2020-09-06</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a>
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
   </div>
   
 <div class="word_count">
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">83</span>
+            <span class="post-count">1k</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
@@ -103,7 +103,33 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h3 id="主流框架"><a href="#主流框架" class="headerlink" title="主流框架"></a>主流框架</h3><h3 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript 新语法规范，从最初的 <code>ES3</code> 到 <code>ES4</code> 及现在所一直保持的 <code>ES5</code> 规范，发现其中还存在很多问题。就针对发现的一些问题，做了新语法规范的改进，也就是现在的 <code>ES6</code> 及 <code>ES7/8/9</code> 甚至 E<code>S10</code>。下面是关于我对新语法规范学习的一些总结，如果有什么好的建议或者发现一些不好、错误的地方，还希望各位大佬在下方的评论区留言，谢谢！</p>
+<p>学习总结过程的代码是基于 <a target="_blank" rel="noopener" href="https://gitee.com/sunny-store/javascript-new-standard">Gitee 码云仓库</a> 进行管理的，有需要的可以自行提取，可以的话，请顺便点个 <code>star</code>，谢谢！</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>全局作用域和私有作用域，这两个作用域是我们玩 JavaScript 的人都知道的，那么 <code>ES6</code> 的到来，新增加了一个概念叫<code>块级作用域</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;test 函数作用域内部变量 b = &#x27;</span> + b)</span><br><span class="line">  <span class="keyword">if</span> (b === <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> c = <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> d = <span class="number">4</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到全局变量 a = &#x27;</span> + a)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到变量 c = &#x27;</span> + c)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;不能访问到变量 d = &#x27;</span> + d)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * test 函数作用域内部变量 b = 2</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到变量 c = 3</span></span><br><span class="line"><span class="comment"> * Uncaught ReferenceError: d is not defined</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中，我们可以知道，全局变量 <code>a</code> 在任何地方都可以被访问到，函数内部变量 <code>b</code> 和 <code>c</code> 在函数内部作用域中都可以被访问到，这也正是我们所熟悉的全局作用域和私有作用域，没毛病。那么变量 <code>d</code> 被访问的时候为什么就被报错了呢？</p>
+<p>相信大家都注意到了，变量 <code>d</code> 是被 <code>let</code> 进行声明定义的，这也就是我们即将要说的 <code>块级作用域</code>，顾名思义，就是含有<code>块</code>的概念，这个块指的就是 <code>&#123;&#125;</code> 大括号，大括号内的作用域就是称为块级作用域。</p>
+<p>我们发现，上述代码中，if()<code>&#123;...&#125;</code> 内的变量仍然可以被其大括号外部访问到，所以块级作用域的出现也正是为了弥补 JS 的这个缺陷，用 let 进行变量声明定义，就可以形成一个块级作用域，正如上述代码中的那样，变量 d 无法被访问到。</p>
+<blockquote>
+<p>Tips：let 声明定义的变量也没有变量提升的概念</p>
+</blockquote>
+<p>全局作用域、私有作用域和块级作用域都说到了，那么剩下的就是<code>动态作用域</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.a = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line">test.bind(&#123; <span class="attr">a</span>: <span class="number">10</span> &#125;)()</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 1</span></span><br><span class="line"><span class="comment"> * 10</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>所谓动态作用域其实就是他的作用域不固定，我们可以通过一些方式，利用 <code>this</code> 指向，通过 <code>bind</code> 的方式改变 this 的指向，从而形成动态作用域。上述代码中，第一次输出结果 1，是因为 this 指向的是全局 window，输出结果 10，是因为 test.bind 将 this 指向了 { a: 10 } 这个对象，从而输出结果 10。</p>
+<h4 id="let-和-const"><a href="#let-和-const" class="headerlink" title="let 和 const"></a>let 和 const</h4><p>关于 let 前面讲过了挺多，这里做以下总结：</p>
+<ul>
+<li>let 声明的变量具有块级作用域的概念；</li>
+<li>let 声明的变量没有变量提升的概念；</li>
+<li>let 声明的变量名不能重复；</li>
+<li>let 声明的全局变量不能用全局对象的属性来访问。</li>
+</ul>
+<p>const 除了具备上述 let 的特点之外，<code>const 用于定义常量</code>，这是 const 独有的特点。</p>
+<blockquote>
+<p>Tips：另外就是 let 和 var 均可以先声明后赋值，但 const 不行。</p>
+</blockquote>
+<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
 <p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
  
       <!-- reward -->
@@ -173,12 +199,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://guohaoqi.com/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">前端面试题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%BB%E7%BB%93/" rel="tag">总结</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
 
     </footer>
   </div>
@@ -186,19 +212,10 @@
    
   <nav class="article-nav">
     
-      <a href="/React-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            React 学习之旅
-          
-        </div>
-      </a>
     
-    
-      <a href="/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0%E6%A1%88%E4%BE%8B%E9%9B%86%E5%90%88/" class="article-nav-link">
+      <a href="/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">前端练习案例集合</div>
+        <div class="article-nav-title">敲码神器之VS Code</div>
       </a>
     
   </nav>

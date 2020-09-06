@@ -6,7 +6,7 @@
   <link href="https://guohaoqi.com/atom.xml" rel="self"/>
   
   <link href="https://guohaoqi.com/"/>
-  <updated>2020-08-24T12:56:51.434Z</updated>
+  <updated>2020-09-06T11:32:54.018Z</updated>
   <id>https://guohaoqi.com/</id>
   
   <author>
@@ -17,12 +17,102 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JavaScript 新语法规范</title>
+    <link href="https://guohaoqi.com/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/"/>
+    <id>https://guohaoqi.com/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/</id>
+    <published>2020-09-06T06:14:17.000Z</published>
+    <updated>2020-09-06T11:32:54.018Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;JavaScript 新语法规范，从最初的 &lt;code&gt;ES3&lt;/code&gt; 到 &lt;code&gt;ES4&lt;/code&gt; 及现在所一直保持的</summary>
+        
+      
+    
+    
+    
+    <category term="JavaScript" scheme="https://guohaoqi.com/categories/JavaScript/"/>
+    
+    
+    <category term="JavaScript" scheme="https://guohaoqi.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>敲码神器之VS Code</title>
+    <link href="https://guohaoqi.com/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/"/>
+    <id>https://guohaoqi.com/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/</id>
+    <published>2020-08-30T13:08:00.000Z</published>
+    <updated>2020-09-06T04:19:31.260Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;“欢迎使用”，打开 VS Code，你便会发现有这么个窗口弹出来，这是 VS Code</summary>
+        
+      
+    
+    
+    
+    <category term="IDE" scheme="https://guohaoqi.com/categories/IDE/"/>
+    
+    
+    <category term="IDE" scheme="https://guohaoqi.com/tags/IDE/"/>
+    
+    <category term="VS Code" scheme="https://guohaoqi.com/tags/VS-Code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React 学习之旅</title>
+    <link href="https://guohaoqi.com/React-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/"/>
+    <id>https://guohaoqi.com/React-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/</id>
+    <published>2020-08-25T12:08:23.000Z</published>
+    <updated>2020-09-06T04:19:15.189Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;关于 React 是什么，我想我也不用多说了，学就完了，干就完了&lt;/p&gt;
+&lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="React" scheme="https://guohaoqi.com/categories/React/"/>
+    
+    
+    <category term="React" scheme="https://guohaoqi.com/tags/React/"/>
+    
+    <category term="总结" scheme="https://guohaoqi.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+    <category term="前端框架" scheme="https://guohaoqi.com/tags/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>前端面试题汇总</title>
     <link href="https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/"/>
     <id>https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</id>
     <published>2020-08-24T12:51:57.000Z</published>
-    <updated>2020-08-24T12:56:51.434Z</updated>
+    <updated>2020-09-06T04:25:35.899Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;HTML&quot;&gt;&lt;a href=&quot;#HTML&quot; class=&quot;headerlink&quot; title=&quot;HTML&quot;&gt;&lt;/a&gt;HTML&lt;/h3&gt;&lt;h3 id=&quot;CSS&quot;&gt;&lt;a href=&quot;#CSS&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
@@ -40,17 +130,26 @@
     <link href="https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0%E6%A1%88%E4%BE%8B%E9%9B%86%E5%90%88/"/>
     <id>https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0%E6%A1%88%E4%BE%8B%E9%9B%86%E5%90%88/</id>
     <published>2020-08-24T12:51:29.000Z</published>
-    <updated>2020-08-24T12:58:12.155Z</updated>
+    <updated>2020-09-06T04:28:59.923Z</updated>
     
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;案例有大有小，日常学习，闲暇娱乐~&lt;/p&gt;
+&lt;h3 id=&quot;基本案例&quot;&gt;&lt;a href=&quot;#基本案例&quot;</summary>
+        
+      
     
     
     
     <category term="练习案例" scheme="https://guohaoqi.com/categories/%E7%BB%83%E4%B9%A0%E6%A1%88%E4%BE%8B/"/>
     
     
-    <category term="前端案例" scheme="https://guohaoqi.com/tags/%E5%89%8D%E7%AB%AF%E6%A1%88%E4%BE%8B/"/>
-    
     <category term="总结" scheme="https://guohaoqi.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+    <category term="前端案例" scheme="https://guohaoqi.com/tags/%E5%89%8D%E7%AB%AF%E6%A1%88%E4%BE%8B/"/>
     
   </entry>
   
@@ -59,7 +158,7 @@
     <link href="https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://guohaoqi.com/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2020-08-17T09:22:45.000Z</published>
-    <updated>2020-08-24T12:55:24.425Z</updated>
+    <updated>2020-09-06T04:19:50.564Z</updated>
     
     
       
