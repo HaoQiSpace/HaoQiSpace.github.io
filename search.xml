@@ -1,6 +1,516 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Vue 学习之旅</title>
+    <url>/Vue-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Vue 是什么，相信我不用多说了吧，大家都知道，它是当前的主流前端框架，也是我最喜欢的前端框架。当你打开 <a href="https://cn.vuejs.org/">Vue官网</a> 你就会看到 <code>渐进式 JavaScript 框架</code> 字样，什么意思呢？我的理解是：你觉的 vue 的哪些东西可以实现你的需求，你就用哪个，而不需要一次性的去接受它的全部功能特性，这样一方面你的学习成本慢慢降低下来了，实际达到的效果也有了，这样你也会更觉得有成就感。</p>
+<p>认识到了主页面的几个醒目的字样后，那就一起点击起步按钮，开始进入 Vue 的学习吧<del>~</del></p>
+<h3 id="初识-Vue"><a href="#初识-Vue" class="headerlink" title="初识 Vue"></a>初识 Vue</h3><p>在正式学习 Vue 之前，我们以经典的 Hello World 来对比下传统的开发模式与 Vue 开发模式，直观的对 Vue 进行一个认识。</p>
+<blockquote>
+<p>传统开发模式</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200912202443.PNG"></p>
+<blockquote>
+<p>Vue 开发模式</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200912202509.PNG"></p>
+<p>通过上面的对比，我们会发现 Vue 的开发模式，几乎是不需要去操作 DOM 的，关注的更多的是数据的处理，是不是很棒！！！</p>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h4><p>Vue.js 使用了基于 HTML 的模板语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。简单的说就是，和我们平时写的 HTML 一样，遵循规范的浏览器和 HTML 解析器解析。</p>
+<blockquote>
+<p>插值表达式（插值文本）</p>
+</blockquote>
+<p>说明：“Mustache”语法 (双大括号) 的文本插值</p>
+<p>形式：JavaScript 表达式均支持</p>
+<p>注意：Vue 中只有在标签的内容中才用插值语法</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200913174627.png"></p>
+<blockquote>
+<p>自带指令</p>
+</blockquote>
+<p>说明：本质就是自定义属性</p>
+<ul>
+<li><p><strong>v-cloak</strong></p>
+<p>作用：防止页面加载时出现闪烁问题和网络过慢时显示插值表达式问题</p>
+<p>原理：在数据渲染完场之后，v-cloak 属性会被自动去除，v-cloak 一旦移除也就是没有这个属性了 ，属性选择器就选择不到该标签，也就是对应的标签会变为可见</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、通过属性选择器，选择到带有属性 v-cloak 的标签，让他隐藏</span></span><br><span class="line"><span class="comment"> * 2、让带有插值语法的添加 v-cloak 属性</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">&lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">  [v-cloak] &#123;</span><br><span class="line">    display: none;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div v-cloak&gt;&#123;&#123; msg &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">   <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123; </span><br><span class="line">     el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        msg: <span class="string">&#x27;Hello Vue&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>v-text</strong></p>
+<p>作用：用于将数据填充到标签中，作用与插值表达式类似，但是没有闪动问题，如果数据中有 HTML 标签会一并输出</p>
+<p>注意：此处为单向绑定，数据对象上的值改变，插值会发生变化，但是当插值发生变化并不会影响数据对象的值</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">  &lt;p v-text=<span class="string">&quot;msg&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line">  &lt;p&gt; &#123;&#123; msg &#125;&#125; &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">      msg: <span class="string">&#x27;Hello Vue.js&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>v-html</strong></p>
+<p>作用：用法和 v-text 相似 ，但是它可以将 HTML 片段填充到标签中</p>
+<p>注意：可能有安全问题,，一般只在可信任内容上使用 <code>v-html</code>，<strong>永不</strong>用在用户提交的内容上</p>
+<p>区别：<code>v-text</code> 输出的是<strong>纯文本</strong>，浏览器不会对其再进行 html 解析，但 <code>v-html</code> 会将其当 <code>html 标签解析后输出</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">  &lt;!-- 输出: html 标签在渲染的时候被解析 --&gt;</span><br><span class="line">  &lt;p v-html=<span class="string">&quot;html&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line">  &lt;!-- 输出: <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>通过双括号绑定<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> --&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;!-- 输出: <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>html 标签在渲染的时候被源码输出<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span> --&gt;</span><br><span class="line">　&lt;p v-text=<span class="string">&quot;text&quot;</span>&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">let</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">　el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">　data: &#123;</span><br><span class="line">　　message: <span class="string">&quot;&lt;span&gt;通过双括号绑定&lt;/span&gt;&quot;</span>,</span><br><span class="line">　　html: <span class="string">&quot;&lt;span&gt;html 标签在渲染的时候被解析&lt;/span&gt;&quot;</span>,</span><br><span class="line">　　text: <span class="string">&quot;&lt;span&gt;html 标签在渲染的时候被源码输出&lt;/span&gt;&quot;</span>,</span><br><span class="line">　&#125;</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>v-pre</strong></p>
+<p>作用：显示原始信息，跳过这个元素和它的子元素的编译过程</p>
+<p>技巧：<strong>一些静态的内容不需要编译加这个指令可以加快渲染</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;span v-pre&gt;&#123;&#123; <span class="built_in">this</span> will not be compiled &#125;&#125;&lt;/span&gt;    </span><br><span class="line">&lt;!-- 显示的是&#123;&#123; <span class="built_in">this</span> will not be compiled &#125;&#125; --&gt;</span><br><span class="line">&lt;span v-pre&gt;&#123;&#123; msg &#125;&#125;&lt;/span&gt;  </span><br><span class="line">&lt;!-- 即使 data 里面定义了 msg 这里仍然显示的是 &#123;&#123; msg &#125;&#125; --&gt;</span><br><span class="line">    </span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">      msg: <span class="string">&#x27;Hello Vue.js&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>v-once</strong></p>
+<p>作用：执行一次性的插值【当数据改变时，插值处的内容不会继续更新】</p>
+<p>应用：如果显示的信息后续不需要再修改，可以使用 v-once，这样可以提高性能</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- 即使 data 里面定义了 msg，后期我们修改了，仍然显示的是第一次 data 里面存储的数据即: Hello Vue.js  --&gt;</span><br><span class="line">&lt;span v-once&gt;&#123;&#123; msg &#125;&#125;&lt;/span&gt;    </span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        msg: <span class="string">&#x27;Hello Vue.js&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>双向数据绑定:  v-model</strong></p>
+<p>当<code>数据</code>发生变化的时候，<code>视图</code>也会跟着同步变化</p>
+<p>当<code>视图</code>发生变化的时候，<code>数据</code>也会跟着同步变化</p>
+<p><strong>注意：</strong>限制在 <code>form 表单</code> 和 <code>components 组件</code> 中使用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; msg &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;<span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&#x27;msg&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        msg: <span class="string">&#x27;Hello Vue.js&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>v-on</strong></p>
+<p>作用：用来绑定事件</p>
+<p>简写：<code>v-on:click</code>  简写为 <code>@click</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200913180943.png"></p>
+</li>
+<li><p><strong>v-bind</strong></p>
+<p>作用：响应地更新 HTML 属性</p>
+<p>简写：<code>v-bind:href</code> 可以缩写为 <code>:href</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- 绑定一个属性 --&gt;</span><br><span class="line">&lt;img v-bind:src=<span class="string">&quot;imageSrc&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 缩写 --&gt;</span><br><span class="line">&lt;img :src=<span class="string">&quot;imageSrc&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定对象</strong></p>
+<p>我们可以给 <code>v-bind:class</code>  一个对象，比如：<strong>样式的动态切换</strong></p>
+<p>注意：<strong>v-bind:class 指令可以与普通的 class（对象） 特性共存</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HTML 最终渲染为 &lt;ul class=&quot;box textColor textSize&quot;&gt;&lt;/ul&gt;</span></span><br><span class="line"><span class="comment"> *     - textColor，textSize 对应的渲染到页面上的 CSS 类名</span></span><br><span class="line"><span class="comment"> *  - isColor，isSize 对应 vue data 中的数据，如果为 true，则对应的类名渲染到页面上</span></span><br><span class="line"><span class="comment"> *  - 当 isColor 和 isSize 变化时，class 列表将相应的更新</span></span><br><span class="line"><span class="comment"> *  - 例如，将 isSize 改成 false，class 列表将变为 &lt;ul class=&quot;box textColor&quot;&gt;&lt;/ul&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .box &#123;</span><br><span class="line">        border:1px dashed #f0f;</span><br><span class="line">    &#125;</span><br><span class="line">    .textColor &#123;</span><br><span class="line">        color:#f00;</span><br><span class="line">        background-color:#eef;</span><br><span class="line">    &#125;</span><br><span class="line">    .textSize &#123;</span><br><span class="line">        font-size:<span class="number">30</span>px;</span><br><span class="line">        font-weight:bold;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;box&quot;</span> v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;&#123; textColor: isColor, textSize: isSize &#125;&quot;</span>&gt;</span><br><span class="line">  &lt;li&gt;学习 Vue &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;学习 Node &lt;/li&gt;</span><br><span class="line">  &lt;li&gt;学习 React &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;div v-bind:style=<span class="string">&quot;&#123; color: activeColor, fontSize: activeSize &#125;&quot;</span>&gt;对象语法&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;sript&gt;</span><br><span class="line"><span class="keyword">var</span> vm= <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">&#x27;.box&#x27;</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        isColor:<span class="literal">true</span>,</span><br><span class="line">        isSize:<span class="literal">true</span>,</span><br><span class="line">        activeColor:<span class="string">&quot;red&quot;</span>,</span><br><span class="line">        activeSize:<span class="string">&quot;25px&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/sript&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定数组</strong></p>
+<p>v-bind 中支持绑定一个<code>数组</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * v-bind 中支持绑定一个数组，数组中 classA 和 classB 对应为 data 中的数据</span></span><br><span class="line"><span class="comment"> *     - 这里的 classA 对应 data 中的 classA</span></span><br><span class="line"><span class="comment"> *  - 这里的 classB 对应 data 中的 classB</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .box&#123;</span><br><span class="line">        border:1px dashed #f0f;</span><br><span class="line">    &#125;</span><br><span class="line">    .textColor&#123;</span><br><span class="line">        color:#f00;</span><br><span class="line">        background-color:#eef;</span><br><span class="line">    &#125;</span><br><span class="line">    .textSize&#123;</span><br><span class="line">        font-size:<span class="number">30</span>px;</span><br><span class="line">        font-weight:bold;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;box&quot;</span> :<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;[classA, classB]&quot;</span>&gt;</span><br><span class="line">    &lt;li&gt;学习Vue&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;学习Node&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;学习React&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">var</span> vm= <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">&#x27;.box&#x27;</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        classA: <span class="string">&#x27;textColor&#x27;</span>,</span><br><span class="line">        classB: <span class="string">&#x27;textSize&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定对象</strong> 和 <strong>绑定数组</strong> 的区别</p>
+<p><strong>绑定对象的时候：对象的属性对应的是 要渲染的类名，对象的属性值对应的是 data 中的数据</strong></p>
+<p><strong>绑定数组的时候：数组里面存的是 data 中的数据</strong></p>
+<p><strong>三个灵活细节点</strong></p>
+<p>绑定对象和绑定数组可以结合使用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;[activeClass, errorClass, &#123;test: isTest&#125;]&#x27;</span>&gt;测试样式&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>类样式数组的简化操作</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;arrClasses&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * data 中定义绑定的这个属性和值</span></span><br><span class="line"><span class="comment"> * 后续改变绑定的 类样式，通过相应的 api 和相应的处理逻辑处理 data 中的这个数据即可</span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">arrClasses: [<span class="string">&#x27;active&#x27;</span>,<span class="string">&#x27;error&#x27;</span>]</span><br><span class="line"><span class="comment">// 同理，类对象简化处理</span></span><br><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;objClasses&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="comment">// data 中</span></span><br><span class="line">objClasses: &#123; <span class="attr">active</span>: <span class="literal">true</span>, <span class="attr">error</span>: <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认的类样式处理：给个默认类样式即可，默认的会被保留，而不会被覆盖，如 base</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;base&quot;</span> v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;objClasses&#x27;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定 Style</strong></p>
+<p>绑定 style 的用法和上述类似</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;styleObject&quot;</span>&gt;绑定样式对象&lt;/div&gt;<span class="string">&#x27;</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">&lt;!-- CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) --&gt;</span></span><br><span class="line"><span class="string">&lt;div v-bind:style=&quot;&#123; color: activeColor, fontSize: fontSize,background:&#x27;</span>red<span class="string">&#x27; &#125;&quot;&gt;内联样式&lt;/div&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;!-- 组语法可以将多个样式对象应用到同一个元素 --&gt;</span></span><br><span class="line"><span class="string">&lt;div v-bind:style=&quot;[styleObj1, styleObj2]&quot;&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">  new Vue(&#123;</span></span><br><span class="line">    el: &#x27;#app&#x27;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      styleObject: &#123;</span><br><span class="line">        color: <span class="string">&#x27;green&#x27;</span>,</span><br><span class="line">        fontSize: <span class="string">&#x27;30px&#x27;</span>,</span><br><span class="line">        background:<span class="string">&#x27;red&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      activeColor: <span class="string">&#x27;green&#x27;</span>,</span><br><span class="line">           fontSize: <span class="string">&quot;30px&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      styleObj1: &#123;</span><br><span class="line">        color: <span class="string">&#x27;red&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      styleObj2: &#123;</span><br><span class="line">        fontSize: <span class="string">&#x27;30px&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>分支结构指令</strong></p>
+<p><strong>v-if</strong> — <strong>v-else</strong> — <strong>v-else-if</strong> — <strong>v-show</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div v-<span class="keyword">if</span>=<span class="string">&#x27;score&gt;=90&#x27;</span>&gt;优秀&lt;/div&gt;</span><br><span class="line">    &lt;div v-<span class="keyword">else</span>-<span class="keyword">if</span>=<span class="string">&#x27;score&lt;90&amp;&amp;score&gt;=80&#x27;</span>&gt;良好&lt;/div&gt;</span><br><span class="line">    &lt;div v-<span class="keyword">else</span>-<span class="keyword">if</span>=<span class="string">&#x27;score&lt;80&amp;&amp;score&gt;60&#x27;</span>&gt;一般&lt;/div&gt;</span><br><span class="line">    &lt;div v-<span class="keyword">else</span>&gt;比较差&lt;/div&gt;</span><br><span class="line">    &lt;div v-show=<span class="string">&#x27;flag&#x27;</span>&gt;测试v-show&lt;/div&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&#x27;handle&#x27;</span>&gt;点击&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        score: <span class="number">10</span>,</span><br><span class="line">        flag: <span class="literal">false</span></span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">this</span>.flag = !<span class="built_in">this</span>.flag;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>v-if</strong> 的应用场景：1、条件判断；2、控制元素的显示隐藏</p>
+<p><strong>v-show</strong> 的应用场景：主要是控制元素的显示隐藏</p>
+<p><code>两者的区别</code></p>
+<p><strong>v-show 本质：就是标签 display 设置为 none，控制隐藏 。v-show 只编译一次，后面其实就是控制 css，而 v-if 不停的销毁和创建节点，故 v-show 性能更好一点，所以当需要频繁的切换组件、节点或者控制元素的显示的隐藏的时候，优先选用 v-show</strong>。</p>
+<p><strong>v-if 是动态的向 DOM 树内添加或者删除 DOM 元素，v-if 切换有一个局部编译 / 卸载的过程，切换过程中合适地销毁和重建内部的事件监听和子组件</strong></p>
+</li>
+<li><p><strong>分支循环结构</strong></p>
+<p><strong>v-for — key</strong>：用于循环的数组里面的值可以是对象，也可以是普通元素  </p>
+<p>key 的作用：<strong>为了高效的更新虚拟 DOM，key 来给每个节点做一个唯一标识，这样可以提高性能</strong></p>
+<p>注意：**不推荐 **同时使用 <code>v-if</code> 和 <code>v-for</code>，因为当 <code>v-if</code> 与 <code>v-for</code> 一起使用时，<code>v-for</code> 具有比 <code>v-if</code> 更高的优先级。</p>
+<p>遍历数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;水果列表&lt;/div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;item in fruits&#x27;</span>&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;</span><br><span class="line">      &lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;(item, index) in fruits&#x27;</span>&gt;&#123;&#123;item + <span class="string">&#x27;---&#x27;</span> + index&#125;&#125;&lt;/li&gt;</span><br><span class="line">      &lt;li :key=<span class="string">&#x27;item.id&#x27;</span> v-<span class="keyword">for</span>=<span class="string">&#x27;(item, index) in myFruits&#x27;</span>&gt;</span><br><span class="line">        &lt;span&gt;&#123;&#123;item.ename&#125;&#125;&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;-----&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;&#123;&#123;item.cname&#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        fruits: [<span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;orange&#x27;</span>, <span class="string">&#x27;banana&#x27;</span>],</span><br><span class="line">        myFruits: [&#123;</span><br><span class="line">          id: <span class="number">1</span>,</span><br><span class="line">          ename: <span class="string">&#x27;apple&#x27;</span>,</span><br><span class="line">          cname: <span class="string">&#x27;苹果&#x27;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">          id: <span class="number">2</span>,</span><br><span class="line">          ename: <span class="string">&#x27;orange&#x27;</span>,</span><br><span class="line">          cname: <span class="string">&#x27;橘子&#x27;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">          id: <span class="number">3</span>,</span><br><span class="line">          ename: <span class="string">&#x27;banana&#x27;</span>,</span><br><span class="line">          cname: <span class="string">&#x27;香蕉&#x27;</span></span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>遍历对象</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;!-- v,k,i 顺序是固定的，即 值，属性，索引 --&gt;</span><br><span class="line">    &lt;div v-<span class="keyword">if</span>=<span class="string">&#x27;v==13&#x27;</span> v-<span class="keyword">for</span>=<span class="string">&#x27;(v,k,i) in obj&#x27;</span>&gt;&#123;&#123;v + <span class="string">&#x27;---&#x27;</span> + k + <span class="string">&#x27;---&#x27;</span> + i&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        obj: &#123;</span><br><span class="line">          uname: <span class="string">&#x27;zhangsan&#x27;</span>,</span><br><span class="line">          age: <span class="number">13</span>,</span><br><span class="line">          gender: <span class="string">&#x27;female&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a><strong>事件修饰符</strong></h4><p>在事件处理程序中调用 <code>event.preventDefault()</code> 或 <code>event.stopPropagation()</code> 是非常常见的需求，但 Vue 不推荐我们操作 DOM ，为了解决这个问题，Vue 为 <code>v-on</code> 提供了<strong>事件修饰符</strong>，具体更多请 <a href="https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6">参考文档</a></p>
+<p>特征：修饰符是由 <code>点开头的指令后缀 </code>来表示的</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123; num &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div v-on:click=<span class="string">&#x27;handle0&#x27;</span>&gt;</span><br><span class="line">      &lt;!-- vue 做法: v-on:click.stop 阻止冒泡 --&gt;</span><br><span class="line">      &lt;button v-on:click.stop=<span class="string">&#x27;handle1&#x27;</span>&gt;点击<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;!-- vue 做法: v-on:click.prevent 阻止默认行为 --&gt;</span><br><span class="line">      &lt;a href=<span class="string">&quot;http://www.baidu.com&quot;</span> v-on:click.prevent=<span class="string">&#x27;handle2&#x27;</span>&gt;百度&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        num: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        handle0: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">this</span>.num++;</span><br><span class="line">        &#125;,</span><br><span class="line">        handle1: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">          <span class="comment">// 阻止冒泡，传统做法</span></span><br><span class="line">          <span class="comment">// event.stopPropagation();</span></span><br><span class="line">        &#125;,</span><br><span class="line">        handle2: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">          <span class="comment">// 阻止默认行为，传统做法</span></span><br><span class="line">          <span class="comment">// event.preventDefault();</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 提交事件不再重载页面 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">&quot;onSubmit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 修饰符可以串联,即: 阻止冒泡也阻止默认事件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop.prevent</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即: 事件不是从内部元素触发的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.self</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>使用修饰符时，顺序很重要。相应的代码会以同样的顺序产生。因此，用 <code>v-on:click.prevent.self</code> 会阻止<code>所有的</code>点击，而 <code>v-on:click.self.prevent</code> 只会阻止<code>对元素自身的</code>点击。</p>
+<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p>在做项目中有时会用到键盘事件，在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 <code>v-on</code> 在监听键盘事件时添加按键修饰符，具体请 <a href="https://cn.vuejs.org/v2/guide/events.html#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6">参考文档</a></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;form action=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        用户名：</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> v-on:keyup.delete=<span class="string">&#x27;clearContent&#x27;</span> v-model=<span class="string">&#x27;uname&#x27;</span>&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        密码：</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> v-on:keyup.f1=<span class="string">&#x27;handleSubmit&#x27;</span> v-model=<span class="string">&#x27;pwd&#x27;</span>&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;button&quot;</span> v-on:click=<span class="string">&#x27;handleSubmit&#x27;</span> value=<span class="string">&quot;提交&quot;</span>&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    Vue.config.keyCodes.f1 = <span class="number">113</span></span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        uname: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        pwd: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        age: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        clearContent:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="comment">// 按 elete 键的时候，清空用户名</span></span><br><span class="line">          <span class="built_in">this</span>.uname = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        handleSubmit: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="built_in">this</span>.uname,<span class="built_in">this</span>.pwd)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用特性"><a href="#常用特性" class="headerlink" title="常用特性"></a>常用特性</h3><h4 id="表单操作"><a href="#表单操作" class="headerlink" title="表单操作"></a>表单操作</h4><p>表单是与服务端进行交互的最常见的方式之一，原生的表单在不指定 method 的情况下，默认是 get 请求方式，其中表单项中各项的 name 属性及其值会以 键值对 的形式传递到服务端，并且 value 值在提交按钮为 submit 的时候也会被提交，但利用 ajax 提交是可以自定义提交哪个值的，那么在 Vue 中，对表单的操作又是怎样的呢？</p>
+<blockquote>
+<p>获取文本的值</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通过 v-model 双向绑定 一个值</span></span><br><span class="line">&lt;input v-model=<span class="string">&quot;message&quot;</span>&gt;</span><br><span class="line">    </span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      <span class="comment">// 默认会让当前的 文本 值为 hello vue</span></span><br><span class="line">      message: <span class="string">&#x27;hello vue&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取多行文本的值</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;textarea v-model=<span class="string">&#x27;desc&#x27;</span>&gt;&lt;/textarea&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      <span class="comment">// 默认会让当前的 多行文本 值为 nihao</span></span><br><span class="line">      desc: <span class="string">&#x27;nihao&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取单选框中的值</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、两个单选框需要同时通过 v-model 双向绑定 一个值</span></span><br><span class="line"><span class="comment"> * 2、每一个单选框必须要有 value 属性，且 value 值不能一样 </span></span><br><span class="line"><span class="comment"> * 3、当某一个单选框选中的时候 v-model 会将当前的 value 值改变 data 中的数据</span></span><br><span class="line"><span class="comment"> * gender 的值就是选中的值，我们只需要实时监控他的值就可以了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">&lt;input type=<span class="string">&quot;radio&quot;</span> id=<span class="string">&quot;male&quot;</span> value=<span class="string">&quot;1&quot;</span> v-model=<span class="string">&#x27;gender&#x27;</span>&gt;</span><br><span class="line">&lt;label <span class="keyword">for</span>=<span class="string">&quot;male&quot;</span>&gt;男&lt;/label&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&quot;radio&quot;</span> id=<span class="string">&quot;female&quot;</span> value=<span class="string">&quot;2&quot;</span> v-model=<span class="string">&#x27;gender&#x27;</span>&gt;</span><br><span class="line">&lt;label <span class="keyword">for</span>=<span class="string">&quot;female&quot;</span>&gt;女&lt;/label&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      <span class="comment">// 默认会让当前的 value 值为 2 的单选框选中</span></span><br><span class="line">      gender: <span class="number">2</span> </span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取复选框中的值</p>
+<p>Tips：复选框 <code>checkbox</code> 这种的组合时，data 中的数据，我们要定义成数组 否则无法实现多选</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、复选框需要同时通过 v-model 双向绑定 一个值</span></span><br><span class="line"><span class="comment"> * 2、每一个复选框必须要有 value 属性，且 value 值不能一样 </span></span><br><span class="line"><span class="comment"> * 3、当某一个复选框选中的时候 v-model 会将当前的 value 值改变 data 中的数据</span></span><br><span class="line"><span class="comment"> * hobby 的值就是选中的值，我们只需要实时监控他的值就可以了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">&lt;input type=<span class="string">&quot;checkbox&quot;</span> id=<span class="string">&quot;ball&quot;</span> value=<span class="string">&quot;1&quot;</span> v-model=<span class="string">&#x27;hobby&#x27;</span>&gt;</span><br><span class="line">&lt;label <span class="keyword">for</span>=<span class="string">&quot;ball&quot;</span>&gt;篮球&lt;/label&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;checkbox&quot;</span> id=<span class="string">&quot;sing&quot;</span> value=<span class="string">&quot;2&quot;</span> v-model=<span class="string">&#x27;hobby&#x27;</span>&gt;</span><br><span class="line">&lt;label <span class="keyword">for</span>=<span class="string">&quot;sing&quot;</span>&gt;唱歌&lt;/label&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;checkbox&quot;</span> id=<span class="string">&quot;code&quot;</span> value=<span class="string">&quot;3&quot;</span> v-model=<span class="string">&#x27;hobby&#x27;</span>&gt;</span><br><span class="line">&lt;label <span class="keyword">for</span>=<span class="string">&quot;code&quot;</span>&gt;写代码&lt;/label&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      <span class="comment">// 默认会让当前的 value 值为 2 和 3 的复选框选中</span></span><br><span class="line">      hobby: [<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>获取下拉框和文本框中的值</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、需要给 select 通过 v-model 双向绑定 一个值 </span></span><br><span class="line"><span class="comment"> * 2、每一个 option 必须要有 value 属性，且 value 值不能一样  </span></span><br><span class="line"><span class="comment"> * 3、当某一个 option 选中的时候 v-model 会将当前的 value 值改变 data 中的数据</span></span><br><span class="line"><span class="comment"> * occupation 的值就是选中的值，我们只需要实时监控他的值就可以了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">&lt;select v-model=<span class="string">&#x27;occupation&#x27;</span>&gt;</span><br><span class="line">  &lt;option value=<span class="string">&quot;0&quot;</span>&gt;请选择职业...&lt;/option&gt;</span><br><span class="line">  &lt;option value=<span class="string">&quot;1&quot;</span>&gt;教师&lt;/option&gt;</span><br><span class="line">  &lt;option value=<span class="string">&quot;2&quot;</span>&gt;软件工程师&lt;/option&gt;</span><br><span class="line">  &lt;option value=<span class="string">&quot;3&quot;</span>&gt;律师&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      <span class="comment">// 默认会让当前的 value 值为 2 和 3 的下拉框选中</span></span><br><span class="line">      occupation: [<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>],</span><br><span class="line">      desc: <span class="string">&#x27;nihao&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>表单修饰符</p>
+<p>Tips：具体查看 <a href="https://cn.vuejs.org/v2/guide/forms.html#%E4%BF%AE%E9%A5%B0%E7%AC%A6">官方文档</a></p>
+</blockquote>
+<ul>
+<li><p><code>.number</code>  转换为数值</p>
+<p>注意：<strong>当开始输入非数字的字符串时</strong>，因为 Vue 无法将字符串转换成数值，所以属性值将实时更新成相同的字符串，即使后面输入数字，也将被视作字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- 自动将用户的输入值转为数值类型 --&gt;</span><br><span class="line">&lt;input v-model.number=<span class="string">&quot;age&quot;</span> type=<span class="string">&quot;text&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>.trim</code>  自动过滤用户输入的首尾空白字符</p>
+<p>注意：只能去掉首尾的，不能去除中间的空格</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- 自动过滤用户输入的首尾空白字符 --&gt;</span><br><span class="line">&lt;input v-model.trim=<span class="string">&quot;msg&quot;</span> type=<span class="string">&quot;text&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>.lazy</code>  将 input 事件（输入框一直输入都会触发）切换成 change 事件（输入框失去焦点触发）</p>
+<p>注意：.lazy 修饰符延迟了同步更新属性值的时机，即将原本绑定在 input 事件的同步逻辑转变为绑定在 change 事件上</p>
+<p>应用：如，账号输入，鼠标离开输入框后提示 “账户已被注册”</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!-- 在 “change” 时而非 “input” 时更新 --&gt;</span><br><span class="line">&lt;input v-model.lazy=<span class="string">&quot;msg&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h4><p>why ? 内置指令不满足需求的时候，需要自定义指令</p>
+<p>关于这篇幅，有需求的可以到 <a href="https://cn.vuejs.org/v2/guide/custom-directive.html">官方</a> 进行详细了解，这里做个简单的介绍</p>
+<blockquote>
+<p>Vue.directive  注册全局指令（可带动态参数）</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用自定义的指令，只需在对用的元素中，加上&#x27;v-&#x27;的前缀形成类似于内部指令 &#x27;v-if&#x27;，&#x27;v-text&#x27; 的形式</span></span><br><span class="line"><span class="comment"> * 注意点：</span></span><br><span class="line"><span class="comment"> *  - 在自定义指令中，如果以驼峰命名的方式定义，如：Vue.directive(&#x27;focusA&#x27;,function()&#123;&#125;)</span></span><br><span class="line"><span class="comment"> *  - 在 HTML 中使用的时候，只能通过 v-focus-a 来使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-focus&gt;</span><br><span class="line">&lt;script&gt;    </span><br><span class="line"><span class="comment">// 注册一个全局自定义指令 v-focus</span></span><br><span class="line">Vue.directive(<span class="string">&#x27;focus&#x27;</span>, &#123;</span><br><span class="line">  <span class="comment">// 当绑定元素插入到 DOM 中，其中 el 为 dom 元素</span></span><br><span class="line">  inserted: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 聚焦元素</span></span><br><span class="line">    el.focus();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">　　el:<span class="string">&#x27;#app&#x27;</span></span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="四大标杆"><a href="#四大标杆" class="headerlink" title="四大标杆"></a>四大标杆</h4><p>Vue 里面有三个非常突出的东西，就是如下，这里主要介绍下这三者的区别和应用场景</p>
+<p><a href="https://cn.vuejs.org/v2/guide/computed.html"><strong>方法</strong></a>  &amp;&amp;  <a href="https://cn.vuejs.org/v2/guide/computed.html"><strong>计算属性</strong></a>  &amp;&amp;  <a href="https://cn.vuejs.org/v2/guide/computed.html"><strong>侦听器</strong></a>  &amp;&amp;  <a href="https://cn.vuejs.org/v2/guide/filters.html"><strong>过滤器</strong></a></p>
+<p><strong>方法（methods）：</strong>这个最没啥可说的，就是定义了许多函数，对相关进行逻辑处理</p>
+<p><strong>计算属性（computed）：</strong>与方法区别不大，唯一就是多了个<strong>响应式依赖缓存机制</strong>，有利性能的提升</p>
+<ul>
+<li><p><strong>响应式依赖缓存机制：因为计算属性更多的用于 data 中的数据逻辑处理，所以这个响应式依赖中的依赖指的就是 data 中的数据，而只要 data 中的数据不发生改变，也就不会重新计算，进而有利性能提升</strong></p>
+</li>
+<li><p>应用场景：适合对多个变量或者对象进行处理后返回一个结果值，也就是数多个变量中的某一个值发生了变化则我们监控的这个值也就会发生变化</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  data: &#123;</span><br><span class="line">    msg: <span class="string">&#x27;Nihao&#x27;</span>,</span><br><span class="line">    <span class="comment">// 下面 computed 中的计算依赖 num 进行</span></span><br><span class="line">    num: <span class="number">100</span></span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    reverseString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">      <span class="comment">// num 的值不发生改变，total 的结果就会被缓存，而不需要进行多次执行</span></span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;=<span class="built_in">this</span>.num;i++)&#123;</span><br><span class="line">        total += i;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> total;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>侦听器（watch）：</strong>data 中某个数据绑定对应的一个侦听器，data 中的这个数据发生改变的时候，自然就触发这个侦听器</p>
+<p><strong>注意点：</strong></p>
+<ul>
+<li><strong>watch 中的属性，一定是 data 中已经存在的数据</strong> </li>
+<li><strong>当需要监听一个对象的改变时，普通的 watch 方法无法监听到对象内部属性的改变，只有 data 中的数据才能够监听到变化，此时就需要 deep 属性对对象进行深度监听</strong></li>
+</ul>
+<p>应用场景：</p>
+<ul>
+<li><p>异步操作：比如 Ajax 异步请求数据，使用 watch 来响应数据的变化</p>
+</li>
+<li><p>开销较大的操作：耗时比较大的操作</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 示例：验证用户名</span></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;span&gt;用户名：&lt;/span&gt;</span><br><span class="line">      &lt;span&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> v-model.lazy=<span class="string">&#x27;uname&#x27;</span>&gt;</span><br><span class="line">      &lt;/span&gt;</span><br><span class="line">      &lt;span&gt;&#123;&#123; tip &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">      el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        uname: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        tip: <span class="string">&#x27;&#x27;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        checkName: <span class="function"><span class="keyword">function</span>(<span class="params">uname</span>) </span>&#123;</span><br><span class="line">          <span class="comment">// 调用接口: 使用定时任务的方式模拟接口调用</span></span><br><span class="line">          <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">          <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 模拟接口调用</span></span><br><span class="line">            <span class="keyword">if</span> (uname == <span class="string">&#x27;admin&#x27;</span>) &#123;</span><br><span class="line">              that.tip = <span class="string">&#x27;用户名已经存在，请更换一个&#x27;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              that.tip = <span class="string">&#x27;用户名可以使用&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;, <span class="number">2000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      watch: &#123;</span><br><span class="line">        uname: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">          <span class="comment">// 调用后台接口验证用户名的合法性</span></span><br><span class="line">          <span class="built_in">this</span>.checkName(val);</span><br><span class="line">          <span class="comment">// 修改提示信息</span></span><br><span class="line">          <span class="built_in">this</span>.tip = <span class="string">&#x27;正在验证...&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>过滤器（filters）：</strong>允许自定义过滤器，可被用于一些常见的文本格式化</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">  &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&#x27;msg&#x27;</span>&gt;</span><br><span class="line">  &lt;!-- upper 被定义为接收单个参数的过滤器函数，表达式 msg 的值将作为参数传入到函数中 --&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; msg | upper &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;!--  </span><br><span class="line">    支持级联操作</span><br><span class="line">    upper 被定义为接收单个参数的过滤器函数，表达式 msg 的值将作为参数传入到函数中。</span><br><span class="line">    然后继续调用同样被定义为接收单个参数的过滤器 lower，将 upper 的结果传递到 lower 中。</span><br><span class="line">    （即：过滤完接着过滤）</span><br><span class="line">  --&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; msg | upper | lower &#125;&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 支持属性绑定的写法 --&gt;</span><br><span class="line">  &lt;div :abc=<span class="string">&#x27;msg | upper&#x27;</span>&gt;测试数据&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">   <span class="comment">// lower 为全局过滤器     </span></span><br><span class="line">   Vue.filter(<span class="string">&#x27;lower&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> val.charAt(<span class="number">0</span>).toLowerCase() + val.slice(<span class="number">1</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">     el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">     data: &#123;</span><br><span class="line">       msg: <span class="string">&#x27;&#x27;</span></span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="comment">// 定义 filters 中的过滤器为局部过滤器 </span></span><br><span class="line">     filters: &#123;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">      * upper 自定义的过滤器名字</span></span><br><span class="line"><span class="comment">      * 同理：upper 被定义为接收单个参数的过滤器函数，表达式 msg 的值将作为参数传入到函数中</span></span><br><span class="line"><span class="comment">      */</span> </span><br><span class="line">     upper: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">       <span class="comment">// 过滤器中一定要有返回值，这样外界使用过滤器的时候才能拿到结果</span></span><br><span class="line">       <span class="keyword">return</span> val.charAt(<span class="number">0</span>).toUpperCase() + val.slice(<span class="number">1</span>);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>过滤器中传递参数（可多个）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;box&quot;</span>&gt;</span><br><span class="line">  &lt;!--</span><br><span class="line">    filterA 被定义为接收三个参数的过滤器函数。</span><br><span class="line">      其中 message 的值作为第一个参数，</span><br><span class="line">    普通字符串 <span class="string">&#x27;arg1&#x27;</span> 作为第二个参数，表达式 arg2 的值作为第三个参数。</span><br><span class="line">  --&gt;</span><br><span class="line">  &#123;&#123; message | filterA(<span class="string">&#x27;arg1&#x27;</span>, <span class="string">&#x27;arg2&#x27;</span>) &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 在过滤器中，第一个参数对应的是 管道符前面的数据 n，此时对应 message</span></span><br><span class="line"><span class="comment">   * 第 2 个参数: a 对应实参 arg1 字符串</span></span><br><span class="line"><span class="comment">   * 第 3 个参数: b 对应实参 arg2 字符串</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  Vue.filter(<span class="string">&#x27;filterA&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">n,a,b</span>)</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 新语法规范</title>
+    <url>/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript 新语法规范，从最初的 <code>ES3</code> 到 <code>ES4</code> 及现在所一直保持的 <code>ES5</code> 规范，发现其中还存在很多问题。就针对发现的一些问题，做了新语法规范的改进，也就是现在的 <code>ES6</code> 及 <code>ES7/8/9</code> 甚至 <code>ES11</code>。下面是关于我对新语法规范学习的一些总结，如果有什么好的建议或者发现一些不好、错误的地方，还希望各位大佬在下方的评论区留言，谢谢！</p>
+<p>学习总结过程的代码是基于 <a href="https://gitee.com/sunny-store/javascript-new-standard">Gitee 码云仓库</a> 进行管理的，有需要的可以自行提取，可以的话，请顺便点个 <code>star</code>，谢谢！</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>全局作用域和私有作用域，这两个作用域是我们玩 JavaScript 的人都知道的，那么 <code>ES6</code> 的到来，新增加了一个概念叫<code>块级作用域</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;test 函数作用域内部变量 b = &#x27;</span> + b)</span><br><span class="line">  <span class="keyword">if</span> (b === <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> c = <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> d = <span class="number">4</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到全局变量 a = &#x27;</span> + a)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到变量 c = &#x27;</span> + c)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;不能访问到变量 d = &#x27;</span> + d)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * test 函数作用域内部变量 b = 2</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到变量 c = 3</span></span><br><span class="line"><span class="comment"> * Uncaught ReferenceError: d is not defined</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中，我们可以知道，全局变量 <code>a</code> 在任何地方都可以被访问到，函数内部变量 <code>b</code> 和 <code>c</code> 在函数内部作用域中都可以被访问到，这也正是我们所熟悉的全局作用域和私有作用域，没毛病。那么变量 <code>d</code> 被访问的时候为什么就被报错了呢？</p>
+<p>相信大家都注意到了，变量 <code>d</code> 是被 <code>let</code> 进行声明定义的，这也就是我们即将要说的 <code>块级作用域</code>，顾名思义，就是含有<code>块</code>的概念，这个块指的就是 <code>&#123;&#125;</code> 大括号，大括号内的作用域就是称为块级作用域。</p>
+<p>我们发现，上述代码中，if()<code>&#123;...&#125;</code> 内的变量仍然可以被其大括号外部访问到，所以块级作用域的出现也正是为了弥补 JS 的这个缺陷，用 let 进行变量声明定义，就可以形成一个块级作用域，正如上述代码中的那样，变量 d 无法被访问到。</p>
+<blockquote>
+<p>Tips：let 声明定义的变量也没有变量提升的概念</p>
+</blockquote>
+<p>全局作用域、私有作用域和块级作用域都说到了，那么剩下的就是<code>动态作用域</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.a = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line">test.bind(&#123; <span class="attr">a</span>: <span class="number">10</span> &#125;)()</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 1</span></span><br><span class="line"><span class="comment"> * 10</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>所谓动态作用域其实就是他的作用域不固定，我们可以通过一些方式，利用 <code>this</code> 指向，通过 <code>bind</code> 的方式改变 this 的指向，从而形成动态作用域。上述代码中，第一次输出结果 1，是因为 this 指向的是全局 window，输出结果 10，是因为 test.bind 将 this 指向了 { a: 10 } 这个对象，从而输出结果 10。</p>
+<h4 id="let-和-const"><a href="#let-和-const" class="headerlink" title="let 和 const"></a>let 和 const</h4><p>关于 let 前面讲过了挺多，这里做以下总结：</p>
+<ul>
+<li>let 声明的变量具有块级作用域的概念；</li>
+<li>let 声明的变量没有变量提升的概念；</li>
+<li>let 声明的变量名不能重复；</li>
+<li>let 声明的全局变量不能用全局对象的属性来访问。</li>
+</ul>
+<p>const 除了具备上述 let 的特点之外，<code>const 用于定义常量</code>，这是 const 独有的特点。</p>
+<blockquote>
+<p>Tips：另外就是 let 和 var 均可以先声明后赋值，但 const 不行。</p>
+</blockquote>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><p>举个例子，我们平时想要将一个数组中的某一项拿到，需要对数组进行变量，以索引的方式进行取值，比较麻烦，而解构赋值便很好的解决了这个问题。<strong>解构赋值，咬文嚼字一下就是将一个结构进行解析，解析出来的值再进行赋给对应的变量。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中，我们可以发现，等号两边的结构是一样的，都是数组，呈对应关系。等号右边便是要进行结构的 “东西” ，这个 “东西” 目前是一个数组，那么解构完了后，我们需要一个同样对应的 “东西” 去接收解构出来的细碎的小物品，一个一个的对应起来，这也就是解构赋值，其中 <code>a 对应 1，即 a = 1，b 对应 2，即 b = 2，c 对应 3，即 c = 3</code>。 下面再来看几个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, [c, d]] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 3 4</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>因为 [c, d] 对应 [3, 4]，所以 c 对应 3，即 c = 3，d 对应 4，即 d = 4</p>
+<blockquote>
+<p>Tips：到来这里，有没有感觉像以前做数学题~哈哈</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, [c]] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>[c] 对应 [3, 4]，因为左边只有一个接收的，所以我们只接收右边的第一个，得出 c 对应 3，即 c = 3，而右边的 4 没有对应的，所以保留。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 [3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>因为 c 对应 [3, 4]，所以 c  = [3, 4]，c 的值是一个数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c, d] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 [3, 4] undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>同理，一一对应，没得对应的自然就是 undefined</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c, d = <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>], <span class="number">6</span>]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 [3, 4] 6</span></span><br></pre></td></tr></table></figure>
+
+<p>同理一一对应，左边的 d 给了初值了，右边又有对应关系，那自然是覆盖了啦</p>
+<p>既然数组可以，那么对象呢？一起来看看~</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>, <span class="attr">age</span>: <span class="number">20</span> &#125;</span><br><span class="line"><span class="keyword">let</span> &#123; name, age &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(name, age)    <span class="comment">// sunny 20</span></span><br><span class="line"><span class="keyword">let</span> &#123; age, name &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(name, age)    <span class="comment">// sunny 20</span></span><br></pre></td></tr></table></figure>
+
+<p>从上述代码中发现，对象也是可以解构赋值的，而且它们的对应关系是<strong>根据 key 属性进行对应的，之前数组是通过 下标，即通过顺序进行对应的</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>, <span class="attr">age</span>: <span class="number">20</span> &#125;</span><br><span class="line"><span class="keyword">let</span> &#123; <span class="attr">name</span>: uname, <span class="attr">age</span>: uage &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(uname, uage)    <span class="comment">// sunny 20</span></span><br></pre></td></tr></table></figure>
+
+<p>既然我们知道了，对象的解构是通过 key 属性进行对应解构的，那么就可以利用 key 进行对对应的属性起别名，如上所示。</p>
+<p>数组，对象都可以，那么类似数组的<strong>字符串</strong>可不可以呢？答案<strong>是可以的</strong>，<strong>其操作和思想和数组差不多，可以参考数组的解构赋值</strong>。</p>
+<p>了解了这么多，总结一下：<strong>解构赋值，就是左边的结构对应右边的结构，左边是接收方，右边是赋予方，接收方少于赋予方，那么就是按需解构赋值；一样就是完全解构赋值，多于就是贪得无厌，对应不到的就是 undefined</strong>。</p>
+<p>常见应用场景：</p>
+<ul>
+<li><p>默认值赋初值：定义数组某项赋初值，函数形参赋初值，函数返回值解构赋值等</p>
+</li>
+<li><p>异步数据请求 json 数据解构</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> json = <span class="string">&#x27;&#123;&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: &quot;world&quot;&#125;&#x27;</span></span><br><span class="line"><span class="comment">// JSON.parse(json): 把字符串转换成对应对象</span></span><br><span class="line"><span class="keyword">let</span> &#123; a, b &#125; = <span class="built_in">JSON</span>.parse(json)</span><br><span class="line"><span class="built_in">console</span>.log(a, b)    <span class="comment">// hello world</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h3><p>对于数组，我想大家再熟悉不过了，操作数组的基础就是对数组的遍历，而遍历数组的方式有很多，其中不乏传统的遍历方式，更多的是结合实际问题而做出的改进方式，也就是 ES6 新增的方式，下面一起来了解下，传统的遍历方式和 ES6 新特性下的遍历方式。</p>
+<p>定义一个数组：<code>let arr = [1, 2, 3, 4, 5]</code>，下面分别以不同的方式对其进行遍历操作</p>
+<h4 id="ES5-方式"><a href="#ES5-方式" class="headerlink" title="ES5 方式"></a>ES5 方式</h4><ul>
+<li><p><strong>for 循环</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(arr[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>forEach()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.forEach(function(currentValue, index, arr), thisValue)</span></span><br><span class="line"><span class="comment"> * function(currentValue, index, arr): 回调函数【必传】</span></span><br><span class="line"><span class="comment"> *  - currentValue: 当前元素【必须】</span></span><br><span class="line"><span class="comment"> *  - index: 当前元素的索引值【可选】</span></span><br><span class="line"><span class="comment"> *  - arr: 当前元素所属的数组对象【可选】</span></span><br><span class="line"><span class="comment"> * thisValue: 传递给函数的值一般用 &quot;this&quot; 值，如果这个参数为空，&quot;undefined&quot; 会传递给 &quot;this&quot; 值。【可选】</span></span><br><span class="line"><span class="comment"> * 注意: forEach() 对于空数组是不会执行回调函数的</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">elem, index, array</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(elem, index, array)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>for 循环</code> 和 <code>forEach()</code> 的区别：<strong>for 循环支持 break 和 continue，而 forEach() 不支持，即 forEach() 中途不能跳出循环</strong>。</p>
+<ul>
+<li><p><strong>map()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.forEach(function(currentValue, index, arr), thisValue)</span></span><br><span class="line"><span class="comment"> * function(currentValue, index, arr): 同上</span></span><br><span class="line"><span class="comment"> * thisValue: 同上</span></span><br><span class="line"><span class="comment"> * 注意: map() 对于空数组是不会执行回调函数的，map() 不会改变原始数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.map(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  value += <span class="number">1</span></span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>map()</code> 和 <code>forEach()</code> 的区别：<strong>forEach() 只是简单的遍历，而 map() 会遍历数组中的每一个元素，然后根据这个回调函数进行回调操作，将我们需要的返回值以一个新数组的形式返回，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>filter()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.filter(function(currentValue,index,arr), thisValue): 参数介绍同上</span></span><br><span class="line"><span class="comment"> * 注意： filter() 不会对空数组进行检测，filter() 不会改变原始数组。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.filter(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>filter()</code> 的特点：<strong>从遍历项中，利用回调函数对遍历项进行过滤筛选操作，符合条件的项以一个新数组的形式返回，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>some()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.some(function(currentValue,index,arr),thisValue): 参数介绍、注意同上</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.some(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">4</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>some()</code> 的特点：<strong>some() 方法会依次执行数组的每个元素，如果有一个元素满足条件，则返回 true , 剩余的元素不会再执行检测；如果没有满足条件的元素，则返回 false，返回的是一个布尔值，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>every()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.every(function(currentValue,index,arr), thisValue): 参数、注意介绍同上</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.every(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>every()</code> 的特点：<strong>every() 方法会依次执行数组的每个元素，如果有一个元素不满足条件，则直接返回 false , 剩余的元素不会再执行检测；如果所有的元素都满足条件，则返回 true，返回的是一个布尔值，原数组不变</strong>。</p>
+<p><strong>所以：some() 方法强调的是个体，every() 方法强调的是整体</strong></p>
+<ul>
+<li><p><strong>reduce()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.reduce(function(total, currentValue, currentIndex, arr), initialValue)</span></span><br><span class="line"><span class="comment"> * function(total,currentValue, index,arr): 回调函数【必传】</span></span><br><span class="line"><span class="comment"> *  - total: 上一次调用回调函数的返回值，当然第一次调用的时候，即相当于初始值【必传】</span></span><br><span class="line"><span class="comment"> *  - currentValue: 当前元素【必须】</span></span><br><span class="line"><span class="comment"> *  - currentIndex: 当前元素的索引值【可选】</span></span><br><span class="line"><span class="comment"> *  - arr: 当前元素所属的数组对象【可选】</span></span><br><span class="line"><span class="comment"> * initialValue: 传递给函数的初始值【可选】</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> sum = arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">prev, cur, index, array</span>) </span>&#123;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 比如遍历 arr 实现求和操作</span></span><br><span class="line"><span class="comment"> *  - 0: 相当于 initialValue，用于 &#x27;和（sum）&#x27; 的起始值，如果不传，起始值就是 1</span></span><br><span class="line"><span class="comment"> * 到了第二次：pre 的值就是返回值，这个返回值源于上一次累加的结果，即 prev + cur -&gt; 0 + 1 -&gt; 返回 1</span></span><br><span class="line"><span class="comment"> * 依此类推...</span></span><br><span class="line"><span class="comment"> * 最后返回，最后累加的值，即计算结果</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">  <span class="built_in">console</span>.log(prev)</span><br><span class="line">  <span class="comment">// 0 1 3 6 8</span></span><br><span class="line">  <span class="keyword">return</span> prev + cur</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum) <span class="comment">// 12</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现数组的去重</span></span><br><span class="line"><span class="keyword">let</span> res = arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">prev, cur</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(prev) // []: 起始值，空数组</span></span><br><span class="line">  prev.indexOf(cur) === <span class="number">-1</span> &amp;&amp; prev.push(cur)</span><br><span class="line">  <span class="keyword">return</span> prev</span><br><span class="line">&#125;, [])</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>for in</strong>：一般<strong>不用于</strong>遍历数组，会出现将数组原型上定义的方法也同时遍历出来，及各种问题（一般用于遍历对象）</p>
+</li>
+</ul>
+<h4 id="ES6-方式"><a href="#ES6-方式" class="headerlink" title="ES6 方式"></a>ES6 方式</h4><ul>
+<li><p><strong>find()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.find(function(currentValue, index, arr),thisValue)</span></span><br><span class="line"><span class="comment"> * 参数、注意同上 forEach</span></span><br><span class="line"><span class="comment"> * 返回值：返回符合测试条件的第一个数组元素值，如果没有符合条件的则返回 undefined</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> res = arr.find(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">8</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>findIndex()</strong></p>
+<p>该方法同 <code>find()</code> 类似，区别在于 <code>findIndex()</code> 返回的是符合测试条件的第一个<code>数组元素索引</code>，如果没有符合条件的则返回  <code>-1</code> 。</p>
+</li>
+<li><p><strong>for of</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 遍历获得数组的每一项 - 直接法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项 - 间接法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr.values()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项索引值</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr.keys()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项及其索引值</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [index, item] <span class="keyword">of</span> arr.entries()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(index, item)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="数组的扩展"><a href="#数组的扩展" class="headerlink" title="数组的扩展"></a>数组的扩展</h3><h4 id="伪数组"><a href="#伪数组" class="headerlink" title="伪数组"></a>伪数组</h4><p>伪数组是<code>有长度</code>，<code>能遍历</code>，<code>不能直接调用数组的 API</code> 的数组</p>
+<p>伪数组特征：</p>
+<ul>
+<li><p>按照索引形式存储数据（索引是非负的整数）</p>
+</li>
+<li><p>具备一个 length 属性</p>
+</li>
+</ul>
+<p>伪数组形式：</p>
+<ul>
+<li><p>arguments，于 ES6 中废除</p>
+</li>
+<li><p>document.querySelectorAll(‘img’)</p>
+</li>
+<li><p>{ 0: ‘a’, 1: ‘b’, length: ‘5’}</p>
+</li>
+</ul>
+<h4 id="ES6-扩展"><a href="#ES6-扩展" class="headerlink" title="ES6 扩展"></a>ES6 扩展</h4><blockquote>
+<p>伪数组转换成真正的数组</p>
+</blockquote>
+<ul>
+<li><p><strong>Array.from(object（或需要转换的伪数组）, [遍历函数], [当前元素的 this 指向])</strong></p>
+</li>
+<li><p>作用：生成一个新数组或者将一个伪数组转换成真正的数组</p>
+</li>
+<li><p>应用：一般用于伪数组转换成真数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个伪数组</span></span><br><span class="line"><span class="keyword">let</span> arrayLike = &#123;</span><br><span class="line">  <span class="number">0</span>: <span class="string">&#x27;es6&#x27;</span>,</span><br><span class="line">  <span class="number">1</span>: <span class="string">&#x27;es7&#x27;</span>,</span><br><span class="line">  <span class="number">2</span>: <span class="string">&#x27;es8&#x27;</span>,</span><br><span class="line">  length: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(arrayLike)</span><br><span class="line">arr.push(<span class="string">&#x27;es9&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>新数组生成方式及其方式对应的应用</p>
+</blockquote>
+<p>我们都知道，生成一个新数组的方式有很多种方式，传统的 <code>new Array()</code> 构建方式，当我们传入的参数只有一个的时候，代表的是构建生成一个只有长度的数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+<p>而传入的值有多个的时候，那么就是具有长度，并且每一项都有值的数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+<p>但往往第一种情况不是我们想要的，所以第二种方式就出来了</p>
+<ul>
+<li><p><strong>Array.of([N个数据，’,’号隔开])</strong></p>
+</li>
+<li><p>作用：生成指定数据项的数组</p>
+</li>
+<li><p>应用：将多个数据项拼接成新的数组</p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 单个数据</span></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.of(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个数据</span></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.of(<span class="number">1</span>, <span class="literal">true</span>, <span class="string">&#x27;sunny&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], &#123;<span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>当然，还有第三种方式，就是进行<code>填充</code></p>
+<ul>
+<li><p><strong>Array.fill(被填充的元素,  [ start ], [ end ])</strong></p>
+</li>
+<li><p>说明：start 和 end: 指定 开始位置 和 结束位置范围内的数，替换成被填充的元素；不指定则所有项替换成 被填充的元素</p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment">// arr.fill(&#x27;sunny&#x27;, 1, 3)</span></span><br><span class="line">arr.fill(<span class="number">0</span>)    <span class="comment">// 全部替换</span></span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>替换数组的某些元素</p>
+</blockquote>
+<ul>
+<li><p><strong>arr.copyWithin(指定替换元素的起始位置,  [ 指定读取元素开始位置 ],  [ 指定读取元素停止位置 ])</strong></p>
+</li>
+<li><p>说明：替换的内容就是 <strong>读取元素开始到结束位置之间的内容</strong></p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.copyWithin(<span class="number">1</span>, <span class="number">3</span>))    <span class="comment">// 1 4 5 4 5</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>检测（查询）数组内是否包含某项</p>
+</blockquote>
+<p><code>ES5</code> 中做法是利用 <code>indexOf()</code> 进行检测，<code>ES6</code> 中利用 <code>includes()</code> 进行检测</p>
+<ul>
+<li><p><strong>arr.indexOf(需要查找的元素，[ 指定开始查找的位置（合法取值：0 到 stringObject.length - 1）])</strong></p>
+</li>
+<li><p>说明：检测（查找）有则返回对应元素所在的索引，无则返回 -1</p>
+</li>
+<li><p>注意：无法检测 NaN</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="literal">NaN</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.indexOf(<span class="literal">NaN</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>arr.includes(需要查找的元素, [ 指定开始查找的位置（默认 0，支持负数）])</strong></p>
+</li>
+<li><p>说明：检测（查找）有则返回 true，无则返回 false，如果为负值，则按升序从 array.length + fromIndex 的索引开始搜索</p>
+</li>
+<li><p>注意：可以检测 NaN</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(arr.includes(<span class="literal">NaN</span>))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h3><p>对于函数的重要性，我这里就不做过多的赘述了，我们常常利用函数进行封装一些我们想要处理的功能，这时候在 ES5 中，常常有个点是必须要考虑的，那就是函数的参数，比如哪些是必传的，哪些是可选的，然后进行一些列处理，等等操作。而在 ES6 中，其新特性为我们提供了很多便利。</p>
+<blockquote>
+<p>函数的默认值</p>
+</blockquote>
+<p>假设我们要封装一个方法，这个方法有个参数是必传的，另一个是可选的，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="string">&#x27;hello&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的参数传递中，我只传了一个实参，那么输出的结果就是：hello undefined，因为 y 的值没有传嘛，所以 y 就是一个可选的参数，就需要做处理，ES5 中处理方式呢，就是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  y = y || <span class="string">&#x27;world&#x27;</span></span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断一些 y 的值有没有传，有的话就将传递给 y 的实参赋值给 y，不然就是取它的默认值 world，而假如我们传递给 y 的是 0 呢，0 是一个 false 的布尔值含义，所以 y 还是会被赋值默认值 world，这样我们在封装函数的时候就增加了思考量，所以 ES6 针对这一问题，给出了新的赋值默认值的方式：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y = <span class="string">&#x27;world&#x27;</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="string">&#x27;hello&#x27;</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>一看上面的代码，相比之前 ES5 的处理方式而言，就简便很多了，直接给 y 一个默认值，有传递实参就是取该实参的值，没有就是取默认值，就不需要像 ES5 中那样的做法去做判断之类的操作。除了<code>代码简洁</code>，你还会发现它的<code>代码可阅读性很强</code>，一眼看去就可以看出哪些参数是必传的，哪些是可选的。另外就是当你后期想要对这个函数进行优化的时候，省去一些参数，那么这些默认的很方便就可以进行简洁优化！ </p>
+<p><strong>注意：ES6 中这样处理函数参数默认值，这默认值必须位于所有形参的最后面</strong></p>
+<blockquote>
+<p>实参与形参巧用解构赋值</p>
+</blockquote>
+<p>关于解构赋值，前面已经说的很清楚了，所以这里也不做过多的赘述，形参与实参之间传递形成一种对应关系，进行解构赋值。</p>
+<blockquote>
+<p>length 属性</p>
+</blockquote>
+<p>length ，当你看到这个，第一想到的是不是数组的长度，其实这里的 length 不是指的数组的长度，而是 <strong>函数必传参数的个数，也称函数未指定默认值参数的个数</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y = <span class="number">2</span>, z = <span class="number">3</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo.length)    <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>很显然，未指定默认值的参数就是 x，所以输出 1，如果都指定默认值，那就是输出 0。</p>
+<h3 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="扩展运算符"></a>扩展运算符</h3><p>扩展运算符，顾名思义它是个运算符，表现形式是 <code>...</code> 三个点，相信你已经意思到这个点的含义了，没错，就是扩展！作用就是：<strong>把数组或类数组展开成用逗号隔开的值</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">foo(...arr)</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子中会发现，是不是有点解构赋值的感觉呢，其实不是，解构赋值要求两边的结构完全一样，但此时的结构并不一样，但 a，b，c 仍旧可以输出对应的值，这正是因为，在进行参数传递的时候，<code>...arr</code> 将数组 arr 的值展开了，那么这样的好处可以帮助我们做些什么事呢？最常见的可以说就是数组的合并了。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> arr2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="comment">// 传统 ES5 的做法</span></span><br><span class="line"><span class="comment">// Array.prototype.push.apply(arr1, arr2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的做法</span></span><br><span class="line">arr1.push(...arr2)</span><br><span class="line"><span class="built_in">console</span>.log(arr1)    <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 push，只能 push 单个值，所以借助展开运算符很方便的就可以进行数组的合并。当然这个并不仅仅适用于数组，试试看把一个字符串展开会是什么样呢？</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;sunny&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(...str)    <span class="comment">// s u n n y</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [...str]</span><br><span class="line"><span class="built_in">console</span>.log(arr)    <span class="comment">// [&quot;s&quot;, &quot;u&quot;, &quot;n&quot;, &quot;n&quot;, &quot;y&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的结果是不是让你理解了之前说的：把数组或类数组展开成用逗号隔开的值~~</p>
+<p>那么既然有扩展，那会不会有组合呢？是的，是有的，它叫 <code>rest 参数</code>，它的作用就是<strong>把逗号隔开的值组合成一个数组</strong>。下面我们来看一个例子，实现任意数的求和。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES5 的方式 - arguments（ES6 已废除）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="built_in">Array</span>.prototype.forEach.call(<span class="built_in">arguments</span>, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))        <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))    <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的方式 - from</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="comment">// from 将 arguments 伪数组转换成真数组</span></span><br><span class="line">  <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>).forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的方式 - rest</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(args)</span></span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  args.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<p>从上面的方式中你会发现，是不是最后一种方式最简单、最实用呢，这也是 rest 的含义，不管你传递多少个参数，我都给你转成数组，注意是真正的数组哦，那么剩下的就是对数组进行操作了。所以这也是 rest 的一个应用场景之一：<strong>对于不确定参数的处理</strong>，下面再来看一个，部分参数确定，部分不确定的。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, ...args</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x)        <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(args)        <span class="comment">// [2, 3]</span></span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>对于参数 x 是确定的，但剩下的是不确定的，那么把不确定的参数就是丢给 <code>...</code> 形成一个数组去处理，聪明的你应该很快就会想到，rest 是不是可以和解构赋值配合使用呢？是的，请看</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [x, ...y] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">console</span>.log(x)    <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(y)    <span class="comment">// [2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>所以，<strong>扩展运算符与 rest 参数互为逆运算</strong>，具体使用还是得结合具体的场景。</p>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端学习笔记</title>
     <url>/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>好记性不如烂笔头</p>
@@ -1242,45 +1752,6 @@
         <tag>总结</tag>
         <tag>学习笔记</tag>
         <tag>前端开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 新语法规范</title>
-    <url>/JavaScript-%E6%96%B0%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript 新语法规范，从最初的 <code>ES3</code> 到 <code>ES4</code> 及现在所一直保持的 <code>ES5</code> 规范，发现其中还存在很多问题。就针对发现的一些问题，做了新语法规范的改进，也就是现在的 <code>ES6</code> 及 <code>ES7/8/9</code> 甚至 E<code>S10</code>。下面是关于我对新语法规范学习的一些总结，如果有什么好的建议或者发现一些不好、错误的地方，还希望各位大佬在下方的评论区留言，谢谢！</p>
-<p>学习总结过程的代码是基于 <a href="https://gitee.com/sunny-store/javascript-new-standard">Gitee 码云仓库</a> 进行管理的，有需要的可以自行提取，可以的话，请顺便点个 <code>star</code>，谢谢！</p>
-<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>全局作用域和私有作用域，这两个作用域是我们玩 JavaScript 的人都知道的，那么 <code>ES6</code> 的到来，新增加了一个概念叫<code>块级作用域</code>。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;test 函数作用域内部变量 b = &#x27;</span> + b)</span><br><span class="line">  <span class="keyword">if</span> (b === <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> c = <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> d = <span class="number">4</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到全局变量 a = &#x27;</span> + a)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到变量 c = &#x27;</span> + c)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;不能访问到变量 d = &#x27;</span> + d)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * test 函数作用域内部变量 b = 2</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到变量 c = 3</span></span><br><span class="line"><span class="comment"> * Uncaught ReferenceError: d is not defined</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-
-<p>从上面的代码中，我们可以知道，全局变量 <code>a</code> 在任何地方都可以被访问到，函数内部变量 <code>b</code> 和 <code>c</code> 在函数内部作用域中都可以被访问到，这也正是我们所熟悉的全局作用域和私有作用域，没毛病。那么变量 <code>d</code> 被访问的时候为什么就被报错了呢？</p>
-<p>相信大家都注意到了，变量 <code>d</code> 是被 <code>let</code> 进行声明定义的，这也就是我们即将要说的 <code>块级作用域</code>，顾名思义，就是含有<code>块</code>的概念，这个块指的就是 <code>&#123;&#125;</code> 大括号，大括号内的作用域就是称为块级作用域。</p>
-<p>我们发现，上述代码中，if()<code>&#123;...&#125;</code> 内的变量仍然可以被其大括号外部访问到，所以块级作用域的出现也正是为了弥补 JS 的这个缺陷，用 let 进行变量声明定义，就可以形成一个块级作用域，正如上述代码中的那样，变量 d 无法被访问到。</p>
-<blockquote>
-<p>Tips：let 声明定义的变量也没有变量提升的概念</p>
-</blockquote>
-<p>全局作用域、私有作用域和块级作用域都说到了，那么剩下的就是<code>动态作用域</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.a = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line">test.bind(&#123; <span class="attr">a</span>: <span class="number">10</span> &#125;)()</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 1</span></span><br><span class="line"><span class="comment"> * 10</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-
-<p>所谓动态作用域其实就是他的作用域不固定，我们可以通过一些方式，利用 <code>this</code> 指向，通过 <code>bind</code> 的方式改变 this 的指向，从而形成动态作用域。上述代码中，第一次输出结果 1，是因为 this 指向的是全局 window，输出结果 10，是因为 test.bind 将 this 指向了 { a: 10 } 这个对象，从而输出结果 10。</p>
-<h4 id="let-和-const"><a href="#let-和-const" class="headerlink" title="let 和 const"></a>let 和 const</h4><p>关于 let 前面讲过了挺多，这里做以下总结：</p>
-<ul>
-<li>let 声明的变量具有块级作用域的概念；</li>
-<li>let 声明的变量没有变量提升的概念；</li>
-<li>let 声明的变量名不能重复；</li>
-<li>let 声明的全局变量不能用全局对象的属性来访问。</li>
-</ul>
-<p>const 除了具备上述 let 的特点之外，<code>const 用于定义常量</code>，这是 const 独有的特点。</p>
-<blockquote>
-<p>Tips：另外就是 let 和 var 均可以先声明后赋值，但 const 不行。</p>
-</blockquote>
-<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>

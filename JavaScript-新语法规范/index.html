@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1k</span>
+            <span class="post-count">5.7k</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">22 分钟</span>
         </span>
     </span>
 </div>
@@ -103,7 +103,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript 新语法规范，从最初的 <code>ES3</code> 到 <code>ES4</code> 及现在所一直保持的 <code>ES5</code> 规范，发现其中还存在很多问题。就针对发现的一些问题，做了新语法规范的改进，也就是现在的 <code>ES6</code> 及 <code>ES7/8/9</code> 甚至 E<code>S10</code>。下面是关于我对新语法规范学习的一些总结，如果有什么好的建议或者发现一些不好、错误的地方，还希望各位大佬在下方的评论区留言，谢谢！</p>
+  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript 新语法规范，从最初的 <code>ES3</code> 到 <code>ES4</code> 及现在所一直保持的 <code>ES5</code> 规范，发现其中还存在很多问题。就针对发现的一些问题，做了新语法规范的改进，也就是现在的 <code>ES6</code> 及 <code>ES7/8/9</code> 甚至 <code>ES11</code>。下面是关于我对新语法规范学习的一些总结，如果有什么好的建议或者发现一些不好、错误的地方，还希望各位大佬在下方的评论区留言，谢谢！</p>
 <p>学习总结过程的代码是基于 <a target="_blank" rel="noopener" href="https://gitee.com/sunny-store/javascript-new-standard">Gitee 码云仓库</a> 进行管理的，有需要的可以自行提取，可以的话，请顺便点个 <code>star</code>，谢谢！</p>
 <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>全局作用域和私有作用域，这两个作用域是我们玩 JavaScript 的人都知道的，那么 <code>ES6</code> 的到来，新增加了一个概念叫<code>块级作用域</code>。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;全局变量 a = &#x27;</span> + a)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;test 函数作用域内部变量 b = &#x27;</span> + b)</span><br><span class="line">  <span class="keyword">if</span> (b === <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> c = <span class="number">3</span></span><br><span class="line">    <span class="keyword">let</span> d = <span class="number">4</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到全局变量 a = &#x27;</span> + a)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;可以访问到变量 c = &#x27;</span> + c)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;不能访问到变量 d = &#x27;</span> + d)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出结果</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * test 函数作用域内部变量 b = 2</span></span><br><span class="line"><span class="comment"> * 全局变量 a = 1</span></span><br><span class="line"><span class="comment"> * 可以访问到变量 c = 3</span></span><br><span class="line"><span class="comment"> * Uncaught ReferenceError: d is not defined</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
@@ -129,7 +129,253 @@
 <blockquote>
 <p>Tips：另外就是 let 和 var 均可以先声明后赋值，但 const 不行。</p>
 </blockquote>
-<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><p>举个例子，我们平时想要将一个数组中的某一项拿到，需要对数组进行变量，以索引的方式进行取值，比较麻烦，而解构赋值便很好的解决了这个问题。<strong>解构赋值，咬文嚼字一下就是将一个结构进行解析，解析出来的值再进行赋给对应的变量。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码中，我们可以发现，等号两边的结构是一样的，都是数组，呈对应关系。等号右边便是要进行结构的 “东西” ，这个 “东西” 目前是一个数组，那么解构完了后，我们需要一个同样对应的 “东西” 去接收解构出来的细碎的小物品，一个一个的对应起来，这也就是解构赋值，其中 <code>a 对应 1，即 a = 1，b 对应 2，即 b = 2，c 对应 3，即 c = 3</code>。 下面再来看几个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, [c, d]] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 3 4</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>因为 [c, d] 对应 [3, 4]，所以 c 对应 3，即 c = 3，d 对应 4，即 d = 4</p>
+<blockquote>
+<p>Tips：到来这里，有没有感觉像以前做数学题~哈哈</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, [c]] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>[c] 对应 [3, 4]，因为左边只有一个接收的，所以我们只接收右边的第一个，得出 c 对应 3，即 c = 3，而右边的 4 没有对应的，所以保留。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 [3, 4]</span></span><br></pre></td></tr></table></figure>
+
+<p>a 对应 1，即 a = 1，b 对应 2，即 b = 2</p>
+<p>因为 c 对应 [3, 4]，所以 c  = [3, 4]，c 的值是一个数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c, d] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 [3, 4] undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>同理，一一对应，没得对应的自然就是 undefined</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [a, b, c, d = <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>], <span class="number">6</span>]</span><br><span class="line"><span class="built_in">console</span>.log(a, b, c, d)    <span class="comment">// 1 2 [3, 4] 6</span></span><br></pre></td></tr></table></figure>
+
+<p>同理一一对应，左边的 d 给了初值了，右边又有对应关系，那自然是覆盖了啦</p>
+<p>既然数组可以，那么对象呢？一起来看看~</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>, <span class="attr">age</span>: <span class="number">20</span> &#125;</span><br><span class="line"><span class="keyword">let</span> &#123; name, age &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(name, age)    <span class="comment">// sunny 20</span></span><br><span class="line"><span class="keyword">let</span> &#123; age, name &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(name, age)    <span class="comment">// sunny 20</span></span><br></pre></td></tr></table></figure>
+
+<p>从上述代码中发现，对象也是可以解构赋值的，而且它们的对应关系是<strong>根据 key 属性进行对应的，之前数组是通过 下标，即通过顺序进行对应的</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>, <span class="attr">age</span>: <span class="number">20</span> &#125;</span><br><span class="line"><span class="keyword">let</span> &#123; <span class="attr">name</span>: uname, <span class="attr">age</span>: uage &#125; = user</span><br><span class="line"><span class="built_in">console</span>.log(uname, uage)    <span class="comment">// sunny 20</span></span><br></pre></td></tr></table></figure>
+
+<p>既然我们知道了，对象的解构是通过 key 属性进行对应解构的，那么就可以利用 key 进行对对应的属性起别名，如上所示。</p>
+<p>数组，对象都可以，那么类似数组的<strong>字符串</strong>可不可以呢？答案<strong>是可以的</strong>，<strong>其操作和思想和数组差不多，可以参考数组的解构赋值</strong>。</p>
+<p>了解了这么多，总结一下：<strong>解构赋值，就是左边的结构对应右边的结构，左边是接收方，右边是赋予方，接收方少于赋予方，那么就是按需解构赋值；一样就是完全解构赋值，多于就是贪得无厌，对应不到的就是 undefined</strong>。</p>
+<p>常见应用场景：</p>
+<ul>
+<li><p>默认值赋初值：定义数组某项赋初值，函数形参赋初值，函数返回值解构赋值等</p>
+</li>
+<li><p>异步数据请求 json 数据解构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> json = <span class="string">&#x27;&#123;&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: &quot;world&quot;&#125;&#x27;</span></span><br><span class="line"><span class="comment">// JSON.parse(json): 把字符串转换成对应对象</span></span><br><span class="line"><span class="keyword">let</span> &#123; a, b &#125; = <span class="built_in">JSON</span>.parse(json)</span><br><span class="line"><span class="built_in">console</span>.log(a, b)    <span class="comment">// hello world</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h3><p>对于数组，我想大家再熟悉不过了，操作数组的基础就是对数组的遍历，而遍历数组的方式有很多，其中不乏传统的遍历方式，更多的是结合实际问题而做出的改进方式，也就是 ES6 新增的方式，下面一起来了解下，传统的遍历方式和 ES6 新特性下的遍历方式。</p>
+<p>定义一个数组：<code>let arr = [1, 2, 3, 4, 5]</code>，下面分别以不同的方式对其进行遍历操作</p>
+<h4 id="ES5-方式"><a href="#ES5-方式" class="headerlink" title="ES5 方式"></a>ES5 方式</h4><ul>
+<li><p><strong>for 循环</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(arr[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>forEach()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.forEach(function(currentValue, index, arr), thisValue)</span></span><br><span class="line"><span class="comment"> * function(currentValue, index, arr): 回调函数【必传】</span></span><br><span class="line"><span class="comment"> *  - currentValue: 当前元素【必须】</span></span><br><span class="line"><span class="comment"> *  - index: 当前元素的索引值【可选】</span></span><br><span class="line"><span class="comment"> *  - arr: 当前元素所属的数组对象【可选】</span></span><br><span class="line"><span class="comment"> * thisValue: 传递给函数的值一般用 &quot;this&quot; 值，如果这个参数为空，&quot;undefined&quot; 会传递给 &quot;this&quot; 值。【可选】</span></span><br><span class="line"><span class="comment"> * 注意: forEach() 对于空数组是不会执行回调函数的</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">elem, index, array</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(elem, index, array)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>for 循环</code> 和 <code>forEach()</code> 的区别：<strong>for 循环支持 break 和 continue，而 forEach() 不支持，即 forEach() 中途不能跳出循环</strong>。</p>
+<ul>
+<li><p><strong>map()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.forEach(function(currentValue, index, arr), thisValue)</span></span><br><span class="line"><span class="comment"> * function(currentValue, index, arr): 同上</span></span><br><span class="line"><span class="comment"> * thisValue: 同上</span></span><br><span class="line"><span class="comment"> * 注意: map() 对于空数组是不会执行回调函数的，map() 不会改变原始数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.map(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  value += <span class="number">1</span></span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>map()</code> 和 <code>forEach()</code> 的区别：<strong>forEach() 只是简单的遍历，而 map() 会遍历数组中的每一个元素，然后根据这个回调函数进行回调操作，将我们需要的返回值以一个新数组的形式返回，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>filter()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.filter(function(currentValue,index,arr), thisValue): 参数介绍同上</span></span><br><span class="line"><span class="comment"> * 注意： filter() 不会对空数组进行检测，filter() 不会改变原始数组。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.filter(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>filter()</code> 的特点：<strong>从遍历项中，利用回调函数对遍历项进行过滤筛选操作，符合条件的项以一个新数组的形式返回，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>some()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.some(function(currentValue,index,arr),thisValue): 参数介绍、注意同上</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.some(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">4</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>some()</code> 的特点：<strong>some() 方法会依次执行数组的每个元素，如果有一个元素满足条件，则返回 true , 剩余的元素不会再执行检测；如果没有满足条件的元素，则返回 false，返回的是一个布尔值，原数组不变</strong>。</p>
+<ul>
+<li><p><strong>every()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.every(function(currentValue,index,arr), thisValue): 参数、注意介绍同上</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> result = arr.every(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(value)</span></span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>every()</code> 的特点：<strong>every() 方法会依次执行数组的每个元素，如果有一个元素不满足条件，则直接返回 false , 剩余的元素不会再执行检测；如果所有的元素都满足条件，则返回 true，返回的是一个布尔值，原数组不变</strong>。</p>
+<p><strong>所以：some() 方法强调的是个体，every() 方法强调的是整体</strong></p>
+<ul>
+<li><p><strong>reduce()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.reduce(function(total, currentValue, currentIndex, arr), initialValue)</span></span><br><span class="line"><span class="comment"> * function(total,currentValue, index,arr): 回调函数【必传】</span></span><br><span class="line"><span class="comment"> *  - total: 上一次调用回调函数的返回值，当然第一次调用的时候，即相当于初始值【必传】</span></span><br><span class="line"><span class="comment"> *  - currentValue: 当前元素【必须】</span></span><br><span class="line"><span class="comment"> *  - currentIndex: 当前元素的索引值【可选】</span></span><br><span class="line"><span class="comment"> *  - arr: 当前元素所属的数组对象【可选】</span></span><br><span class="line"><span class="comment"> * initialValue: 传递给函数的初始值【可选】</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> sum = arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">prev, cur, index, array</span>) </span>&#123;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 比如遍历 arr 实现求和操作</span></span><br><span class="line"><span class="comment"> *  - 0: 相当于 initialValue，用于 &#x27;和（sum）&#x27; 的起始值，如果不传，起始值就是 1</span></span><br><span class="line"><span class="comment"> * 到了第二次：pre 的值就是返回值，这个返回值源于上一次累加的结果，即 prev + cur -&gt; 0 + 1 -&gt; 返回 1</span></span><br><span class="line"><span class="comment"> * 依此类推...</span></span><br><span class="line"><span class="comment"> * 最后返回，最后累加的值，即计算结果</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">  <span class="built_in">console</span>.log(prev)</span><br><span class="line">  <span class="comment">// 0 1 3 6 8</span></span><br><span class="line">  <span class="keyword">return</span> prev + cur</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"><span class="built_in">console</span>.log(sum) <span class="comment">// 12</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现数组的去重</span></span><br><span class="line"><span class="keyword">let</span> res = arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">prev, cur</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(prev) // []: 起始值，空数组</span></span><br><span class="line">  prev.indexOf(cur) === <span class="number">-1</span> &amp;&amp; prev.push(cur)</span><br><span class="line">  <span class="keyword">return</span> prev</span><br><span class="line">&#125;, [])</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>for in</strong>：一般<strong>不用于</strong>遍历数组，会出现将数组原型上定义的方法也同时遍历出来，及各种问题（一般用于遍历对象）</p>
+</li>
+</ul>
+<h4 id="ES6-方式"><a href="#ES6-方式" class="headerlink" title="ES6 方式"></a>ES6 方式</h4><ul>
+<li><p><strong>find()</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * array.find(function(currentValue, index, arr),thisValue)</span></span><br><span class="line"><span class="comment"> * 参数、注意同上 forEach</span></span><br><span class="line"><span class="comment"> * 返回值：返回符合测试条件的第一个数组元素值，如果没有符合条件的则返回 undefined</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">let</span> res = arr.find(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> value === <span class="number">8</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr, res)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>findIndex()</strong></p>
+<p>该方法同 <code>find()</code> 类似，区别在于 <code>findIndex()</code> 返回的是符合测试条件的第一个<code>数组元素索引</code>，如果没有符合条件的则返回  <code>-1</code> 。</p>
+</li>
+<li><p><strong>for of</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 遍历获得数组的每一项 - 直接法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项 - 间接法</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr.values()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项索引值</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr.keys()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历获得数组的每一项及其索引值</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [index, item] <span class="keyword">of</span> arr.entries()) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(index, item)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="数组的扩展"><a href="#数组的扩展" class="headerlink" title="数组的扩展"></a>数组的扩展</h3><h4 id="伪数组"><a href="#伪数组" class="headerlink" title="伪数组"></a>伪数组</h4><p>伪数组是<code>有长度</code>，<code>能遍历</code>，<code>不能直接调用数组的 API</code> 的数组</p>
+<p>伪数组特征：</p>
+<ul>
+<li><p>按照索引形式存储数据（索引是非负的整数）</p>
+</li>
+<li><p>具备一个 length 属性</p>
+</li>
+</ul>
+<p>伪数组形式：</p>
+<ul>
+<li><p>arguments，于 ES6 中废除</p>
+</li>
+<li><p>document.querySelectorAll(‘img’)</p>
+</li>
+<li><p>{ 0: ‘a’, 1: ‘b’, length: ‘5’}</p>
+</li>
+</ul>
+<h4 id="ES6-扩展"><a href="#ES6-扩展" class="headerlink" title="ES6 扩展"></a>ES6 扩展</h4><blockquote>
+<p>伪数组转换成真正的数组</p>
+</blockquote>
+<ul>
+<li><p><strong>Array.from(object（或需要转换的伪数组）, [遍历函数], [当前元素的 this 指向])</strong></p>
+</li>
+<li><p>作用：生成一个新数组或者将一个伪数组转换成真正的数组</p>
+</li>
+<li><p>应用：一般用于伪数组转换成真数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个伪数组</span></span><br><span class="line"><span class="keyword">let</span> arrayLike = &#123;</span><br><span class="line">  <span class="number">0</span>: <span class="string">&#x27;es6&#x27;</span>,</span><br><span class="line">  <span class="number">1</span>: <span class="string">&#x27;es7&#x27;</span>,</span><br><span class="line">  <span class="number">2</span>: <span class="string">&#x27;es8&#x27;</span>,</span><br><span class="line">  length: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(arrayLike)</span><br><span class="line">arr.push(<span class="string">&#x27;es9&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>新数组生成方式及其方式对应的应用</p>
+</blockquote>
+<p>我们都知道，生成一个新数组的方式有很多种方式，传统的 <code>new Array()</code> 构建方式，当我们传入的参数只有一个的时候，代表的是构建生成一个只有长度的数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+<p>而传入的值有多个的时候，那么就是具有长度，并且每一项都有值的数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+<p>但往往第一种情况不是我们想要的，所以第二种方式就出来了</p>
+<ul>
+<li><p><strong>Array.of([N个数据，’,’号隔开])</strong></p>
+</li>
+<li><p>作用：生成指定数据项的数组</p>
+</li>
+<li><p>应用：将多个数据项拼接成新的数组</p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单个数据</span></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.of(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个数据</span></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.of(<span class="number">1</span>, <span class="literal">true</span>, <span class="string">&#x27;sunny&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], &#123;<span class="attr">name</span>: <span class="string">&#x27;sunny&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>当然，还有第三种方式，就是进行<code>填充</code></p>
+<ul>
+<li><p><strong>Array.fill(被填充的元素,  [ start ], [ end ])</strong></p>
+</li>
+<li><p>说明：start 和 end: 指定 开始位置 和 结束位置范围内的数，替换成被填充的元素；不指定则所有项替换成 被填充的元素</p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment">// arr.fill(&#x27;sunny&#x27;, 1, 3)</span></span><br><span class="line">arr.fill(<span class="number">0</span>)    <span class="comment">// 全部替换</span></span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>替换数组的某些元素</p>
+</blockquote>
+<ul>
+<li><p><strong>arr.copyWithin(指定替换元素的起始位置,  [ 指定读取元素开始位置 ],  [ 指定读取元素停止位置 ])</strong></p>
+</li>
+<li><p>说明：替换的内容就是 <strong>读取元素开始到结束位置之间的内容</strong></p>
+</li>
+<li><p>注意：会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.copyWithin(<span class="number">1</span>, <span class="number">3</span>))    <span class="comment">// 1 4 5 4 5</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>检测（查询）数组内是否包含某项</p>
+</blockquote>
+<p><code>ES5</code> 中做法是利用 <code>indexOf()</code> 进行检测，<code>ES6</code> 中利用 <code>includes()</code> 进行检测</p>
+<ul>
+<li><p><strong>arr.indexOf(需要查找的元素，[ 指定开始查找的位置（合法取值：0 到 stringObject.length - 1）])</strong></p>
+</li>
+<li><p>说明：检测（查找）有则返回对应元素所在的索引，无则返回 -1</p>
+</li>
+<li><p>注意：无法检测 NaN</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="literal">NaN</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.indexOf(<span class="literal">NaN</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>arr.includes(需要查找的元素, [ 指定开始查找的位置（默认 0，支持负数）])</strong></p>
+</li>
+<li><p>说明：检测（查找）有则返回 true，无则返回 false，如果为负值，则按升序从 array.length + fromIndex 的索引开始搜索</p>
+</li>
+<li><p>注意：可以检测 NaN</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(arr.includes(<span class="literal">NaN</span>))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h3><p>对于函数的重要性，我这里就不做过多的赘述了，我们常常利用函数进行封装一些我们想要处理的功能，这时候在 ES5 中，常常有个点是必须要考虑的，那就是函数的参数，比如哪些是必传的，哪些是可选的，然后进行一些列处理，等等操作。而在 ES6 中，其新特性为我们提供了很多便利。</p>
+<blockquote>
+<p>函数的默认值</p>
+</blockquote>
+<p>假设我们要封装一个方法，这个方法有个参数是必传的，另一个是可选的，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="string">&#x27;hello&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的参数传递中，我只传了一个实参，那么输出的结果就是：hello undefined，因为 y 的值没有传嘛，所以 y 就是一个可选的参数，就需要做处理，ES5 中处理方式呢，就是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  y = y || <span class="string">&#x27;world&#x27;</span></span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断一些 y 的值有没有传，有的话就将传递给 y 的实参赋值给 y，不然就是取它的默认值 world，而假如我们传递给 y 的是 0 呢，0 是一个 false 的布尔值含义，所以 y 还是会被赋值默认值 world，这样我们在封装函数的时候就增加了思考量，所以 ES6 针对这一问题，给出了新的赋值默认值的方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y = <span class="string">&#x27;world&#x27;</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="string">&#x27;hello&#x27;</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>一看上面的代码，相比之前 ES5 的处理方式而言，就简便很多了，直接给 y 一个默认值，有传递实参就是取该实参的值，没有就是取默认值，就不需要像 ES5 中那样的做法去做判断之类的操作。除了<code>代码简洁</code>，你还会发现它的<code>代码可阅读性很强</code>，一眼看去就可以看出哪些参数是必传的，哪些是可选的。另外就是当你后期想要对这个函数进行优化的时候，省去一些参数，那么这些默认的很方便就可以进行简洁优化！ </p>
+<p><strong>注意：ES6 中这样处理函数参数默认值，这默认值必须位于所有形参的最后面</strong></p>
+<blockquote>
+<p>实参与形参巧用解构赋值</p>
+</blockquote>
+<p>关于解构赋值，前面已经说的很清楚了，所以这里也不做过多的赘述，形参与实参之间传递形成一种对应关系，进行解构赋值。</p>
+<blockquote>
+<p>length 属性</p>
+</blockquote>
+<p>length ，当你看到这个，第一想到的是不是数组的长度，其实这里的 length 不是指的数组的长度，而是 <strong>函数必传参数的个数，也称函数未指定默认值参数的个数</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y = <span class="number">2</span>, z = <span class="number">3</span></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo.length)    <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>很显然，未指定默认值的参数就是 x，所以输出 1，如果都指定默认值，那就是输出 0。</p>
+<h3 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="扩展运算符"></a>扩展运算符</h3><p>扩展运算符，顾名思义它是个运算符，表现形式是 <code>...</code> 三个点，相信你已经意思到这个点的含义了，没错，就是扩展！作用就是：<strong>把数组或类数组展开成用逗号隔开的值</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a, b, c)    <span class="comment">// 1 2 3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">foo(...arr)</span><br></pre></td></tr></table></figure>
+
+<p>从上面的例子中会发现，是不是有点解构赋值的感觉呢，其实不是，解构赋值要求两边的结构完全一样，但此时的结构并不一样，但 a，b，c 仍旧可以输出对应的值，这正是因为，在进行参数传递的时候，<code>...arr</code> 将数组 arr 的值展开了，那么这样的好处可以帮助我们做些什么事呢？最常见的可以说就是数组的合并了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> arr2 = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="comment">// 传统 ES5 的做法</span></span><br><span class="line"><span class="comment">// Array.prototype.push.apply(arr1, arr2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的做法</span></span><br><span class="line">arr1.push(...arr2)</span><br><span class="line"><span class="built_in">console</span>.log(arr1)    <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 push，只能 push 单个值，所以借助展开运算符很方便的就可以进行数组的合并。当然这个并不仅仅适用于数组，试试看把一个字符串展开会是什么样呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;sunny&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(...str)    <span class="comment">// s u n n y</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [...str]</span><br><span class="line"><span class="built_in">console</span>.log(arr)    <span class="comment">// [&quot;s&quot;, &quot;u&quot;, &quot;n&quot;, &quot;n&quot;, &quot;y&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的结果是不是让你理解了之前说的：把数组或类数组展开成用逗号隔开的值~~</p>
+<p>那么既然有扩展，那会不会有组合呢？是的，是有的，它叫 <code>rest 参数</code>，它的作用就是<strong>把逗号隔开的值组合成一个数组</strong>。下面我们来看一个例子，实现任意数的求和。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5 的方式 - arguments（ES6 已废除）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="built_in">Array</span>.prototype.forEach.call(<span class="built_in">arguments</span>, <span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))        <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))    <span class="comment">// 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的方式 - from</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="comment">// from 将 arguments 伪数组转换成真数组</span></span><br><span class="line">  <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>).forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES6 的方式 - rest</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// console.log(args)</span></span><br><span class="line">  <span class="keyword">let</span> sum = <span class="number">0</span></span><br><span class="line">  args.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">    sum += item</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> sum</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">console</span>.log(foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<p>从上面的方式中你会发现，是不是最后一种方式最简单、最实用呢，这也是 rest 的含义，不管你传递多少个参数，我都给你转成数组，注意是真正的数组哦，那么剩下的就是对数组进行操作了。所以这也是 rest 的一个应用场景之一：<strong>对于不确定参数的处理</strong>，下面再来看一个，部分参数确定，部分不确定的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">x, ...args</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x)        <span class="comment">// 1</span></span><br><span class="line">  <span class="built_in">console</span>.log(args)        <span class="comment">// [2, 3]</span></span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>对于参数 x 是确定的，但剩下的是不确定的，那么把不确定的参数就是丢给 <code>...</code> 形成一个数组去处理，聪明的你应该很快就会想到，rest 是不是可以和解构赋值配合使用呢？是的，请看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> [x, ...y] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">console</span>.log(x)    <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(y)    <span class="comment">// [2, 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>所以，<strong>扩展运算符与 rest 参数互为逆运算</strong>，具体使用还是得结合具体的场景。</p>
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
 <p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
  
       <!-- reward -->
@@ -211,6 +457,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/Vue-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Vue 学习之旅
+          
+        </div>
+      </a>
     
     
       <a href="/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/" class="article-nav-link">
