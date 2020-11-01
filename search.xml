@@ -2212,6 +2212,230 @@
       </tags>
   </entry>
   <entry>
+    <title>jQuery之回忆篇</title>
+    <url>/jQuery%E4%B9%8B%E5%9B%9E%E5%BF%86%E7%AF%87/</url>
+    <content><![CDATA[<h3 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h3><blockquote>
+<p>原生 JS</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jQuery</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种写法</span></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种写法</span></span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种写法 (推荐)</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.第四种写法</span></span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>原生 JS 与 jQuery 入口函数的区别</p>
+<ul>
+<li>原生 JS 和 jQuery 入口函数的<code>加载模式不同</code>：原生 JS 会等到 DOM 元素加载完毕，并且图片也加载完毕才会执行；jQuery 会等到 DOM 元素加载完毕,但不会等到图片也加载完毕就会执行</li>
+<li>原生的 JS 如果编写了多个入口函数，后面编写的<code>会</code>覆盖前面编写的；jQuery 中编写多个入口函数，后面的<code>不会</code>覆盖前面的</li>
+</ul>
+<p><code>注意：$ 符合冲突问题解决方式</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方式 1：释放 $ 的使用权</span></span><br><span class="line"><span class="comment"> *	- 释放操作必须在编写其它 jQuery 代码之前编写</span></span><br><span class="line"><span class="comment"> *  - 释放之后就不能再使用 $，改为使用 jQuery</span></span><br><span class="line"><span class="comment"> *  - jQuery 原理 .noConflict();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jQuery.noConflict();</span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2：自定义一个访问符号，如：sunny</span></span><br><span class="line"><span class="keyword">var</span> sunny = jQuery.noConflict();</span><br><span class="line">sunny(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// $ 函数执行</span></span><br><span class="line">$();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于原生普通函数调用执行，如: test()</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可接收参数</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、接收一个函数，即：入口函数</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 2、接收一个字符串</span></span><br><span class="line"><span class="comment">     *	- 2.1、接收一个字符串选择器，返回一个 jQuery 对象, 对象中保存了找到的 DOM 元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> $box1 = $(<span class="string">&quot;.box1&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($box1);</span><br><span class="line">    <span class="comment">// 2.2、接收一个字符串代码片段，返回一个 jQuery 对象, 对象中保存了创建的 DOM 元素</span></span><br><span class="line">    <span class="keyword">var</span> $p = $(<span class="string">&quot;&lt;p&gt;我是段落&lt;/p&gt;&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($p);</span><br><span class="line">    $box1.append($p);</span><br><span class="line">    <span class="comment">// 3、接收一个 DOM 元素，会被包装成一个 jQuery 对象返回</span></span><br><span class="line">    <span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">console</span>.log(span);</span><br><span class="line">    <span class="keyword">var</span> $span = $(span);</span><br><span class="line">    <span class="built_in">console</span>.log($span);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="jQ-对象"><a href="#jQ-对象" class="headerlink" title="jQ 对象"></a>jQ 对象</h3><p>jQuery 对象是一个伪数组（有 0 到 length-1 的属性, 并且有 length 属性）</p>
+<blockquote>
+<p>jQ 对象转 DOM 对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、[index] 角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、.get(index) 获取角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v.get(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>DOM 对象转 jQ 对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将 DOM 对象以参数形式传递给 jQ 核心函数</span></span><br><span class="line"><span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> $span = $(span);</span><br></pre></td></tr></table></figure>
+
+<h3 id="jQ-方法"><a href="#jQ-方法" class="headerlink" title="jQ 方法"></a>jQ 方法</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<blockquote>
+<p>常用静态方法</p>
+</blockquote>
+<p>each：遍历</p>
+<p>map：遍历</p>
+<p><strong>两者的区别：</strong></p>
+<ul>
+<li>each 静态方法默认的返回值就是，<code>遍历谁就返回谁</code>；map 静态方法默认的返回值是一个<code>空数组</code></li>
+<li>each 静态方法<code>不支持</code>在回调函数中对遍历的数组进行处理；map 静态方法<code>可以在回调函数中通过 return 对遍历的数组进行处理</code>，然后<code>生成一个新的数组返回</code></li>
+</ul>
+<p>trim：去除字符串两端的空格</p>
+<p>isWindow：判断传入的对象是否是 window 对象</p>
+<p>isArray：判断传入的对象是否是真数组</p>
+<p>isFunction：判断传入的对象是否是一个函数</p>
+<p>holdReady：暂停 ready 执行</p>
+<h3 id="jQ-选择器"><a href="#jQ-选择器" class="headerlink" title="jQ 选择器"></a>jQ 选择器</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<h3 id="属性（节点）操作"><a href="#属性（节点）操作" class="headerlink" title="属性（节点）操作"></a>属性（节点）操作</h3><h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>属性：对象身上保存的变量就是属性</p>
+<p>属性节点：HTML 标签中添加的属性就是属性节点</p>
+<p>获取到 DOM 元素后，两者的形式：浏览器中找到对应 DOM 元素，展开看到的都是属性，在 attributes 属性中保存的所有内容都是属性节点</p>
+<p>贴图</p>
+<p>属性和属性节点的区别：任何对象都有属性, 但是只有 DOM 对象才有属性节点</p>
+<h4 id="原生-JS-操作"><a href="#原生-JS-操作" class="headerlink" title="原生 JS  操作"></a>原生 JS  操作</h4><p><strong>属性操作</strong></p>
+<ul>
+<li>赋值：对象.属性名称 = 值; 或者 对象[“属性名称”] = 值;</li>
+<li>取值：对象.属性名称; 或者 对象[“属性名称”];</li>
+</ul>
+<p><strong>属性节点操作</strong></p>
+<ul>
+<li>赋值：DOM 元素.setAttribute(“属性名称”, “值”);</li>
+<li>取值：DOM元素.getAttribute(“属性名称”);</li>
+</ul>
+<h4 id="jQuery-操作"><a href="#jQuery-操作" class="headerlink" title="jQuery 操作"></a>jQuery 操作</h4><p><strong>属性节点操作</strong></p>
+<p>attr()：获取或者设置属性节点的值</p>
+<p>可以传递一个参数，也可以传递两个参数</p>
+<ul>
+<li>如果传递一个参数，代表<code>获取</code>属性节点的值</li>
+<li>如果传递两个参数，代表<code>设置</code>属性节点的值</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>如果是<code>获取</code>：无论找到多少个元素，都只会返回第一个元素指定的属性节点的值</li>
+<li>如果是<code>设置</code>：找到多少个元素就会设置多少个元素</li>
+<li>如果是<code>设置</code>：如果设置的属性节点不存在，那么系统会自动新增</li>
+</ul>
+<p>removeAttr()：删除属性节点</p>
+<p>注意：会删除<code>所有</code>找到元素<code>指定的属性节点</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除的属性节点可以多个，用空格隔开</span></span><br><span class="line">$(<span class="string">&quot;span&quot;</span>).removeAttr(<span class="string">&quot;class name&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>属性操作</strong></p>
+<p>prop()：特点和 attr 方法一致</p>
+<p>removeProp()：特点和 removeAttr 方法一致</p>
+<p>注意：prop 方法既能够操作属性，还能操作属性节点</p>
+<p><strong>官方推荐：在操作属性节点时，具有 true 和 false 两个属性的属性节点，如 checked，selected 或者 disabled 使用 prop()，其他的使用 attr()</strong></p>
+<h3 id="CSS-操作"><a href="#CSS-操作" class="headerlink" title="CSS 操作"></a>CSS 操作</h3><h4 id="CSS-类样式操作"><a href="#CSS-类样式操作" class="headerlink" title="CSS 类样式操作"></a>CSS 类样式操作</h4><p>添加类样式：addClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加一个类，如果要添加多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).addClass(<span class="string">&quot;class1 class2&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>删除类样式：removeClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除一个类，如果想删除多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).removeClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>切换类样式：toggleClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有就删除, 没有就添加（切换 添加和删除类）</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggleClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="CSS-样式操作"><a href="#CSS-样式操作" class="headerlink" title="CSS 样式操作"></a>CSS 样式操作</h4><p>设置样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、逐个设置</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2、链式设置</span></span><br><span class="line"><span class="comment"> *  - 注意点: 链式操作如果大于 3 步, 建议分开，不然可阅读性差</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;blue&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、批量设置，传入一个对象进行</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(&#123;</span><br><span class="line">    width: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    height: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    background: <span class="string">&quot;red&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>获取样式值</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本值操作"><a href="#文本值操作" class="headerlink" title="文本值操作"></a>文本值操作</h3><h4 id="HTML-文本操作"><a href="#HTML-文本操作" class="headerlink" title="HTML 文本操作"></a>HTML 文本操作</h4><p>注意：html() 等效于原生的 innerHTML</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&quot;&lt;p&gt;我是段落&lt;span&gt;我是span&lt;/span&gt;&lt;/p&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清空 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="普通文本操作"><a href="#普通文本操作" class="headerlink" title="普通文本操作"></a>普通文本操作</h4><p>注意：text() 等效于原生的 innerText</p>
+<p>用法同上</p>
+<p>文本值操作</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val(<span class="string">&quot;请输入内容&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val();</span><br></pre></td></tr></table></figure>
+
+<h3 id="位置和尺寸操作"><a href="#位置和尺寸操作" class="headerlink" title="位置和尺寸操作"></a>位置和尺寸操作</h3><h4 id="尺寸相关"><a href="#尺寸相关" class="headerlink" title="尺寸相关"></a>尺寸相关</h4><p>元素的宽度（就是 width，不包括别的）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width(<span class="string">&quot;500px&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其它具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<h4 id="位置相关"><a href="#位置相关" class="headerlink" title="位置相关"></a>位置相关</h4><p>元素<code>距离窗口的偏移位</code>，left 表示指定获取哪个方向的偏移位：offset()</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset(&#123;</span><br><span class="line">    left: <span class="number">10</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>元素距离<code>定位元素</code>的偏移位：position()</p>
+<p>注意：position方法只能获取不能设置</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).position().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置，别的方式撒，如</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).css(&#123;</span><br><span class="line">    left: <span class="string">&quot;10px&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="滚动相关"><a href="#滚动相关" class="headerlink" title="滚动相关"></a>滚动相关</h4><p><code>元素内部</code>滚动的偏移位</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>网页</code>滚动的偏移位</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取（注意点: 为了保证浏览器的兼容，获取网页滚动的偏移位需要按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;body&quot;</span>).scrollTop() + $(<span class="string">&quot;html&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置（注意点: 为了保证浏览器的兼容, 设置网页滚动偏移位的时候必须按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;html,body&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><h4 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 部分事件 jQuery 没有实现,所以不能添加</span></span><br><span class="line">事件源.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 所有 js 事件都可以添加</span></span><br><span class="line">事件源.on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line">                             </span><br><span class="line"><span class="comment">// 方式 3 : 所有 js 事件都可以添加，并支持链式绑定</span></span><br><span class="line">最外层事件源.on(<span class="string">&quot;click&quot;</span>, <span class="string">&#x27;指定事件源&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件解绑"><a href="#事件解绑" class="headerlink" title="事件解绑"></a>事件解绑</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 移除该事件源上绑定的所有事件</span></span><br><span class="line">事件源.off();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 移除该事件源上绑定的具体事件，如 click</span></span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 3 : 移除该事件源上绑定的具体事件以及具体处理函数，如 click test1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello lnj&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">事件源.click(test1);</span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>, test1);</span><br></pre></td></tr></table></figure>
+
+<h4 id="阻止事件冒泡和默认行为"><a href="#阻止事件冒泡和默认行为" class="headerlink" title="阻止事件冒泡和默认行为"></a>阻止事件冒泡和默认行为</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止事件冒泡</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.stopPropagation()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.stopPropagation();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止默认行为</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.preventDefault()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;a&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;弹出注册框&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.preventDefault();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件自动触发"><a href="#事件自动触发" class="headerlink" title="事件自动触发"></a>事件自动触发</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">方式 一 : 事件源.trigger(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line">方式 二 : 事件源.triggerHandler(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意：自动触发事件，可以传参，如：事件源.trigger(&quot;对应事件&quot;, &#x27;options&#x27;);</span></span><br></pre></td></tr></table></figure>
+
+<p>两者的区别</p>
+<ul>
+<li>trigger 会触发事件冒泡，triggerHandler 不会</li>
+<li>trigger 会触发默认行为，triggerHandler 不会</li>
+</ul>
+<p><strong>注意：当事件源为 a 标签的时候，想利用 trigger 既触发事件冒泡又触发默认行为时，需要在 a 标签内部添加一个 span 标签，并把 span 作为事件源</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;span&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h4><p>原理：利用 trigger 自动触发事件进行</p>
+<p>需要满足两个条件</p>
+<ul>
+<li>事件必须是通过 on 绑定的</li>
+<li>事件必须通过 trigger 来触发</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;myClick&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).triggerHandler(<span class="string">&quot;myClick&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>事件命名空间</p>
+</blockquote>
+<p>需要满足两个条件</p>
+<ul>
+<li>事件是通过 on 来绑定的</li>
+<li>通过 trigger 触发事件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// zs 即为该点击事件的命名</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.zs&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click1&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click2&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.zs&quot;);</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click.ls&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意</p>
+<ul>
+<li>利用 trigger 触发子元素带命名空间的事件，那么父元素带相同命名空间的事件也会被触发，而父元素没有命名空间的事件不会被触发</li>
+<li>利用 trigger 触发子元素不带命名空间的事件，那么子元素所有相同类型的事件和父元素所有相同类型的事件都会被触发</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click2&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;son click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.ls&quot;); // 触发：3 1</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);	<span class="comment">// 触发：3 1 2</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h4><p>隐式遍历：在 jQuery 中，如果通过核心函数找到的元素不止一个，那么在添加事件的时候，jQuery 会遍历所有找到的元素，给所有找到的元素添加事件</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>新增一个li<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 隐式遍历</span></span><br><span class="line"><span class="comment"> *	- 三个 li 都会被注册点击事件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;ul&gt;li&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击 button 的时候，动态新增一个 li</span></span><br><span class="line">$(<span class="string">&quot;button&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">&quot;ul&quot;</span>).append(<span class="string">&quot;&lt;li&gt;我是新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果：当我们点击 li 1 2 3 的时候，发现都会有效，而点击 button 后新增的 li 时却无效，原因是新增的由于程序执行顺序并没有绑定上点击事件，导致点击无效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解决：采取事件委托的形式，给其父元素绑定点击事件，利用事件冒泡的原理</span></span><br><span class="line"><span class="comment"> * 	- 将 li 的点击事件委托给其父元素 ul</span></span><br><span class="line"><span class="comment"> *  - delegate 事件委派（不推荐）</span></span><br><span class="line"><span class="comment"> *  - on 也可以事件委派（推荐）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 不推荐，因为 3.0 版本废除了</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).delegate(<span class="string">&quot;li&quot;</span>, <span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 推荐</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="移入移出事件"><a href="#移入移出事件" class="headerlink" title="移入移出事件"></a>移入移出事件</h4><ul>
+<li><p>mouseover / mouseout</p>
+<p>注意：子元素被移入移出<code>也会触发</code>父元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mouseenter / mouseleave（推荐使用）</p>
+<p>注意：子元素被移入移出<code>不会触发</code>父元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseenter(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseleave(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hover</p>
+<p>两个参数时：第一个参数是处理函数，处理移入，第二个参数是处理函数，处理移出</p>
+<p>一个参数时：是处理函数，同时处理移入和移出</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 两个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="动画效果"><a href="#动画效果" class="headerlink" title="动画效果"></a>动画效果</h3><h4 id="基本动画"><a href="#基本动画" class="headerlink" title="基本动画"></a>基本动画</h4><p>显示</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 带参数</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show(<span class="number">1000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;显示动画执行完毕&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>隐藏</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).hide();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
+
+<p>切换</p>
+<p>显示和隐藏动画之间的切换</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggle();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="滑动动画"><a href="#滑动动画" class="headerlink" title="滑动动画"></a>滑动动画</h4><p>展开：slideDown    |    收起：slideUp    |    切换：slideToggle</p>
+<p>用法：同理基本动画</p>
+<h4 id="淡入淡出"><a href="#淡入淡出" class="headerlink" title="淡入淡出"></a>淡入淡出</h4><p>淡入：fadeIn    |    淡出：fadeOut    |    切换：fadeToggle    |    淡入到：fadeTo</p>
+<p>用法：同理基本动画</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 淡入到</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 淡入程度，一个 0 至 1 之间表示透明度的数字</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).fadeTo(<span class="number">1000</span>, <span class="number">0.2</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;淡入完毕&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>jQuery</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>jQuery</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>敲码神器之VS Code</title>
     <url>/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>“欢迎使用”，打开 VS Code，你便会发现有这么个窗口弹出来，这是 VS Code 表示对你的欢迎！</p>
