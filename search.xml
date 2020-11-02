@@ -2424,6 +2424,43 @@
 <p>用法：同理基本动画</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 淡入到</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 淡入程度，一个 0 至 1 之间表示透明度的数字</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).fadeTo(<span class="number">1000</span>, <span class="number">0.2</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;淡入完毕&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
+<h4 id="自定义动画"><a href="#自定义动画" class="headerlink" title="自定义动画"></a>自定义动画</h4><p>比较灵活，具体参考：<a href="https://jquery.cuishifeng.cn/animate.html">自定义动画文档</a></p>
+<h3 id="节点操作"><a href="#节点操作" class="headerlink" title="节点操作"></a>节点操作</h3><h4 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>添加节点<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>内部添加（插入）</p>
+</blockquote>
+<p>append(content)    |    节点内容.appendTo(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素内部的最后</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 需添加的节点内容</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;&lt;li&gt;新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"><span class="comment">// append	|	appendTo : 仅仅写法不一样，推荐 append</span></span><br><span class="line">$li.appendTo(<span class="string">&quot;ul&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>prepend(content)    |    节点内容.prependTo(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素内部的最前面</code></p>
+<p>用法同理，推荐：prepend</p>
+<blockquote>
+<p>外部添加（插入）</p>
+</blockquote>
+<p>after(content)    |    节点内容.insertAfter(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素外部的后面</code></p>
+<p>用法同理，推荐：after</p>
+<p>before(content)    |    节点内容.insertBefore(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素外部的前面</code></p>
+<p>用法同理，推荐：before</p>
+<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><ul>
+<li>remove([expr])：删除指定元素，选中谁就删除谁，删除之后再重新添加，原有的事件无法响应</li>
+<li>empty()：删除指定元素的内容和子元素，指定元素自身不会被删除（清空子元素和内容）</li>
+<li>detach([expr])：同 remove，但利用 detach 删除之后再重新添加，原有事件可以响应</li>
+</ul>
+<h4 id="复制节点"><a href="#复制节点" class="headerlink" title="复制节点"></a>复制节点</h4><p>clone()：指定谁就复制谁，默认 false</p>
+<p>参数：true / false</p>
+<p>true：深复制，会复制元素，而且还会复制元素的事件</p>
+<p>false：浅复制，会复制元素，不会复制元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// true：深复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">true</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"></span><br><span class="line"><span class="comment">// false：浅复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">false</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br></pre></td></tr></table></figure>
+
+<h4 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h4><p>replaceWith(内容)    |    replaceAll(元素)</p>
+<p>替换所有匹配的元素为指定的元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 内容</span></span><br><span class="line"><span class="keyword">var</span> $h6 = $(<span class="string">&quot;&lt;h6&gt;我是标题6&lt;/h6&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换内容</span></span><br><span class="line">$(<span class="string">&quot;h1&quot;</span>).replaceWith($h6);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换元素</span></span><br><span class="line">$h6.replaceAll(<span class="string">&quot;h1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 <p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
 <p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
 ]]></content>
