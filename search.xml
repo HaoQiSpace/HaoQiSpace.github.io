@@ -1,301 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JavaScript之数据结构与算法</title>
-    <url>/JavaScript%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<p>开场白也不多说了，数据结构与算法这东西，说多了都是泪，干就完了！</p>
-<h3 id="算法效率的度量方法"><a href="#算法效率的度量方法" class="headerlink" title="算法效率的度量方法"></a>算法效率的度量方法</h3><blockquote>
-<p>Tips：官方的概念不做赘述</p>
-</blockquote>
-<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p>理解：执行次数 == 时间，次数越多越复杂，反之越简单</p>
-<p>表示：大 O 表示法</p>
-<p>大 O 阶推导技巧：抽象法</p>
-<ul>
-<li><p><strong>用常数 1 取代运行时间中的所有加法常数</strong></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 时间复杂度记为：O(1)</span></span><br><span class="line"><span class="comment"> * 1 + 1 + 1 -&gt; 用常数 1 取代</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> sum = <span class="number">0</span>, n = <span class="number">100</span>	<span class="comment">// 执行 1 次</span></span><br><span class="line">sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>	<span class="comment">// 执行 1 次</span></span><br><span class="line"><span class="built_in">console</span>.log(sum)	    <span class="comment">// 执行 1 次</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>在修改后的运行次数函数中，只保留最高阶项，如果最高阶项存在且不是 1，则去除与这个项相乘的常数</strong></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 时间复杂度记为：O(n^2)</span></span><br><span class="line"><span class="comment"> * 实际的时间复杂度：n^2/2 + n/2</span></span><br><span class="line"><span class="comment"> * 	1、只保留最高阶项：去掉 n/2，得 n^2/2</span></span><br><span class="line"><span class="comment"> *	2、最高阶项存在且不是 1：去掉 1/2，得 n^2 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> i, j, n = <span class="number">100</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (j = i; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;sunny&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对数阶，主要是如下所示两种</p>
-<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20206986694475.PNG"> </p>
-</li>
-</ul>
-<h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><p>理解：事先就开辟一片内存空间，存储好对应的结果值，就像 ASCLL 表，事先做好了，需要的时候做个结果对应就好了，其复杂度取决于所开辟的空间大小，即：程序运行所需要占据的内存大小</p>
-<p>表示：大 O 表示法</p>
-<h4 id="设计算法原则"><a href="#设计算法原则" class="headerlink" title="设计算法原则"></a>设计算法原则</h4><p>时间开销换取空间开销，还是反之，请君去思考了，但貌似<strong>时间开销才是主流</strong></p>
-<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><p>特点：<strong>后进先出</strong></p>
-<p>注意：JavaScript 中没有栈，但可以利用 Array 来模拟实现栈的所有功能</p>
-<blockquote>
-<p>常见操作</p>
-</blockquote>
-<p>入栈：push    出栈：pop    栈顶元素：stack[stack.length - 1]</p>
-<blockquote>
-<p>前端中与栈的联系</p>
-</blockquote>
-<p>函数调用堆栈</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> func1 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    func2();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> func2 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    func3();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> func3 = <span class="function">() =&gt;</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">func1();	<span class="comment">// 1 调用 2，2 调用 3 - 3 释放完 2，2 释放完 1</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>算法题</p>
-</blockquote>
-<p>【LeetCode - 20】有效的括号</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>数据结构与算法</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React 学习之旅</title>
-    <url>/React-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>关于 React 是什么，我想我也不用多说了，学就完了，干就完了</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>关于 React 的安装，这里不做过多的累赘，请移步：<a href="https://react.docschina.org/docs/create-a-new-react-app.html">React 安装</a></p>
-<h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><ul>
-<li><p>node_modules：包管理文件</p>
-</li>
-<li><p>public：Html 入口文件 &amp;&amp; 资源文件</p>
-</li>
-<li><p>src：源码文件</p>
-</li>
-</ul>
-<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="1、JSX-语法"><a href="#1、JSX-语法" class="headerlink" title="1、JSX 语法"></a>1、JSX 语法</h4><p><code>js</code> 语法 + <code>xml</code> 语法（可以理解为 HTML）</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="string">&#x27;hello react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;&gt;&lt;/&gt;: 作为 xml（html）语法解析</span></span><br><span class="line"><span class="comment"> * &#123; ... &#125;: 作为 js 语法解析 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;h1&gt;Hello, &#123;name&#125;&lt;/h1&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2、元素渲染"><a href="#2、元素渲染" class="headerlink" title="2、元素渲染"></a>2、元素渲染</h4><p>说白了就是，能看到实际效果</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tick</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 注意：这里是 ()，而不是 &#123;&#125;</span></span><br><span class="line">  <span class="keyword">const</span> element = (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;Hello, world!&lt;/h1&gt;</span><br><span class="line">      &lt;h2&gt;It is &#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()&#125;.&lt;/h2&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 需要放到函数内，才能得到 element</span></span><br><span class="line">  ReactDOM.render(element, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setInterval</span>(tick, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="3、组件创建"><a href="#3、组件创建" class="headerlink" title="3、组件创建"></a>3、组件创建</h4><p>tips: 组件文件后缀名是 .js 或者 .jsx（有代码提示）</p>
-<p>类 class 形式创建：Home.jsx</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 渲染函数</span></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> ( <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>学习 react<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span> )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
-
-<h4 id="4、props"><a href="#4、props" class="headerlink" title="4、props"></a>4、props</h4><p>props 的出现，使得组件可以进行传值，即组件可复用了</p>
-<p><strong>注意：</strong>接收唯一带有数据的 “props”（代表属性）对象，且子组件不可以修改 props 的值，要修改也是去父组件修改</p>
-<p><strong>父组件向子组件传值：父组件以标识属性的方式进行传值，子组件以 props 进行接收</strong></p>
-<ul>
-<li><p>父组件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入子组件</span></span><br><span class="line"><span class="keyword">import</span> MyNav <span class="keyword">from</span> <span class="string">&#x27;./myNav&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="comment">// 父组件定义传递数据</span></span><br><span class="line">    <span class="keyword">let</span> nav_1 = [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;javascript&#x27;</span>, <span class="string">&#x27;c#&#x27;</span>];</span><br><span class="line">    <span class="keyword">let</span> nav_2 = [<span class="string">&#x27;从&#x27;</span>, <span class="string">&#x27;入门&#x27;</span>, <span class="string">&#x27;到&#x27;</span>, <span class="string">&#x27;放弃&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;学习 react&lt;/h1&gt;</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="comment">/**</span></span><br><span class="line"><span class="comment">           * 传递数据，可以是任意类型</span></span><br><span class="line"><span class="comment">           * title、nav，传递属性，子组件用于接收的标识属性</span></span><br><span class="line"><span class="comment">           */</span></span><br><span class="line">        &#125;</span><br><span class="line">        &lt;MyNav title=<span class="string">&quot;语言导航&quot;</span> nav=&#123;nav_1&#125; /&gt;</span><br><span class="line">        &lt;MyNav title=<span class="string">&quot;忠言导航&quot;</span> nav=&#123;nav_2&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子组件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNav</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;<span class="comment">/* 接收 title 属性标识的数据 */</span>&#125;</span><br><span class="line">        &lt;h3&gt;&#123;<span class="built_in">this</span>.props.title&#125;&lt;/h3&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">// 接收 nav 属性标识的数据，并遍历</span></span><br><span class="line">            <span class="built_in">this</span>.props.nav.map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;index&#x27;</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> MyNav</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<p><strong>子组件向父组件传值：子组件通过调用 props 接收到的父级方法，以参数传递的形式向父组件进行传值</strong></p>
-<ul>
-<li><p>父组件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入子组件</span></span><br><span class="line"><span class="keyword">import</span> MyNav <span class="keyword">from</span> <span class="string">&#x27;./myNav&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">&#x27;我是父组件数据&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 该方法用于传递到子组件，子组件接收调用，并向父组件传值</span></span><br><span class="line"><span class="comment">   * sunData: 子组件传递过来的数据</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  handleText = <span class="function">(<span class="params">sunData</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      text: sunData</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.text&#125;&lt;/p&gt;</span><br><span class="line">        &#123;<span class="comment">/* handleTexts: 传递给子组件的方法，用于子组件调用并向父组件传参 */</span>&#125;</span><br><span class="line">        &lt;MyNav handleTexts=&#123; <span class="built_in">this</span>.handleText &#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子组件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNav</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="built_in">super</span>(props)</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">&#x27;我是子组件的数据&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * handleChangeTexts: 该方法用于子组件调用，实现子组件点击修改父组件 state 数据</span></span><br><span class="line"><span class="comment">   * handleTexts: 该方法为父组件传递过来的，子组件接收调用，并向父组件传递参数: this.state.text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  handleChangeTexts = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.props.handleTexts(<span class="built_in">this</span>.state.text)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.handleChangeTexts &#125;&gt;修改父组件 state 数据&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> MyNav</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="5、state"><a href="#5、state" class="headerlink" title="5、state"></a>5、state</h4><p>State 与 props 类似，但是 state 是私有的，并且完全受控于当前组件，即：<strong>State 是当前组件的</strong></p>
-<p>定义位置：当前组件的 <strong>构造函数</strong> 中，即：<strong>constructor 中</strong></p>
-<blockquote>
-<p><strong>setState 的同步异步问题</strong></p>
-<p><code>tips：setState 会引起视图重绘</code></p>
-</blockquote>
-<ul>
-<li><p>在非可控的情况下是同步</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SetStateDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      count: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击 count +1 按钮，加 1</span></span><br><span class="line">  handleButton() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="built_in">this</span>.state.count</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 非可控的情况下是同步，点击一次</span></span><br><span class="line"><span class="comment">     * 页面显示：1</span></span><br><span class="line"><span class="comment">     * 控制台：0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      count: count+<span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.count)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;setState 是同步还是异步&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.count&#125;&lt;/p&gt; </span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.handleButton.bind(<span class="built_in">this</span>) &#125;&gt;count +<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> SetStateDemo</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在可控的情况下是异步</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SetStateDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      count: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法一：</span></span><br><span class="line">  <span class="comment">// 点击 count +1 按钮，加 1</span></span><br><span class="line">  <span class="comment">// handleButton() &#123;</span></span><br><span class="line">    <span class="comment">// let count = this.state.count</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在可控的情况下是异步，点击一次</span></span><br><span class="line"><span class="comment">     * 页面显示：1</span></span><br><span class="line"><span class="comment">     * 控制台：1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// this.setState(&#123;</span></span><br><span class="line">    <span class="comment">//   count: count+1</span></span><br><span class="line">    <span class="comment">// &#125;, () =&gt; &#123;</span></span><br><span class="line">    <span class="comment">//   console.log(this.state.count)</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">  <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法二：promise async await</span></span><br><span class="line">  <span class="keyword">async</span> handleButton() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="built_in">this</span>.state.count</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      count: count+<span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">this</span>.setStateAsync(&#123;<span class="attr">count</span>: count+<span class="number">1</span>&#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.count)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// promise 处理异步</span></span><br><span class="line">  setStateAsync(state) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.setState(state, resolve)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;setState 是同步还是异步&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.count&#125;&lt;/p&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="built_in">this</span>.handleButton.bind(<span class="built_in">this</span>)&#125;&gt;count +<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> SetStateDemo</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h4 id="6、生命周期函数"><a href="#6、生命周期函数" class="headerlink" title="6、生命周期函数"></a>6、生命周期函数</h4><ul>
-<li><code>componentWillMount</code>：在组件渲染之前执行</li>
-<li><code>componentDidMount</code>：在组件渲染之后执行</li>
-<li><code>shouldComponentUpdate</code>：返回 <code>true</code> 和 <code>false</code>，<code>true</code> 代表允许改变，<code>false</code> 代表不允许改变</li>
-<li><code>componentWillUpdate</code>：数据在改变之前执行 ( <code>state</code>，<code>props</code> )</li>
-<li><code>componentDidUpdate</code>：数据修改完成 (<code>state</code>，<code>props</code> )</li>
-<li><code>componentWillReveiceProps</code>：<code>props</code> 发生改变执行</li>
-<li><code>componentWillUnmount</code>：组件卸载前执行</li>
-</ul>
-<p>贴图</p>
-<h4 id="7、条件渲染"><a href="#7、条件渲染" class="headerlink" title="7、条件渲染"></a>7、条件渲染</h4><p>React 中的条件渲染和 JavaScript 中的一样，使用 JavaScript 运算符 <code>if</code> 或者 条件运算符 去创建元素来表现当前的状态，然后让 React 根据它们来更新 UI</p>
-<p>常见应用</p>
-<ul>
-<li>根据条件进行视图切换，如：未登录 切换到 登陆</li>
-<li>做缺省值，如: 数据未加载完成，提示 “数据还在加载中…”</li>
-</ul>
-<h4 id="8、列表-amp-key"><a href="#8、列表-amp-key" class="headerlink" title="8、列表 &amp; key"></a>8、列表 &amp; key</h4><p>起因：数据量一旦变的庞大，层次结构变得复杂的时候，整个渲染就会变慢，绑定 key 也是为了解决这个问题</p>
-<p><strong>key 的概念和作用</strong></p>
-<p>前面提到 <code>setState</code> 会引起视图的<code>重绘</code>，因为你一个 <code>state</code> 的改变可能引起整个数据结构的改变（牵一发而动全身），有数组或者对象等遍历型数据的时候，<strong>外层包裹一个 <code>key</code> 属性，<code>唯一标识</code>，如果数据的索引未发生改变，UI 不会重绘，只有发生变化的部分会重绘</strong>，这样就可以使得整体的一个性能得到优化提升</p>
-<h4 id="9、表单"><a href="#9、表单" class="headerlink" title="9、表单"></a>9、表单</h4><p>受控组件：表单内的 value 值是通过 state 进行管理的（表单数据较少情况下，使用频率高）</p>
-<blockquote>
-<p><strong>Tips:</strong> 因为 <code>state</code> 的数据只能是通过 <code>setState</code> 进行修改的，所以需要绑定对应的  <code>onChange</code> 事件去进行操作</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FormDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.state = &#123;</span><br><span class="line">			<span class="comment">// 表单的 value 值</span></span><br><span class="line">            value:<span class="string">&quot;&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 表单提交事件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    handleSubmit = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">        e.preventDefault();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.value);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 操作 state value 值改变的 change 事件处理函数</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    onChangeHandler = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            value: e.target.value</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;form onSubmit=&#123;<span class="built_in">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> value=&#123; <span class="built_in">this</span>.state.value &#125; onChange=&#123; <span class="built_in">this</span>.onChangeHandler &#125;/&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;提交&quot;</span>&gt;&lt;/input&gt;</span><br><span class="line">                &lt;/form&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> FormDemo</span><br></pre></td></tr></table></figure>
-
-<p>非受控组件：表单内的 value 值通过操作 DOM 的形式进行管理（表单数据较多，处理较多的情况下）</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefsForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">		<span class="comment">// 定义多个不同的 ref 进行标识操作</span></span><br><span class="line">        <span class="built_in">this</span>.username = React.createRef();</span><br><span class="line">        <span class="built_in">this</span>.password = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clickHandler = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">		<span class="comment">// 进行对应的 ref 操作</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.username.current.value);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.password.current.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> ref=&#123; <span class="built_in">this</span>.username &#125;/&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> ref=&#123; <span class="built_in">this</span>.password &#125;/&gt;</span><br><span class="line">				&#123; <span class="comment">/* 非受控组件：这里就只需要定义一个处理事件去操作 */</span> &#125;</span><br><span class="line">                &lt;button onClick=&#123; <span class="built_in">this</span>.clickHandler &#125;&gt;提交&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> RefsForm</span><br></pre></td></tr></table></figure>
-
-<p><code>refs and the DOM</code>：以 refs 的方式进行操作 DOM（尽量避免，少使用）</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefsAndDOM</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">		<span class="comment">// 1、创建 refs，</span></span><br><span class="line">        <span class="built_in">this</span>.myRef = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentDidMount()&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 3、访问 ref: this.ref 名称.current</span></span><br><span class="line"><span class="comment">		 * current: 被访问当前节点属性对象</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">        <span class="built_in">this</span>.myRef.current.style.color = <span class="string">&quot;red&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">				&#123; <span class="comment">/* 2、通过 ref 属性附加到 React 元素 */</span> &#125;</span><br><span class="line">                &lt;div ref=&#123; <span class="built_in">this</span>.myRef &#125;&gt;</span><br><span class="line">                    Hello</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> RefsAndDOM</span><br></pre></td></tr></table></figure>
-
-<h4 id="10、状态提升"><a href="#10、状态提升" class="headerlink" title="10、状态提升"></a>10、状态提升</h4><p>前面学习了 <code>父子组件传值</code> ，那么简单点说，就是兄弟组件之间以父组件进行建立联系、通信</p>
-<p>具体详情，请异步 <a href="https://react.docschina.org/docs/lifting-state-up.html">官方文档</a></p>
-<h4 id="11、组合-VS-继承"><a href="#11、组合-VS-继承" class="headerlink" title="11、组合 VS 继承"></a>11、组合 VS 继承</h4><p>组合：为了考虑到组件更好的复用性，采取 <code>组件套组件</code> 的形式，实现组件的复用</p>
-<p>被套组件内容读取形式：<code>this.props.children</code></p>
-<p><strong>官方说：能用 组合 不用 继承</strong>，所以继承介绍的少</p>
-<h3 id="React-Router"><a href="#React-Router" class="headerlink" title="React-Router"></a>React-Router</h3><p>官方文档（英文）：<a href="https://reactrouter.com/web/guides/quick-start">https://reactrouter.com/web/guides/quick-start</a></p>
-<p>对于路由这东西，多查查文档会比较好</p>
-<h3 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h3><p>Redux 是 JavaScript 状态容器（说白了就是数据仓库，管理数据的），让人觉得一脸懵逼的 <a href="https://www.redux.org.cn/">中文文档</a></p>
-<ul>
-<li><p>安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cnpm install --save-dev redux</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>基本使用</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/counters&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、创建 store 仓库（主函数中）</span></span><br><span class="line"><span class="comment"> *  - 方式：createStore(&#x27;参数是一个函数&#x27;)</span></span><br><span class="line"><span class="comment"> * subscribe：监听数据的改变</span></span><br><span class="line"><span class="comment"> *  - 参数：Function</span></span><br><span class="line"><span class="comment"> * getState：获取到 state 数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(reducer)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2、对应组件中定义事件并分发 action</span></span><br><span class="line"><span class="comment"> * onIncrement: 加 1 事件</span></span><br><span class="line"><span class="comment"> * onIncrement: 减 1 事件</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * dispatch：store 的方法，分发 action，触发 state 的变化（唯一途径）</span></span><br><span class="line"><span class="comment"> *  - 参数：action，是一个描述应用变化的普通对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reder = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  ReactDOM.render(</span><br><span class="line">    &lt;App </span><br><span class="line">      onIncrement = &#123; <span class="function">() =&gt;</span> store.dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;INCREMENT&quot;</span> &#125;)&#125;</span><br><span class="line">      onDecrement = &#123; <span class="function">() =&gt;</span> store.dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;DECREMENT&quot;</span> &#125;)&#125;</span><br><span class="line">      value = &#123; store.getState() &#125;</span><br><span class="line">    /&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reder();</span><br><span class="line">store.subscribe(reder)</span><br><span class="line"></span><br><span class="line"><span class="comment">// App.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">&quot;App&quot;</span>&gt;</span><br><span class="line">        &#123;<span class="comment">/**</span></span><br><span class="line"><span class="comment">          * 4、子组件接收并触发事件</span></span><br><span class="line"><span class="comment">          */</span>&#125;</span><br><span class="line">        &lt;h1&gt;&#123; <span class="built_in">this</span>.props.value &#125;&lt;/h1&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.props.onIncrement &#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.props.onDecrement &#125;&gt;<span class="number">-1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br><span class="line"></span><br><span class="line"><span class="comment">// reducer.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 3、定义 action.type，不同的类型做不同的操作</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>state 仓库中所存储的数据状态（数据）</span></span><br><span class="line"><span class="comment"> *  - state = 0：数据初始化（ES6 写法）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>action 改变数据状态（数据）的方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>action.type 不同的值可以做不同的修改</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * INCREMENT：代表类型操作为 + 1</span></span><br><span class="line"><span class="comment"> * DECREMENT：代表类型操作为 - 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state = <span class="number">0</span>,action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;INCREMENT&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;DECREMENT&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> reducer</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-        <tag>总结</tag>
-        <tag>前端框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端练习案例集合</title>
-    <url>/%E5%89%8D%E7%AB%AF%E7%BB%83%E4%B9%A0%E6%A1%88%E4%BE%8B%E9%9B%86%E5%90%88/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>案例有大有小，日常学习，闲暇娱乐~</p>
-<h3 id="基本案例"><a href="#基本案例" class="headerlink" title="基本案例"></a>基本案例</h3><h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-]]></content>
-      <categories>
-        <category>练习案例</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>前端案例</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>敲码神器之VS Code</title>
-    <url>/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>“欢迎使用”，打开 VS Code，你便会发现有这么个窗口弹出来，这是 VS Code 表示对你的欢迎！</p>
-<p>同样，您能花您宝贵的时间，来看我这篇对 VS Code 的介绍，相信你也是热爱 VS Code 的，那么请放下耐心往下浏览吧!</p>
-<blockquote>
-<p>Tips：下载请访问<a href="https://code.visualstudio.com/">官方网址</a>进行下载，下载完双击安装，点击下一步、下一步即可完成安装（建议：安装路径选择非C盘的其它路径）</p>
-</blockquote>
-<p><img src="https://static001.geekbang.org/resource/image/58/4f/588bcd217ad7d2c5d18cbab0b1781a4f.png"></p>
-<h3 id="快速上手-VS-Code"><a href="#快速上手-VS-Code" class="headerlink" title="快速上手 VS Code"></a>快速上手 VS Code</h3><h4 id="1、命令面板"><a href="#1、命令面板" class="headerlink" title="1、命令面板"></a>1、命令面板</h4><p>说明：VS Code 快捷键的主要交互界面</p>
-<p>打开快捷键</p>
-<ul>
-<li><p>Windows：Ctrl + Shift + P</p>
-</li>
-<li><p>MacOS：Cmd + Shift + P</p>
-</li>
-</ul>
-<p><img src="https://static001.geekbang.org/resource/image/24/0d/2471149edc2c94a6745a34b5c917d00d.png"></p>
-<p>作用：熟练使用命令面板，你就可以摆脱鼠标，完全通过键盘操作来完成全部编码工作（一点都不夸张哦~）</p>
-<h4 id="2、界面概览"><a href="#2、界面概览" class="headerlink" title="2、界面概览"></a>2、界面概览</h4><p>说明：VS Code 默认界面里的不同部件的位置、名称和快捷键。</p>
-<p>相关快捷键：</p>
-<ul>
-<li>文件资源管理器：Ctrl + Shift + E</li>
-<li>跨文件搜索（全局搜索）：Ctrl + Shift + F</li>
-<li>源代码管理：Ctrl + Shift + G</li>
-<li>启动和调试：Ctrl + Shift + D</li>
-<li>管理扩展：Ctrl + Shift + X</li>
-<li>查看错误和警告：Ctrl + Shift + M</li>
-</ul>
-<p><img src="https://static001.geekbang.org/resource/image/67/78/67025c889d9e28fecc7d4a71e3904c78.png"></p>
-<h4 id="3、交互式演习场"><a href="#3、交互式演习场" class="headerlink" title="3、交互式演习场"></a>3、交互式演习场</h4><p>VS Code 官方提供的熟悉方式，由于全是英文的，有兴趣的可以自行了解哈<del>~</del></p>
-<h4 id="4、命令行的使用"><a href="#4、命令行的使用" class="headerlink" title="4、命令行的使用"></a>4、命令行的使用</h4><p>命令行你应该不陌生，Win + R，输入 cmd，弹出的黑白框，没少玩过吧~</p>
-<p>到了 VS Code，一个关键的词语你得记住了 <code>Code</code>，没错，时不时觉得很具有代表性，哈哈~可以试着通过 <code>code --help</code>打印出 VS Code 命令行所支持的所有参数，这里介绍几个常用的。</p>
-<p><strong>code + 文件或者文件夹的地址</strong>，这样 VS Code 就会在一个新窗口中打开这个文件或文件夹</p>
-<blockquote>
-<p>例如：我们用 vue-cli 初始化一个 vue 项目的时候会提示 cd xxx 文件夹，然后 npm run serve，这个时候当你执行了 cd 命令，进入到了这个初始化项目文件目录的时候，就可以执行 <code>code .</code> 命令，这样就可以快速在一个新窗口打开这个项目了。</p>
-</blockquote>
-<p>当然，如果你希望使用已经打开的窗口来打开文件，可以在 <code>code</code> 命令后添加参数 <code>-r</code>来进行窗口的复用</p>
-<p><img src="https://static001.geekbang.org/resource/image/6c/b9/6ca4986f77f1da58759801894d6cf8b9.gif"></p>
-<p>你也可以使用参数 <code>-g &lt;file:line[:character]&gt;</code> 打开文件，然后滚动到文件中某个特定的行和列，比如输入 <code>code -r -g package.json:128</code>命令，你就可以打开 package.json 这个文件，然后自动跳转到 128 行。这个命令可以方便你从终端里快速地在 VS Code 里打开一个文件进行预览，一个特别常见的例子就是当我们使用脚本执行某个命令，这个命令告诉我们某个文件的某一行出现了错误，我们就能够快速定位了。</p>
-<p><img src="https://static001.geekbang.org/resource/image/2b/30/2b0ac41fcf93cfb74dc4c2712b8ab630.gif"></p>
-<p>VS Code 也可以用来比较两个文件的内容，你只需使用 <code>-d</code>参数，并传入两个文件路径，比如输入 <code>code -r -d a.txt b.txt</code>命令，就可以比较 a.txt 和 b.txt 两个文件的内容了。有了这个命令，你就可以既使用命令行运行脚本，也可以借助 VS Code 的图形化界面进行文件内容的对比了。</p>
-<p><img src="https://static001.geekbang.org/resource/image/c7/d4/c76cf6fed94d1eb1722d949ee1e632d4.gif"></p>
-<p>VS Code 命令行除了支持打开磁盘上的文件以外，也接受来自管道中的数据。这样你就可以将原本在命令行中展示的内容，实时地展示在 VS Code 里，然后在编辑器中搜索和修改。</p>
-<blockquote>
-<p>例如，你可以把当前目录下所有的文件名都展示在编辑器里，此时只需使用<code>ls | code -</code>命令。</p>
-</blockquote>
-<p><img src="https://static001.geekbang.org/resource/image/4b/3e/4b7b576d51156c4f80fd4957135ffe3e.gif"></p>
-<p>另外，VS Code 命令行还能够管理插件，查看 VS Code 的运行情况，记录和分析 VS Code 运行性能，你也可以现在就开始小试牛刀，试试它的威力。</p>
-<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-<h3 id="快捷键进阶"><a href="#快捷键进阶" class="headerlink" title="快捷键进阶"></a>快捷键进阶</h3><h4 id="1、代码行编辑"><a href="#1、代码行编辑" class="headerlink" title="1、代码行编辑"></a>1、代码行编辑</h4><p>当前行的<code>下面</code>新开始一行：</p>
-<ul>
-<li>Windows：Ctrl + Enter</li>
-<li>MacOS：Cmd + Enter</li>
-</ul>
-<p>当前行的<code>上面</code>新开始一行：</p>
-<ul>
-<li>Windows：Ctrl + Shift + Enter</li>
-<li>MacOS：Cmd + Shift + Enter</li>
-</ul>
-<p><img src="https://static001.geekbang.org/resource/image/b2/d1/b2d7a80ded072f62a19ebce6b9ecb8d1.gif"> </p>
-<p>将当前行，或者当前选中的几行代码，在编辑器里上下移动</p>
-<ul>
-<li>Windows：Alt + 上下方向键</li>
-<li>MacOS：Option + 上下方向键</li>
-</ul>
-<p><img src="https://static001.geekbang.org/resource/image/25/be/25053dfebdb3117cb89604615bf355be.gif"> </p>
-<p>如果你同时按住 <code>Shift</code> 键的话，那就可以复制这几行，然后粘贴到当前行的上面或者下面</p>
-<ul>
-<li>Windows：Alt + shift + 上下方向键</li>
-<li>MacOS：Option + Shift + 上下方向键</li>
-</ul>
-<p><img src="https://static001.geekbang.org/resource/image/d4/16/d4f9ae5ad3a0bb62e734386b7522ba16.gif"> </p>
-<h4 id="2、编码相关"><a href="#2、编码相关" class="headerlink" title="2、编码相关"></a>2、编码相关</h4><p>添加注释：Ctrl + /，Cmd + / </p>
-<p>代码格式化：Alt + Shift + F，Option + Shift + F</p>
-<p>代码缩进：打开命令面板（快捷键：Cmd / Ctrl + Shift + P），搜索 <code>缩进</code>，然后使用 <code>重新缩进行</code> 将整个文档的缩进进行调整，但更多时候，你只需要运行 <code>重新缩进选中行</code> 来调整部分选中代码行的缩进</p>
-<p>多光标创建：使用鼠标，在键盘上按住 <code>Option / Alt</code>，然后鼠标点在第二个 5 之前，那么第二个光标就创建好了</p>
-<p><img src="https://static001.geekbang.org/resource/image/6e/f1/6e457c792615747787352aa92e6ae8f1.gif"> </p>
-<h4 id="3、文件跳转"><a href="#3、文件跳转" class="headerlink" title="3、文件跳转"></a>3、文件跳转</h4><p>文件搜索快捷键：Ctrl / Cmd + Enter</p>
-<p>模糊查询：Ctrl / Cmd + T，输入 <code># + 搜索关键字</code></p>
-<p><img src="https://static001.geekbang.org/resource/image/37/7c/37ea953edce0e8d65c332498889f277c.gif"> </p>
-<p>可以借助鼠标来完成跳转操作，我们还是把鼠标移动到示例代码的第五行 <code>foo</code> 上，然后按下 Ctrl / Cmd 键，这时候 <code>foo</code>下面出现了一个下划线，然后当我们按下鼠标左键，就跳转到了 <code>foo</code> 函数的定义处</p>
-<p><img src="https://static001.geekbang.org/resource/image/2e/45/2e81558f17eb3390547e6f2af4af9045.gif"> </p>
-<p>备注：此篇学习自吕鹏大佬的玩转 VS Code，如有侵权请告知删除，谢谢！</p>
-]]></content>
-      <categories>
-        <category>IDE</category>
-      </categories>
-      <tags>
-        <tag>IDE</tag>
-        <tag>VS Code</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题汇总</title>
-    <url>/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h3 id="主流框架"><a href="#主流框架" class="headerlink" title="主流框架"></a>主流框架</h3><h3 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-]]></content>
-      <categories>
-        <category>面试题</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>前端面试题</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue 学习之旅</title>
     <url>/Vue-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Vue 是什么，相信我不用多说了吧，大家都知道，它是当前的主流前端框架，也是我最喜欢的前端框架。当你打开 <a href="https://cn.vuejs.org/">Vue官网</a> 你就会看到 <code>渐进式 JavaScript 框架</code> 字样，什么意思呢？我的理解是：你觉的 vue 的哪些东西可以实现你的需求，你就用哪个，而不需要一次性的去接受它的全部功能特性，这样一方面你的学习成本慢慢降低下来了，实际达到的效果也有了，这样你也会更觉得有成就感。</p>
@@ -518,267 +223,6 @@
       </categories>
       <tags>
         <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>jQuery之回忆篇</title>
-    <url>/jQuery%E4%B9%8B%E5%9B%9E%E5%BF%86%E7%AF%87/</url>
-    <content><![CDATA[<h3 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h3><blockquote>
-<p>原生 JS</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>jQuery</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种写法</span></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种写法</span></span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种写法 (推荐)</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.第四种写法</span></span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>原生 JS 与 jQuery 入口函数的区别</p>
-<ul>
-<li>原生 JS 和 jQuery 入口函数的<code>加载模式不同</code>：原生 JS 会等到 DOM 元素加载完毕，并且图片也加载完毕才会执行；jQuery 会等到 DOM 元素加载完毕,但不会等到图片也加载完毕就会执行</li>
-<li>原生的 JS 如果编写了多个入口函数，后面编写的<code>会</code>覆盖前面编写的；jQuery 中编写多个入口函数，后面的<code>不会</code>覆盖前面的</li>
-</ul>
-<p><code>注意：$ 符合冲突问题解决方式</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方式 1：释放 $ 的使用权</span></span><br><span class="line"><span class="comment"> *	- 释放操作必须在编写其它 jQuery 代码之前编写</span></span><br><span class="line"><span class="comment"> *  - 释放之后就不能再使用 $，改为使用 jQuery</span></span><br><span class="line"><span class="comment"> *  - jQuery 原理 .noConflict();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jQuery.noConflict();</span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2：自定义一个访问符号，如：sunny</span></span><br><span class="line"><span class="keyword">var</span> sunny = jQuery.noConflict();</span><br><span class="line">sunny(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// $ 函数执行</span></span><br><span class="line">$();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于原生普通函数调用执行，如: test()</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可接收参数</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、接收一个函数，即：入口函数</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 2、接收一个字符串</span></span><br><span class="line"><span class="comment">     *	- 2.1、接收一个字符串选择器，返回一个 jQuery 对象, 对象中保存了找到的 DOM 元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> $box1 = $(<span class="string">&quot;.box1&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($box1);</span><br><span class="line">    <span class="comment">// 2.2、接收一个字符串代码片段，返回一个 jQuery 对象, 对象中保存了创建的 DOM 元素</span></span><br><span class="line">    <span class="keyword">var</span> $p = $(<span class="string">&quot;&lt;p&gt;我是段落&lt;/p&gt;&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($p);</span><br><span class="line">    $box1.append($p);</span><br><span class="line">    <span class="comment">// 3、接收一个 DOM 元素，会被包装成一个 jQuery 对象返回</span></span><br><span class="line">    <span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">console</span>.log(span);</span><br><span class="line">    <span class="keyword">var</span> $span = $(span);</span><br><span class="line">    <span class="built_in">console</span>.log($span);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="jQ-对象"><a href="#jQ-对象" class="headerlink" title="jQ 对象"></a>jQ 对象</h3><p>jQuery 对象是一个伪数组（有 0 到 length-1 的属性, 并且有 length 属性）</p>
-<blockquote>
-<p>jQ 对象转 DOM 对象</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、[index] 角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、.get(index) 获取角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v.get(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>DOM 对象转 jQ 对象</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将 DOM 对象以参数形式传递给 jQ 核心函数</span></span><br><span class="line"><span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> $span = $(span);</span><br></pre></td></tr></table></figure>
-
-<h3 id="jQ-方法"><a href="#jQ-方法" class="headerlink" title="jQ 方法"></a>jQ 方法</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
-<blockquote>
-<p>常用静态方法</p>
-</blockquote>
-<p>each：遍历</p>
-<p>map：遍历</p>
-<p><strong>两者的区别：</strong></p>
-<ul>
-<li>each 静态方法默认的返回值就是，<code>遍历谁就返回谁</code>；map 静态方法默认的返回值是一个<code>空数组</code></li>
-<li>each 静态方法<code>不支持</code>在回调函数中对遍历的数组进行处理；map 静态方法<code>可以在回调函数中通过 return 对遍历的数组进行处理</code>，然后<code>生成一个新的数组返回</code></li>
-</ul>
-<p>trim：去除字符串两端的空格</p>
-<p>isWindow：判断传入的对象是否是 window 对象</p>
-<p>isArray：判断传入的对象是否是真数组</p>
-<p>isFunction：判断传入的对象是否是一个函数</p>
-<p>holdReady：暂停 ready 执行</p>
-<h3 id="jQ-选择器"><a href="#jQ-选择器" class="headerlink" title="jQ 选择器"></a>jQ 选择器</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
-<h3 id="属性（节点）操作"><a href="#属性（节点）操作" class="headerlink" title="属性（节点）操作"></a>属性（节点）操作</h3><h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>属性：对象身上保存的变量就是属性</p>
-<p>属性节点：HTML 标签中添加的属性就是属性节点</p>
-<p>获取到 DOM 元素后，两者的形式：浏览器中找到对应 DOM 元素，展开看到的都是属性，在 attributes 属性中保存的所有内容都是属性节点</p>
-<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200801194475.PNG"> </p>
-<p>属性和属性节点的区别：任何对象都有属性, 但是只有 DOM 对象才有属性节点</p>
-<h4 id="原生-JS-操作"><a href="#原生-JS-操作" class="headerlink" title="原生 JS  操作"></a>原生 JS  操作</h4><p><strong>属性操作</strong></p>
-<ul>
-<li>赋值：对象.属性名称 = 值; 或者 对象[“属性名称”] = 值;</li>
-<li>取值：对象.属性名称; 或者 对象[“属性名称”];</li>
-</ul>
-<p><strong>属性节点操作</strong></p>
-<ul>
-<li>赋值：DOM 元素.setAttribute(“属性名称”, “值”);</li>
-<li>取值：DOM元素.getAttribute(“属性名称”);</li>
-</ul>
-<h4 id="jQuery-操作"><a href="#jQuery-操作" class="headerlink" title="jQuery 操作"></a>jQuery 操作</h4><p><strong>属性节点操作</strong></p>
-<p>attr()：获取或者设置属性节点的值</p>
-<p>可以传递一个参数，也可以传递两个参数</p>
-<ul>
-<li>如果传递一个参数，代表<code>获取</code>属性节点的值</li>
-<li>如果传递两个参数，代表<code>设置</code>属性节点的值</li>
-</ul>
-<p>注意：</p>
-<ul>
-<li>如果是<code>获取</code>：无论找到多少个元素，都只会返回第一个元素指定的属性节点的值</li>
-<li>如果是<code>设置</code>：找到多少个元素就会设置多少个元素</li>
-<li>如果是<code>设置</code>：如果设置的属性节点不存在，那么系统会自动新增</li>
-</ul>
-<p>removeAttr()：删除属性节点</p>
-<p>注意：会删除<code>所有</code>找到元素<code>指定的属性节点</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除的属性节点可以多个，用空格隔开</span></span><br><span class="line">$(<span class="string">&quot;span&quot;</span>).removeAttr(<span class="string">&quot;class name&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p><strong>属性操作</strong></p>
-<p>prop()：特点和 attr 方法一致</p>
-<p>removeProp()：特点和 removeAttr 方法一致</p>
-<p>注意：prop 方法既能够操作属性，还能操作属性节点</p>
-<p><strong>官方推荐：在操作属性节点时，具有 true 和 false 两个属性的属性节点，如 checked，selected 或者 disabled 使用 prop()，其他的使用 attr()</strong></p>
-<h3 id="CSS-操作"><a href="#CSS-操作" class="headerlink" title="CSS 操作"></a>CSS 操作</h3><h4 id="CSS-类样式操作"><a href="#CSS-类样式操作" class="headerlink" title="CSS 类样式操作"></a>CSS 类样式操作</h4><p>添加类样式：addClass(class)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加一个类，如果要添加多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).addClass(<span class="string">&quot;class1 class2&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>删除类样式：removeClass(class)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除一个类，如果想删除多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).removeClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>切换类样式：toggleClass(class)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有就删除, 没有就添加（切换 添加和删除类）</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggleClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="CSS-样式操作"><a href="#CSS-样式操作" class="headerlink" title="CSS 样式操作"></a>CSS 样式操作</h4><p>设置样式</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、逐个设置</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2、链式设置</span></span><br><span class="line"><span class="comment"> *  - 注意点: 链式操作如果大于 3 步, 建议分开，不然可阅读性差</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;blue&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、批量设置，传入一个对象进行</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(&#123;</span><br><span class="line">    width: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    height: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    background: <span class="string">&quot;red&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>获取样式值</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="文本值操作"><a href="#文本值操作" class="headerlink" title="文本值操作"></a>文本值操作</h3><h4 id="HTML-文本操作"><a href="#HTML-文本操作" class="headerlink" title="HTML 文本操作"></a>HTML 文本操作</h4><p>注意：html() 等效于原生的 innerHTML</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&quot;&lt;p&gt;我是段落&lt;span&gt;我是span&lt;/span&gt;&lt;/p&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清空 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="普通文本操作"><a href="#普通文本操作" class="headerlink" title="普通文本操作"></a>普通文本操作</h4><p>注意：text() 等效于原生的 innerText</p>
-<p>用法同上</p>
-<p>文本值操作</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val(<span class="string">&quot;请输入内容&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val();</span><br></pre></td></tr></table></figure>
-
-<h3 id="位置和尺寸操作"><a href="#位置和尺寸操作" class="headerlink" title="位置和尺寸操作"></a>位置和尺寸操作</h3><h4 id="尺寸相关"><a href="#尺寸相关" class="headerlink" title="尺寸相关"></a>尺寸相关</h4><p>元素的宽度（就是 width，不包括别的）</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width(<span class="string">&quot;500px&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>其它具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
-<h4 id="位置相关"><a href="#位置相关" class="headerlink" title="位置相关"></a>位置相关</h4><p>元素<code>距离窗口的偏移位</code>，left 表示指定获取哪个方向的偏移位：offset()</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset(&#123;</span><br><span class="line">    left: <span class="number">10</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>元素距离<code>定位元素</code>的偏移位：position()</p>
-<p>注意：position方法只能获取不能设置</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).position().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置，别的方式撒，如</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).css(&#123;</span><br><span class="line">    left: <span class="string">&quot;10px&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="滚动相关"><a href="#滚动相关" class="headerlink" title="滚动相关"></a>滚动相关</h4><p><code>元素内部</code>滚动的偏移位</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
-
-<p><code>网页</code>滚动的偏移位</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取（注意点: 为了保证浏览器的兼容，获取网页滚动的偏移位需要按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;body&quot;</span>).scrollTop() + $(<span class="string">&quot;html&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置（注意点: 为了保证浏览器的兼容, 设置网页滚动偏移位的时候必须按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;html,body&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><h4 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 部分事件 jQuery 没有实现,所以不能添加</span></span><br><span class="line">事件源.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 所有 js 事件都可以添加</span></span><br><span class="line">事件源.on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line">                             </span><br><span class="line"><span class="comment">// 方式 3 : 所有 js 事件都可以添加，并支持链式绑定</span></span><br><span class="line">最外层事件源.on(<span class="string">&quot;click&quot;</span>, <span class="string">&#x27;指定事件源&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="事件解绑"><a href="#事件解绑" class="headerlink" title="事件解绑"></a>事件解绑</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 移除该事件源上绑定的所有事件</span></span><br><span class="line">事件源.off();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 移除该事件源上绑定的具体事件，如 click</span></span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 3 : 移除该事件源上绑定的具体事件以及具体处理函数，如 click test1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello lnj&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">事件源.click(test1);</span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>, test1);</span><br></pre></td></tr></table></figure>
-
-<h4 id="阻止事件冒泡和默认行为"><a href="#阻止事件冒泡和默认行为" class="headerlink" title="阻止事件冒泡和默认行为"></a>阻止事件冒泡和默认行为</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止事件冒泡</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.stopPropagation()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.stopPropagation();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止默认行为</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.preventDefault()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;a&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;弹出注册框&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.preventDefault();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="事件自动触发"><a href="#事件自动触发" class="headerlink" title="事件自动触发"></a>事件自动触发</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">方式 一 : 事件源.trigger(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line">方式 二 : 事件源.triggerHandler(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意：自动触发事件，可以传参，如：事件源.trigger(&quot;对应事件&quot;, &#x27;options&#x27;);</span></span><br></pre></td></tr></table></figure>
-
-<p>两者的区别</p>
-<ul>
-<li>trigger 会触发事件冒泡，triggerHandler 不会</li>
-<li>trigger 会触发默认行为，triggerHandler 不会</li>
-</ul>
-<p><strong>注意：当事件源为 a 标签的时候，想利用 trigger 既触发事件冒泡又触发默认行为时，需要在 a 标签内部添加一个 span 标签，并把 span 作为事件源</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;span&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<h4 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h4><p>原理：利用 trigger 自动触发事件进行</p>
-<p>需要满足两个条件</p>
-<ul>
-<li>事件必须是通过 on 绑定的</li>
-<li>事件必须通过 trigger 来触发</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;myClick&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).triggerHandler(<span class="string">&quot;myClick&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>事件命名空间</p>
-</blockquote>
-<p>需要满足两个条件</p>
-<ul>
-<li>事件是通过 on 来绑定的</li>
-<li>通过 trigger 触发事件</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// zs 即为该点击事件的命名</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.zs&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click1&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click2&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.zs&quot;);</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click.ls&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>注意</p>
-<ul>
-<li>利用 trigger 触发子元素带命名空间的事件，那么父元素带相同命名空间的事件也会被触发，而父元素没有命名空间的事件不会被触发</li>
-<li>利用 trigger 触发子元素不带命名空间的事件，那么子元素所有相同类型的事件和父元素所有相同类型的事件都会被触发</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click2&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;son click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.ls&quot;); // 触发：3 1</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);	<span class="comment">// 触发：3 1 2</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h4><p>隐式遍历：在 jQuery 中，如果通过核心函数找到的元素不止一个，那么在添加事件的时候，jQuery 会遍历所有找到的元素，给所有找到的元素添加事件</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>新增一个li<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 隐式遍历</span></span><br><span class="line"><span class="comment"> *	- 三个 li 都会被注册点击事件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;ul&gt;li&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击 button 的时候，动态新增一个 li</span></span><br><span class="line">$(<span class="string">&quot;button&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">&quot;ul&quot;</span>).append(<span class="string">&quot;&lt;li&gt;我是新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果：当我们点击 li 1 2 3 的时候，发现都会有效，而点击 button 后新增的 li 时却无效，原因是新增的由于程序执行顺序并没有绑定上点击事件，导致点击无效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解决：采取事件委托的形式，给其父元素绑定点击事件，利用事件冒泡的原理</span></span><br><span class="line"><span class="comment"> * 	- 将 li 的点击事件委托给其父元素 ul</span></span><br><span class="line"><span class="comment"> *  - delegate 事件委派（不推荐）</span></span><br><span class="line"><span class="comment"> *  - on 也可以事件委派（推荐）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 不推荐，因为 3.0 版本废除了</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).delegate(<span class="string">&quot;li&quot;</span>, <span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 推荐</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="移入移出事件"><a href="#移入移出事件" class="headerlink" title="移入移出事件"></a>移入移出事件</h4><ul>
-<li><p>mouseover / mouseout</p>
-<p>注意：子元素被移入移出<code>也会触发</code>父元素的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mouseenter / mouseleave（推荐使用）</p>
-<p>注意：子元素被移入移出<code>不会触发</code>父元素的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseenter(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseleave(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>hover</p>
-<p>两个参数时：第一个参数是处理函数，处理移入，第二个参数是处理函数，处理移出</p>
-<p>一个参数时：是处理函数，同时处理移入和移出</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 两个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="动画效果"><a href="#动画效果" class="headerlink" title="动画效果"></a>动画效果</h3><h4 id="基本动画"><a href="#基本动画" class="headerlink" title="基本动画"></a>基本动画</h4><p>显示</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 带参数</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show(<span class="number">1000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;显示动画执行完毕&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>隐藏</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).hide();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
-
-<p>切换</p>
-<p>显示和隐藏动画之间的切换</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggle();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="滑动动画"><a href="#滑动动画" class="headerlink" title="滑动动画"></a>滑动动画</h4><p>展开：slideDown    |    收起：slideUp    |    切换：slideToggle</p>
-<p>用法：同理基本动画</p>
-<h4 id="淡入淡出"><a href="#淡入淡出" class="headerlink" title="淡入淡出"></a>淡入淡出</h4><p>淡入：fadeIn    |    淡出：fadeOut    |    切换：fadeToggle    |    淡入到：fadeTo</p>
-<p>用法：同理基本动画</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 淡入到</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 淡入程度，一个 0 至 1 之间表示透明度的数字</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).fadeTo(<span class="number">1000</span>, <span class="number">0.2</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;淡入完毕&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="自定义动画"><a href="#自定义动画" class="headerlink" title="自定义动画"></a>自定义动画</h4><p>比较灵活，具体参考：<a href="https://jquery.cuishifeng.cn/animate.html">自定义动画文档</a></p>
-<h3 id="节点操作"><a href="#节点操作" class="headerlink" title="节点操作"></a>节点操作</h3><h4 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>添加节点<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>内部添加（插入）</p>
-</blockquote>
-<p>append(content)    |    节点内容.appendTo(“需要添加的位置”)</p>
-<p>将元素添加到<code>指定元素内部的最后</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 需添加的节点内容</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;&lt;li&gt;新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"><span class="comment">// append	|	appendTo : 仅仅写法不一样，推荐 append</span></span><br><span class="line">$li.appendTo(<span class="string">&quot;ul&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>prepend(content)    |    节点内容.prependTo(“需要添加的位置”)</p>
-<p>将元素添加到<code>指定元素内部的最前面</code></p>
-<p>用法同理，推荐：prepend</p>
-<blockquote>
-<p>外部添加（插入）</p>
-</blockquote>
-<p>after(content)    |    节点内容.insertAfter(“需要添加的位置”)</p>
-<p>将元素添加到<code>指定元素外部的后面</code></p>
-<p>用法同理，推荐：after</p>
-<p>before(content)    |    节点内容.insertBefore(“需要添加的位置”)</p>
-<p>将元素添加到<code>指定元素外部的前面</code></p>
-<p>用法同理，推荐：before</p>
-<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><ul>
-<li>remove([expr])：删除指定元素，选中谁就删除谁，删除之后再重新添加，原有的事件无法响应</li>
-<li>empty()：删除指定元素的内容和子元素，指定元素自身不会被删除（清空子元素和内容）</li>
-<li>detach([expr])：同 remove，但利用 detach 删除之后再重新添加，原有事件可以响应</li>
-</ul>
-<h4 id="复制节点"><a href="#复制节点" class="headerlink" title="复制节点"></a>复制节点</h4><p>clone()：指定谁就复制谁，默认 false</p>
-<p>参数：true / false</p>
-<p>true：深复制，会复制元素，而且还会复制元素的事件</p>
-<p>false：浅复制，会复制元素，不会复制元素的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// true：深复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">true</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"></span><br><span class="line"><span class="comment">// false：浅复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">false</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br></pre></td></tr></table></figure>
-
-<h4 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h4><p>replaceWith(内容)    |    replaceAll(元素)</p>
-<p>替换所有匹配的元素为指定的元素</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 内容</span></span><br><span class="line"><span class="keyword">var</span> $h6 = $(<span class="string">&quot;&lt;h6&gt;我是标题6&lt;/h6&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换内容</span></span><br><span class="line">$(<span class="string">&quot;h1&quot;</span>).replaceWith($h6);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换元素</span></span><br><span class="line">$h6.replaceAll(<span class="string">&quot;h1&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
-<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
-]]></content>
-      <categories>
-        <category>jQuery</category>
-      </categories>
-      <tags>
-        <tag>总结</tag>
-        <tag>jQuery</tag>
       </tags>
   </entry>
   <entry>
@@ -2832,6 +2276,574 @@
         <tag>总结</tag>
         <tag>学习笔记</tag>
         <tag>前端开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JS之设计模式</title>
+    <url>/JS%E4%B9%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>JS 是一门弱化的面向对象编程语言，但具备面向对象编程的思想，其中三大要素十分的重要。</p>
+<p><strong>继承</strong></p>
+<p>理解：儿子继承家产</p>
+<p>特点：一个父类，是公共的，不仅仅服务于一个子类，即：一个父亲有多个孩子，这多个孩子均可以继承家产</p>
+<p>好处：继承可以将公共方法抽离出来，提高复用，减少冗余，即：做富二代，你懂的</p>
+<p><strong>封装</strong></p>
+<p>ES6 暂时还不支持 public 等的关键字，所以想了解的请移步：TypeScript</p>
+<p><strong>多态</strong></p>
+<p>ES6 暂时还不支持 public 等的关键字，所以想了解的请移步：TypeScript</p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p><strong>概念：将 new 操作单独封装</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 需要生产的产品</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">	    <span class="built_in">this</span>.name = name</span><br><span class="line">	&#125;</span><br><span class="line">	fn1() &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;挣钱&#x27;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	fn2() &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;便利生活&#x27;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生产该产品的工厂</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Creator</span> </span>&#123;</span><br><span class="line">	create(name) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Product(name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ‘我’ 要做的事情</span></span><br><span class="line"><span class="keyword">let</span> creator = <span class="keyword">new</span> Creator()				<span class="comment">// 1、找到这么一家工厂</span></span><br><span class="line"><span class="keyword">let</span> p = Creator.create(<span class="string">&#x27;javascript&#x27;</span>)	 <span class="comment">// 2、告诉这家工厂，要生产的产品</span></span><br><span class="line"><span class="comment">// 利用这个生产出来的产品去挣钱等行为</span></span><br><span class="line">p.fn1()		<span class="comment">// 挣钱</span></span><br><span class="line">p.fn2()		<span class="comment">// 给生活带来便利</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>结合应用场景去理解</strong></p>
+<p>jQuery 中的核心函数，不熟悉的可以去看我的另一篇笔记：<a href="https://guohaoqi.com/jQuery%E4%B9%8B%E5%9B%9E%E5%BF%86%E7%AF%87/">jQuery 之回忆篇</a>。我们一个深的体会就是：jQuery 的核心函数可以接收不同的参数，进而我们可以得到一个 jQuery 对象，我们可以基于 jQuery 这个对象，调用各种 jQuery 方法去实现我们的需求，是的，这就是库，操作呢也就是：调库，其实工厂模式的思想就是我们平时接触较多的库的封装，我们不需要关注库是怎么封装和实现的，我们需要知道的是这个库的各个方法的作用，这就需要去看相关库的文档，从而利用相关的方法去实现我们的需求。</p>
+]]></content>
+      <categories>
+        <category>程序设计</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>设计模式</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript之数据结构与算法</title>
+    <url>/JavaScript%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>开场白也不多说了，数据结构与算法这东西，说多了都是泪，干就完了！</p>
+<h3 id="算法效率的度量方法"><a href="#算法效率的度量方法" class="headerlink" title="算法效率的度量方法"></a>算法效率的度量方法</h3><blockquote>
+<p>Tips：官方的概念不做赘述</p>
+</blockquote>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p>理解：执行次数 == 时间，次数越多越复杂，反之越简单</p>
+<p>表示：大 O 表示法</p>
+<p>大 O 阶推导技巧：抽象法</p>
+<ul>
+<li><p><strong>用常数 1 取代运行时间中的所有加法常数</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 时间复杂度记为：O(1)</span></span><br><span class="line"><span class="comment"> * 1 + 1 + 1 -&gt; 用常数 1 取代</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> sum = <span class="number">0</span>, n = <span class="number">100</span>	<span class="comment">// 执行 1 次</span></span><br><span class="line">sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>	<span class="comment">// 执行 1 次</span></span><br><span class="line"><span class="built_in">console</span>.log(sum)	    <span class="comment">// 执行 1 次</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>在修改后的运行次数函数中，只保留最高阶项，如果最高阶项存在且不是 1，则去除与这个项相乘的常数</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 时间复杂度记为：O(n^2)</span></span><br><span class="line"><span class="comment"> * 实际的时间复杂度：n^2/2 + n/2</span></span><br><span class="line"><span class="comment"> * 	1、只保留最高阶项：去掉 n/2，得 n^2/2</span></span><br><span class="line"><span class="comment"> *	2、最高阶项存在且不是 1：去掉 1/2，得 n^2 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> i, j, n = <span class="number">100</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (j = i; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;sunny&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对数阶，主要是如下所示两种</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20206986694475.PNG"> </p>
+</li>
+</ul>
+<h4 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h4><p>理解：事先就开辟一片内存空间，存储好对应的结果值，就像 ASCLL 表，事先做好了，需要的时候做个结果对应就好了，其复杂度取决于所开辟的空间大小，即：程序运行所需要占据的内存大小</p>
+<p>表示：大 O 表示法</p>
+<h4 id="设计算法原则"><a href="#设计算法原则" class="headerlink" title="设计算法原则"></a>设计算法原则</h4><p>时间开销换取空间开销，还是反之，请君去思考了，但貌似<strong>时间开销才是主流</strong></p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><p>特点：<strong>后进先出</strong></p>
+<p>注意：JavaScript 中没有栈，但可以利用 Array 来模拟实现栈的所有功能</p>
+<blockquote>
+<p>常见操作</p>
+</blockquote>
+<p>入栈：push    出栈：pop    栈顶元素：stack[stack.length - 1]</p>
+<blockquote>
+<p>前端中与栈的联系</p>
+</blockquote>
+<p>函数调用堆栈</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> func1 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    func2();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> func2 = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    func3();</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> func3 = <span class="function">() =&gt;</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">func1();	<span class="comment">// 1 调用 2，2 调用 3 - 3 释放完 2，2 释放完 1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>算法题</p>
+</blockquote>
+<p>【LeetCode - 20】有效的括号</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jQuery之回忆篇</title>
+    <url>/jQuery%E4%B9%8B%E5%9B%9E%E5%BF%86%E7%AF%87/</url>
+    <content><![CDATA[<h3 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h3><blockquote>
+<p>原生 JS</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jQuery</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种写法</span></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种写法</span></span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种写法 (推荐)</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// alert(&quot;hello world!&quot;);</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4.第四种写法</span></span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>原生 JS 与 jQuery 入口函数的区别</p>
+<ul>
+<li>原生 JS 和 jQuery 入口函数的<code>加载模式不同</code>：原生 JS 会等到 DOM 元素加载完毕，并且图片也加载完毕才会执行；jQuery 会等到 DOM 元素加载完毕,但不会等到图片也加载完毕就会执行</li>
+<li>原生的 JS 如果编写了多个入口函数，后面编写的<code>会</code>覆盖前面编写的；jQuery 中编写多个入口函数，后面的<code>不会</code>覆盖前面的</li>
+</ul>
+<p><code>注意：$ 符合冲突问题解决方式</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 方式 1：释放 $ 的使用权</span></span><br><span class="line"><span class="comment"> *	- 释放操作必须在编写其它 jQuery 代码之前编写</span></span><br><span class="line"><span class="comment"> *  - 释放之后就不能再使用 $，改为使用 jQuery</span></span><br><span class="line"><span class="comment"> *  - jQuery 原理 .noConflict();</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">jQuery.noConflict();</span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2：自定义一个访问符号，如：sunny</span></span><br><span class="line"><span class="keyword">var</span> sunny = jQuery.noConflict();</span><br><span class="line">sunny(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello sunny&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// $ 函数执行</span></span><br><span class="line">$();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于原生普通函数调用执行，如: test()</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br><span class="line">test()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可接收参数</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、接收一个函数，即：入口函数</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 2、接收一个字符串</span></span><br><span class="line"><span class="comment">     *	- 2.1、接收一个字符串选择器，返回一个 jQuery 对象, 对象中保存了找到的 DOM 元素</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">var</span> $box1 = $(<span class="string">&quot;.box1&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($box1);</span><br><span class="line">    <span class="comment">// 2.2、接收一个字符串代码片段，返回一个 jQuery 对象, 对象中保存了创建的 DOM 元素</span></span><br><span class="line">    <span class="keyword">var</span> $p = $(<span class="string">&quot;&lt;p&gt;我是段落&lt;/p&gt;&quot;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log($p);</span><br><span class="line">    $box1.append($p);</span><br><span class="line">    <span class="comment">// 3、接收一个 DOM 元素，会被包装成一个 jQuery 对象返回</span></span><br><span class="line">    <span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line">    <span class="built_in">console</span>.log(span);</span><br><span class="line">    <span class="keyword">var</span> $span = $(span);</span><br><span class="line">    <span class="built_in">console</span>.log($span);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="jQ-对象"><a href="#jQ-对象" class="headerlink" title="jQ 对象"></a>jQ 对象</h3><p>jQuery 对象是一个伪数组（有 0 到 length-1 的属性, 并且有 length 属性）</p>
+<blockquote>
+<p>jQ 对象转 DOM 对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、[index] 角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2、.get(index) 获取角标法</span></span><br><span class="line"><span class="keyword">var</span> v = $v.get(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>DOM 对象转 jQ 对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将 DOM 对象以参数形式传递给 jQ 核心函数</span></span><br><span class="line"><span class="keyword">var</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;span&quot;</span>)[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> $span = $(span);</span><br></pre></td></tr></table></figure>
+
+<h3 id="jQ-方法"><a href="#jQ-方法" class="headerlink" title="jQ 方法"></a>jQ 方法</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<blockquote>
+<p>常用静态方法</p>
+</blockquote>
+<p>each：遍历</p>
+<p>map：遍历</p>
+<p><strong>两者的区别：</strong></p>
+<ul>
+<li>each 静态方法默认的返回值就是，<code>遍历谁就返回谁</code>；map 静态方法默认的返回值是一个<code>空数组</code></li>
+<li>each 静态方法<code>不支持</code>在回调函数中对遍历的数组进行处理；map 静态方法<code>可以在回调函数中通过 return 对遍历的数组进行处理</code>，然后<code>生成一个新的数组返回</code></li>
+</ul>
+<p>trim：去除字符串两端的空格</p>
+<p>isWindow：判断传入的对象是否是 window 对象</p>
+<p>isArray：判断传入的对象是否是真数组</p>
+<p>isFunction：判断传入的对象是否是一个函数</p>
+<p>holdReady：暂停 ready 执行</p>
+<h3 id="jQ-选择器"><a href="#jQ-选择器" class="headerlink" title="jQ 选择器"></a>jQ 选择器</h3><p>具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<h3 id="属性（节点）操作"><a href="#属性（节点）操作" class="headerlink" title="属性（节点）操作"></a>属性（节点）操作</h3><h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>属性：对象身上保存的变量就是属性</p>
+<p>属性节点：HTML 标签中添加的属性就是属性节点</p>
+<p>获取到 DOM 元素后，两者的形式：浏览器中找到对应 DOM 元素，展开看到的都是属性，在 attributes 属性中保存的所有内容都是属性节点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/HaoQiSpace/cdn/typora/20200801194475.PNG"> </p>
+<p>属性和属性节点的区别：任何对象都有属性, 但是只有 DOM 对象才有属性节点</p>
+<h4 id="原生-JS-操作"><a href="#原生-JS-操作" class="headerlink" title="原生 JS  操作"></a>原生 JS  操作</h4><p><strong>属性操作</strong></p>
+<ul>
+<li>赋值：对象.属性名称 = 值; 或者 对象[“属性名称”] = 值;</li>
+<li>取值：对象.属性名称; 或者 对象[“属性名称”];</li>
+</ul>
+<p><strong>属性节点操作</strong></p>
+<ul>
+<li>赋值：DOM 元素.setAttribute(“属性名称”, “值”);</li>
+<li>取值：DOM元素.getAttribute(“属性名称”);</li>
+</ul>
+<h4 id="jQuery-操作"><a href="#jQuery-操作" class="headerlink" title="jQuery 操作"></a>jQuery 操作</h4><p><strong>属性节点操作</strong></p>
+<p>attr()：获取或者设置属性节点的值</p>
+<p>可以传递一个参数，也可以传递两个参数</p>
+<ul>
+<li>如果传递一个参数，代表<code>获取</code>属性节点的值</li>
+<li>如果传递两个参数，代表<code>设置</code>属性节点的值</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>如果是<code>获取</code>：无论找到多少个元素，都只会返回第一个元素指定的属性节点的值</li>
+<li>如果是<code>设置</code>：找到多少个元素就会设置多少个元素</li>
+<li>如果是<code>设置</code>：如果设置的属性节点不存在，那么系统会自动新增</li>
+</ul>
+<p>removeAttr()：删除属性节点</p>
+<p>注意：会删除<code>所有</code>找到元素<code>指定的属性节点</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除的属性节点可以多个，用空格隔开</span></span><br><span class="line">$(<span class="string">&quot;span&quot;</span>).removeAttr(<span class="string">&quot;class name&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>属性操作</strong></p>
+<p>prop()：特点和 attr 方法一致</p>
+<p>removeProp()：特点和 removeAttr 方法一致</p>
+<p>注意：prop 方法既能够操作属性，还能操作属性节点</p>
+<p><strong>官方推荐：在操作属性节点时，具有 true 和 false 两个属性的属性节点，如 checked，selected 或者 disabled 使用 prop()，其他的使用 attr()</strong></p>
+<h3 id="CSS-操作"><a href="#CSS-操作" class="headerlink" title="CSS 操作"></a>CSS 操作</h3><h4 id="CSS-类样式操作"><a href="#CSS-类样式操作" class="headerlink" title="CSS 类样式操作"></a>CSS 类样式操作</h4><p>添加类样式：addClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加一个类，如果要添加多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).addClass(<span class="string">&quot;class1 class2&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>删除类样式：removeClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除一个类，如果想删除多个, 多个类名之间用空格隔开即可</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).removeClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>切换类样式：toggleClass(class)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有就删除, 没有就添加（切换 添加和删除类）</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggleClass(<span class="string">&quot;class2 class1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="CSS-样式操作"><a href="#CSS-样式操作" class="headerlink" title="CSS 样式操作"></a>CSS 样式操作</h4><p>设置样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1、逐个设置</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>);</span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2、链式设置</span></span><br><span class="line"><span class="comment"> *  - 注意点: 链式操作如果大于 3 步, 建议分开，不然可阅读性差</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;width&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;height&quot;</span>, <span class="string">&quot;100px&quot;</span>).css(<span class="string">&quot;background&quot;</span>, <span class="string">&quot;blue&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3、批量设置，传入一个对象进行</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).css(&#123;</span><br><span class="line">    width: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    height: <span class="string">&quot;100px&quot;</span>,</span><br><span class="line">    background: <span class="string">&quot;red&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>获取样式值</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;div&quot;</span>).css(<span class="string">&quot;background&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本值操作"><a href="#文本值操作" class="headerlink" title="文本值操作"></a>文本值操作</h3><h4 id="HTML-文本操作"><a href="#HTML-文本操作" class="headerlink" title="HTML 文本操作"></a>HTML 文本操作</h4><p>注意：html() 等效于原生的 innerHTML</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&quot;&lt;p&gt;我是段落&lt;span&gt;我是span&lt;/span&gt;&lt;/p&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清空 HTML 文本</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).html(<span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="普通文本操作"><a href="#普通文本操作" class="headerlink" title="普通文本操作"></a>普通文本操作</h4><p>注意：text() 等效于原生的 innerText</p>
+<p>用法同上</p>
+<p>文本值操作</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val(<span class="string">&quot;请输入内容&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取文本框值</span></span><br><span class="line">$(<span class="string">&quot;input&quot;</span>).val();</span><br></pre></td></tr></table></figure>
+
+<h3 id="位置和尺寸操作"><a href="#位置和尺寸操作" class="headerlink" title="位置和尺寸操作"></a>位置和尺寸操作</h3><h4 id="尺寸相关"><a href="#尺寸相关" class="headerlink" title="尺寸相关"></a>尺寸相关</h4><p>元素的宽度（就是 width，不包括别的）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).width(<span class="string">&quot;500px&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其它具体参考文档：<a href="https://jquery.cuishifeng.cn/">jQuery API</a></p>
+<h4 id="位置相关"><a href="#位置相关" class="headerlink" title="位置相关"></a>位置相关</h4><p>元素<code>距离窗口的偏移位</code>，left 表示指定获取哪个方向的偏移位：offset()</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).offset(&#123;</span><br><span class="line">    left: <span class="number">10</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>元素距离<code>定位元素</code>的偏移位：position()</p>
+<p>注意：position方法只能获取不能设置</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).position().left;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置，别的方式撒，如</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).css(&#123;</span><br><span class="line">    left: <span class="string">&quot;10px&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="滚动相关"><a href="#滚动相关" class="headerlink" title="滚动相关"></a>滚动相关</h4><p><code>元素内部</code>滚动的偏移位</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">$(<span class="string">&quot;.scroll&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>网页</code>滚动的偏移位</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取（注意点: 为了保证浏览器的兼容，获取网页滚动的偏移位需要按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;body&quot;</span>).scrollTop() + $(<span class="string">&quot;html&quot;</span>).scrollTop();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置（注意点: 为了保证浏览器的兼容, 设置网页滚动偏移位的时候必须按照如下写法）</span></span><br><span class="line">$(<span class="string">&quot;html,body&quot;</span>).scrollTop(<span class="number">300</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件操作"><a href="#事件操作" class="headerlink" title="事件操作"></a>事件操作</h3><h4 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 部分事件 jQuery 没有实现,所以不能添加</span></span><br><span class="line">事件源.click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 所有 js 事件都可以添加</span></span><br><span class="line">事件源.on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br><span class="line">                             </span><br><span class="line"><span class="comment">// 方式 3 : 所有 js 事件都可以添加，并支持链式绑定</span></span><br><span class="line">最外层事件源.on(<span class="string">&quot;click&quot;</span>, <span class="string">&#x27;指定事件源&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件解绑"><a href="#事件解绑" class="headerlink" title="事件解绑"></a>事件解绑</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 方式 1 : 移除该事件源上绑定的所有事件</span></span><br><span class="line">事件源.off();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 2 : 移除该事件源上绑定的具体事件，如 click</span></span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式 3 : 移除该事件源上绑定的具体事件以及具体处理函数，如 click test1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;hello lnj&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">事件源.click(test1);</span><br><span class="line">事件源.off(<span class="string">&quot;click&quot;</span>, test1);</span><br></pre></td></tr></table></figure>
+
+<h4 id="阻止事件冒泡和默认行为"><a href="#阻止事件冒泡和默认行为" class="headerlink" title="阻止事件冒泡和默认行为"></a>阻止事件冒泡和默认行为</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止事件冒泡</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.stopPropagation()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.stopPropagation();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阻止默认行为</span></span><br><span class="line"><span class="comment"> * 	- 方式 1 : return false</span></span><br><span class="line"><span class="comment"> *  - 方式 2 : event.preventDefault()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;a&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;弹出注册框&quot;</span>);</span><br><span class="line">    <span class="comment">// return false;</span></span><br><span class="line">    event.preventDefault();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件自动触发"><a href="#事件自动触发" class="headerlink" title="事件自动触发"></a>事件自动触发</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">方式 一 : 事件源.trigger(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line">方式 二 : 事件源.triggerHandler(<span class="string">&quot;对应事件&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意：自动触发事件，可以传参，如：事件源.trigger(&quot;对应事件&quot;, &#x27;options&#x27;);</span></span><br></pre></td></tr></table></figure>
+
+<p>两者的区别</p>
+<ul>
+<li>trigger 会触发事件冒泡，triggerHandler 不会</li>
+<li>trigger 会触发默认行为，triggerHandler 不会</li>
+</ul>
+<p><strong>注意：当事件源为 a 标签的时候，想利用 trigger 既触发事件冒泡又触发默认行为时，需要在 a 标签内部添加一个 span 标签，并把 span 作为事件源</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.baidu.com&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;span&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h4><p>原理：利用 trigger 自动触发事件进行</p>
+<p>需要满足两个条件</p>
+<ul>
+<li>事件必须是通过 on 绑定的</li>
+<li>事件必须通过 trigger 来触发</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;myClick&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;son&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).triggerHandler(<span class="string">&quot;myClick&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>事件命名空间</p>
+</blockquote>
+<p>需要满足两个条件</p>
+<ul>
+<li>事件是通过 on 来绑定的</li>
+<li>通过 trigger 触发事件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// zs 即为该点击事件的命名</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.zs&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click1&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;click2&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.zs&quot;);</span></span><br><span class="line">$(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click.ls&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意</p>
+<ul>
+<li>利用 trigger 触发子元素带命名空间的事件，那么父元素带相同命名空间的事件也会被触发，而父元素没有命名空间的事件不会被触发</li>
+<li>利用 trigger 触发子元素不带命名空间的事件，那么子元素所有相同类型的事件和父元素所有相同类型的事件都会被触发</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    $(<span class="string">&quot;.father&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;father click2&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).on(<span class="string">&quot;click.ls&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">&quot;son click1&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// $(&quot;.son&quot;).trigger(&quot;click.ls&quot;); // 触发：3 1</span></span><br><span class="line">    $(<span class="string">&quot;.son&quot;</span>).trigger(<span class="string">&quot;click&quot;</span>);	<span class="comment">// 触发：3 1 2</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h4><p>隐式遍历：在 jQuery 中，如果通过核心函数找到的元素不止一个，那么在添加事件的时候，jQuery 会遍历所有找到的元素，给所有找到的元素添加事件</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>新增一个li<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 隐式遍历</span></span><br><span class="line"><span class="comment"> *	- 三个 li 都会被注册点击事件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;ul&gt;li&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击 button 的时候，动态新增一个 li</span></span><br><span class="line">$(<span class="string">&quot;button&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">&quot;ul&quot;</span>).append(<span class="string">&quot;&lt;li&gt;我是新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果：当我们点击 li 1 2 3 的时候，发现都会有效，而点击 button 后新增的 li 时却无效，原因是新增的由于程序执行顺序并没有绑定上点击事件，导致点击无效</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解决：采取事件委托的形式，给其父元素绑定点击事件，利用事件冒泡的原理</span></span><br><span class="line"><span class="comment"> * 	- 将 li 的点击事件委托给其父元素 ul</span></span><br><span class="line"><span class="comment"> *  - delegate 事件委派（不推荐）</span></span><br><span class="line"><span class="comment"> *  - on 也可以事件委派（推荐）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 不推荐，因为 3.0 版本废除了</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).delegate(<span class="string">&quot;li&quot;</span>, <span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 推荐</span></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).on(<span class="string">&quot;click&quot;</span>, <span class="string">&quot;li&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="built_in">this</span>).html());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="移入移出事件"><a href="#移入移出事件" class="headerlink" title="移入移出事件"></a>移入移出事件</h4><ul>
+<li><p>mouseover / mouseout</p>
+<p>注意：子元素被移入移出<code>也会触发</code>父元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mouseenter / mouseleave（推荐使用）</p>
+<p>注意：子元素被移入移出<code>不会触发</code>父元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseenter(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).mouseleave(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hover</p>
+<p>两个参数时：第一个参数是处理函数，处理移入，第二个参数是处理函数，处理移出</p>
+<p>一个参数时：是处理函数，同时处理移入和移出</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 两个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入了&quot;</span>);</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一个参数</span></span><br><span class="line">$(<span class="string">&quot;.father&quot;</span>).hover(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;father被移入移出了&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="动画效果"><a href="#动画效果" class="headerlink" title="动画效果"></a>动画效果</h3><h4 id="基本动画"><a href="#基本动画" class="headerlink" title="基本动画"></a>基本动画</h4><p>显示</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 带参数</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).show(<span class="number">1000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;显示动画执行完毕&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>隐藏</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).hide();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
+
+<p>切换</p>
+<p>显示和隐藏动画之间的切换</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不带参数</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).toggle();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带参数，同上</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="滑动动画"><a href="#滑动动画" class="headerlink" title="滑动动画"></a>滑动动画</h4><p>展开：slideDown    |    收起：slideUp    |    切换：slideToggle</p>
+<p>用法：同理基本动画</p>
+<h4 id="淡入淡出"><a href="#淡入淡出" class="headerlink" title="淡入淡出"></a>淡入淡出</h4><p>淡入：fadeIn    |    淡出：fadeOut    |    切换：fadeToggle    |    淡入到：fadeTo</p>
+<p>用法：同理基本动画</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 淡入到</span></span><br><span class="line"><span class="comment"> *	- 参数 1 : 该动画多少毫秒执行完成</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 淡入程度，一个 0 至 1 之间表示透明度的数字</span></span><br><span class="line"><span class="comment"> *  - 参数 2 : 动画执行完毕之后的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$(<span class="string">&quot;div&quot;</span>).fadeTo(<span class="number">1000</span>, <span class="number">0.2</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;淡入完毕&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义动画"><a href="#自定义动画" class="headerlink" title="自定义动画"></a>自定义动画</h4><p>比较灵活，具体参考：<a href="https://jquery.cuishifeng.cn/animate.html">自定义动画文档</a></p>
+<h3 id="节点操作"><a href="#节点操作" class="headerlink" title="节点操作"></a>节点操作</h3><h4 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>添加节点<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第1个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第2个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>我是第3个li<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>内部添加（插入）</p>
+</blockquote>
+<p>append(content)    |    节点内容.appendTo(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素内部的最后</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 需添加的节点内容</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;&lt;li&gt;新增的li&lt;/li&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"><span class="comment">// append	|	appendTo : 仅仅写法不一样，推荐 append</span></span><br><span class="line">$li.appendTo(<span class="string">&quot;ul&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>prepend(content)    |    节点内容.prependTo(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素内部的最前面</code></p>
+<p>用法同理，推荐：prepend</p>
+<blockquote>
+<p>外部添加（插入）</p>
+</blockquote>
+<p>after(content)    |    节点内容.insertAfter(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素外部的后面</code></p>
+<p>用法同理，推荐：after</p>
+<p>before(content)    |    节点内容.insertBefore(“需要添加的位置”)</p>
+<p>将元素添加到<code>指定元素外部的前面</code></p>
+<p>用法同理，推荐：before</p>
+<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><ul>
+<li>remove([expr])：删除指定元素，选中谁就删除谁，删除之后再重新添加，原有的事件无法响应</li>
+<li>empty()：删除指定元素的内容和子元素，指定元素自身不会被删除（清空子元素和内容）</li>
+<li>detach([expr])：同 remove，但利用 detach 删除之后再重新添加，原有事件可以响应</li>
+</ul>
+<h4 id="复制节点"><a href="#复制节点" class="headerlink" title="复制节点"></a>复制节点</h4><p>clone()：指定谁就复制谁，默认 false</p>
+<p>参数：true / false</p>
+<p>true：深复制，会复制元素，而且还会复制元素的事件</p>
+<p>false：浅复制，会复制元素，不会复制元素的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// true：深复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">true</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br><span class="line"></span><br><span class="line"><span class="comment">// false：浅复制</span></span><br><span class="line"><span class="keyword">var</span> $li = $(<span class="string">&quot;li:first&quot;</span>).clone(<span class="literal">false</span>);</span><br><span class="line">$(<span class="string">&quot;ul&quot;</span>).append($li);</span><br></pre></td></tr></table></figure>
+
+<h4 id="替换节点"><a href="#替换节点" class="headerlink" title="替换节点"></a>替换节点</h4><p>replaceWith(内容)    |    replaceAll(元素)</p>
+<p>替换所有匹配的元素为指定的元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 内容</span></span><br><span class="line"><span class="keyword">var</span> $h6 = $(<span class="string">&quot;&lt;h6&gt;我是标题6&lt;/h6&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换内容</span></span><br><span class="line">$(<span class="string">&quot;h1&quot;</span>).replaceWith($h6);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换元素</span></span><br><span class="line">$h6.replaceAll(<span class="string">&quot;h1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>jQuery</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>jQuery</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>敲码神器之VS Code</title>
+    <url>/%E6%95%B2%E7%A0%81%E7%A5%9E%E5%99%A8%E4%B9%8BVS-Code/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>“欢迎使用”，打开 VS Code，你便会发现有这么个窗口弹出来，这是 VS Code 表示对你的欢迎！</p>
+<p>同样，您能花您宝贵的时间，来看我这篇对 VS Code 的介绍，相信你也是热爱 VS Code 的，那么请放下耐心往下浏览吧!</p>
+<blockquote>
+<p>Tips：下载请访问<a href="https://code.visualstudio.com/">官方网址</a>进行下载，下载完双击安装，点击下一步、下一步即可完成安装（建议：安装路径选择非C盘的其它路径）</p>
+</blockquote>
+<p><img src="https://static001.geekbang.org/resource/image/58/4f/588bcd217ad7d2c5d18cbab0b1781a4f.png"></p>
+<h3 id="快速上手-VS-Code"><a href="#快速上手-VS-Code" class="headerlink" title="快速上手 VS Code"></a>快速上手 VS Code</h3><h4 id="1、命令面板"><a href="#1、命令面板" class="headerlink" title="1、命令面板"></a>1、命令面板</h4><p>说明：VS Code 快捷键的主要交互界面</p>
+<p>打开快捷键</p>
+<ul>
+<li><p>Windows：Ctrl + Shift + P</p>
+</li>
+<li><p>MacOS：Cmd + Shift + P</p>
+</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/24/0d/2471149edc2c94a6745a34b5c917d00d.png"></p>
+<p>作用：熟练使用命令面板，你就可以摆脱鼠标，完全通过键盘操作来完成全部编码工作（一点都不夸张哦~）</p>
+<h4 id="2、界面概览"><a href="#2、界面概览" class="headerlink" title="2、界面概览"></a>2、界面概览</h4><p>说明：VS Code 默认界面里的不同部件的位置、名称和快捷键。</p>
+<p>相关快捷键：</p>
+<ul>
+<li>文件资源管理器：Ctrl + Shift + E</li>
+<li>跨文件搜索（全局搜索）：Ctrl + Shift + F</li>
+<li>源代码管理：Ctrl + Shift + G</li>
+<li>启动和调试：Ctrl + Shift + D</li>
+<li>管理扩展：Ctrl + Shift + X</li>
+<li>查看错误和警告：Ctrl + Shift + M</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/67/78/67025c889d9e28fecc7d4a71e3904c78.png"></p>
+<h4 id="3、交互式演习场"><a href="#3、交互式演习场" class="headerlink" title="3、交互式演习场"></a>3、交互式演习场</h4><p>VS Code 官方提供的熟悉方式，由于全是英文的，有兴趣的可以自行了解哈<del>~</del></p>
+<h4 id="4、命令行的使用"><a href="#4、命令行的使用" class="headerlink" title="4、命令行的使用"></a>4、命令行的使用</h4><p>命令行你应该不陌生，Win + R，输入 cmd，弹出的黑白框，没少玩过吧~</p>
+<p>到了 VS Code，一个关键的词语你得记住了 <code>Code</code>，没错，时不时觉得很具有代表性，哈哈~可以试着通过 <code>code --help</code>打印出 VS Code 命令行所支持的所有参数，这里介绍几个常用的。</p>
+<p><strong>code + 文件或者文件夹的地址</strong>，这样 VS Code 就会在一个新窗口中打开这个文件或文件夹</p>
+<blockquote>
+<p>例如：我们用 vue-cli 初始化一个 vue 项目的时候会提示 cd xxx 文件夹，然后 npm run serve，这个时候当你执行了 cd 命令，进入到了这个初始化项目文件目录的时候，就可以执行 <code>code .</code> 命令，这样就可以快速在一个新窗口打开这个项目了。</p>
+</blockquote>
+<p>当然，如果你希望使用已经打开的窗口来打开文件，可以在 <code>code</code> 命令后添加参数 <code>-r</code>来进行窗口的复用</p>
+<p><img src="https://static001.geekbang.org/resource/image/6c/b9/6ca4986f77f1da58759801894d6cf8b9.gif"></p>
+<p>你也可以使用参数 <code>-g &lt;file:line[:character]&gt;</code> 打开文件，然后滚动到文件中某个特定的行和列，比如输入 <code>code -r -g package.json:128</code>命令，你就可以打开 package.json 这个文件，然后自动跳转到 128 行。这个命令可以方便你从终端里快速地在 VS Code 里打开一个文件进行预览，一个特别常见的例子就是当我们使用脚本执行某个命令，这个命令告诉我们某个文件的某一行出现了错误，我们就能够快速定位了。</p>
+<p><img src="https://static001.geekbang.org/resource/image/2b/30/2b0ac41fcf93cfb74dc4c2712b8ab630.gif"></p>
+<p>VS Code 也可以用来比较两个文件的内容，你只需使用 <code>-d</code>参数，并传入两个文件路径，比如输入 <code>code -r -d a.txt b.txt</code>命令，就可以比较 a.txt 和 b.txt 两个文件的内容了。有了这个命令，你就可以既使用命令行运行脚本，也可以借助 VS Code 的图形化界面进行文件内容的对比了。</p>
+<p><img src="https://static001.geekbang.org/resource/image/c7/d4/c76cf6fed94d1eb1722d949ee1e632d4.gif"></p>
+<p>VS Code 命令行除了支持打开磁盘上的文件以外，也接受来自管道中的数据。这样你就可以将原本在命令行中展示的内容，实时地展示在 VS Code 里，然后在编辑器中搜索和修改。</p>
+<blockquote>
+<p>例如，你可以把当前目录下所有的文件名都展示在编辑器里，此时只需使用<code>ls | code -</code>命令。</p>
+</blockquote>
+<p><img src="https://static001.geekbang.org/resource/image/4b/3e/4b7b576d51156c4f80fd4957135ffe3e.gif"></p>
+<p>另外，VS Code 命令行还能够管理插件，查看 VS Code 的运行情况，记录和分析 VS Code 运行性能，你也可以现在就开始小试牛刀，试试它的威力。</p>
+<p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+<h3 id="快捷键进阶"><a href="#快捷键进阶" class="headerlink" title="快捷键进阶"></a>快捷键进阶</h3><h4 id="1、代码行编辑"><a href="#1、代码行编辑" class="headerlink" title="1、代码行编辑"></a>1、代码行编辑</h4><p>当前行的<code>下面</code>新开始一行：</p>
+<ul>
+<li>Windows：Ctrl + Enter</li>
+<li>MacOS：Cmd + Enter</li>
+</ul>
+<p>当前行的<code>上面</code>新开始一行：</p>
+<ul>
+<li>Windows：Ctrl + Shift + Enter</li>
+<li>MacOS：Cmd + Shift + Enter</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/b2/d1/b2d7a80ded072f62a19ebce6b9ecb8d1.gif"> </p>
+<p>将当前行，或者当前选中的几行代码，在编辑器里上下移动</p>
+<ul>
+<li>Windows：Alt + 上下方向键</li>
+<li>MacOS：Option + 上下方向键</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/25/be/25053dfebdb3117cb89604615bf355be.gif"> </p>
+<p>如果你同时按住 <code>Shift</code> 键的话，那就可以复制这几行，然后粘贴到当前行的上面或者下面</p>
+<ul>
+<li>Windows：Alt + shift + 上下方向键</li>
+<li>MacOS：Option + Shift + 上下方向键</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/d4/16/d4f9ae5ad3a0bb62e734386b7522ba16.gif"> </p>
+<h4 id="2、编码相关"><a href="#2、编码相关" class="headerlink" title="2、编码相关"></a>2、编码相关</h4><p>添加注释：Ctrl + /，Cmd + / </p>
+<p>代码格式化：Alt + Shift + F，Option + Shift + F</p>
+<p>代码缩进：打开命令面板（快捷键：Cmd / Ctrl + Shift + P），搜索 <code>缩进</code>，然后使用 <code>重新缩进行</code> 将整个文档的缩进进行调整，但更多时候，你只需要运行 <code>重新缩进选中行</code> 来调整部分选中代码行的缩进</p>
+<p>多光标创建：使用鼠标，在键盘上按住 <code>Option / Alt</code>，然后鼠标点在第二个 5 之前，那么第二个光标就创建好了</p>
+<p><img src="https://static001.geekbang.org/resource/image/6e/f1/6e457c792615747787352aa92e6ae8f1.gif"> </p>
+<h4 id="3、文件跳转"><a href="#3、文件跳转" class="headerlink" title="3、文件跳转"></a>3、文件跳转</h4><p>文件搜索快捷键：Ctrl / Cmd + Enter</p>
+<p>模糊查询：Ctrl / Cmd + T，输入 <code># + 搜索关键字</code></p>
+<p><img src="https://static001.geekbang.org/resource/image/37/7c/37ea953edce0e8d65c332498889f277c.gif"> </p>
+<p>可以借助鼠标来完成跳转操作，我们还是把鼠标移动到示例代码的第五行 <code>foo</code> 上，然后按下 Ctrl / Cmd 键，这时候 <code>foo</code>下面出现了一个下划线，然后当我们按下鼠标左键，就跳转到了 <code>foo</code> 函数的定义处</p>
+<p><img src="https://static001.geekbang.org/resource/image/2e/45/2e81558f17eb3390547e6f2af4af9045.gif"> </p>
+<p>备注：此篇学习自吕鹏大佬的玩转 VS Code，如有侵权请告知删除，谢谢！</p>
+]]></content>
+      <categories>
+        <category>IDE</category>
+      </categories>
+      <tags>
+        <tag>IDE</tag>
+        <tag>VS Code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 学习之旅</title>
+    <url>/React-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%85/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>关于 React 是什么，我想我也不用多说了，学就完了，干就完了</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>关于 React 的安装，这里不做过多的累赘，请移步：<a href="https://react.docschina.org/docs/create-a-new-react-app.html">React 安装</a></p>
+<h3 id="目录介绍"><a href="#目录介绍" class="headerlink" title="目录介绍"></a>目录介绍</h3><ul>
+<li><p>node_modules：包管理文件</p>
+</li>
+<li><p>public：Html 入口文件 &amp;&amp; 资源文件</p>
+</li>
+<li><p>src：源码文件</p>
+</li>
+</ul>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="1、JSX-语法"><a href="#1、JSX-语法" class="headerlink" title="1、JSX 语法"></a>1、JSX 语法</h4><p><code>js</code> 语法 + <code>xml</code> 语法（可以理解为 HTML）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> name = <span class="string">&#x27;hello react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;&gt;&lt;/&gt;: 作为 xml（html）语法解析</span></span><br><span class="line"><span class="comment"> * &#123; ... &#125;: 作为 js 语法解析 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;h1&gt;Hello, &#123;name&#125;&lt;/h1&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、元素渲染"><a href="#2、元素渲染" class="headerlink" title="2、元素渲染"></a>2、元素渲染</h4><p>说白了就是，能看到实际效果</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tick</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 注意：这里是 ()，而不是 &#123;&#125;</span></span><br><span class="line">  <span class="keyword">const</span> element = (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;Hello, world!&lt;/h1&gt;</span><br><span class="line">      &lt;h2&gt;It is &#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()&#125;.&lt;/h2&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 需要放到函数内，才能得到 element</span></span><br><span class="line">  ReactDOM.render(element, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setInterval</span>(tick, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、组件创建"><a href="#3、组件创建" class="headerlink" title="3、组件创建"></a>3、组件创建</h4><p>tips: 组件文件后缀名是 .js 或者 .jsx（有代码提示）</p>
+<p>类 class 形式创建：Home.jsx</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 渲染函数</span></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> ( <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>学习 react<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span> )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、props"><a href="#4、props" class="headerlink" title="4、props"></a>4、props</h4><p>props 的出现，使得组件可以进行传值，即组件可复用了</p>
+<p><strong>注意：</strong>接收唯一带有数据的 “props”（代表属性）对象，且子组件不可以修改 props 的值，要修改也是去父组件修改</p>
+<p><strong>父组件向子组件传值：父组件以标识属性的方式进行传值，子组件以 props 进行接收</strong></p>
+<ul>
+<li><p>父组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入子组件</span></span><br><span class="line"><span class="keyword">import</span> MyNav <span class="keyword">from</span> <span class="string">&#x27;./myNav&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="comment">// 父组件定义传递数据</span></span><br><span class="line">    <span class="keyword">let</span> nav_1 = [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;javascript&#x27;</span>, <span class="string">&#x27;c#&#x27;</span>];</span><br><span class="line">    <span class="keyword">let</span> nav_2 = [<span class="string">&#x27;从&#x27;</span>, <span class="string">&#x27;入门&#x27;</span>, <span class="string">&#x27;到&#x27;</span>, <span class="string">&#x27;放弃&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;学习 react&lt;/h1&gt;</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="comment">/**</span></span><br><span class="line"><span class="comment">           * 传递数据，可以是任意类型</span></span><br><span class="line"><span class="comment">           * title、nav，传递属性，子组件用于接收的标识属性</span></span><br><span class="line"><span class="comment">           */</span></span><br><span class="line">        &#125;</span><br><span class="line">        &lt;MyNav title=<span class="string">&quot;语言导航&quot;</span> nav=&#123;nav_1&#125; /&gt;</span><br><span class="line">        &lt;MyNav title=<span class="string">&quot;忠言导航&quot;</span> nav=&#123;nav_2&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNav</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;<span class="comment">/* 接收 title 属性标识的数据 */</span>&#125;</span><br><span class="line">        &lt;h3&gt;&#123;<span class="built_in">this</span>.props.title&#125;&lt;/h3&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">// 接收 nav 属性标识的数据，并遍历</span></span><br><span class="line">            <span class="built_in">this</span>.props.nav.map(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;index&#x27;</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">            &#125;)</span><br><span class="line">          &#125;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> MyNav</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<p><strong>子组件向父组件传值：子组件通过调用 props 接收到的父级方法，以参数传递的形式向父组件进行传值</strong></p>
+<ul>
+<li><p>父组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入子组件</span></span><br><span class="line"><span class="keyword">import</span> MyNav <span class="keyword">from</span> <span class="string">&#x27;./myNav&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">&#x27;我是父组件数据&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 该方法用于传递到子组件，子组件接收调用，并向父组件传值</span></span><br><span class="line"><span class="comment">   * sunData: 子组件传递过来的数据</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  handleText = <span class="function">(<span class="params">sunData</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      text: sunData</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.text&#125;&lt;/p&gt;</span><br><span class="line">        &#123;<span class="comment">/* handleTexts: 传递给子组件的方法，用于子组件调用并向父组件传参 */</span>&#125;</span><br><span class="line">        &lt;MyNav handleTexts=&#123; <span class="built_in">this</span>.handleText &#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Home</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyNav</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="built_in">super</span>(props)</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">&#x27;我是子组件的数据&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * handleChangeTexts: 该方法用于子组件调用，实现子组件点击修改父组件 state 数据</span></span><br><span class="line"><span class="comment">   * handleTexts: 该方法为父组件传递过来的，子组件接收调用，并向父组件传递参数: this.state.text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  handleChangeTexts = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.props.handleTexts(<span class="built_in">this</span>.state.text)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.handleChangeTexts &#125;&gt;修改父组件 state 数据&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> MyNav</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="5、state"><a href="#5、state" class="headerlink" title="5、state"></a>5、state</h4><p>State 与 props 类似，但是 state 是私有的，并且完全受控于当前组件，即：<strong>State 是当前组件的</strong></p>
+<p>定义位置：当前组件的 <strong>构造函数</strong> 中，即：<strong>constructor 中</strong></p>
+<blockquote>
+<p><strong>setState 的同步异步问题</strong></p>
+<p><code>tips：setState 会引起视图重绘</code></p>
+</blockquote>
+<ul>
+<li><p>在非可控的情况下是同步</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SetStateDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      count: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 点击 count +1 按钮，加 1</span></span><br><span class="line">  handleButton() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="built_in">this</span>.state.count</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 非可控的情况下是同步，点击一次</span></span><br><span class="line"><span class="comment">     * 页面显示：1</span></span><br><span class="line"><span class="comment">     * 控制台：0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      count: count+<span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.count)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;setState 是同步还是异步&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.count&#125;&lt;/p&gt; </span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.handleButton.bind(<span class="built_in">this</span>) &#125;&gt;count +<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> SetStateDemo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在可控的情况下是异步</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SetStateDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="built_in">super</span>()</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      count: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法一：</span></span><br><span class="line">  <span class="comment">// 点击 count +1 按钮，加 1</span></span><br><span class="line">  <span class="comment">// handleButton() &#123;</span></span><br><span class="line">    <span class="comment">// let count = this.state.count</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在可控的情况下是异步，点击一次</span></span><br><span class="line"><span class="comment">     * 页面显示：1</span></span><br><span class="line"><span class="comment">     * 控制台：1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// this.setState(&#123;</span></span><br><span class="line">    <span class="comment">//   count: count+1</span></span><br><span class="line">    <span class="comment">// &#125;, () =&gt; &#123;</span></span><br><span class="line">    <span class="comment">//   console.log(this.state.count)</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">  <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写法二：promise async await</span></span><br><span class="line">  <span class="keyword">async</span> handleButton() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="built_in">this</span>.state.count</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">      count: count+<span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">this</span>.setStateAsync(&#123;<span class="attr">count</span>: count+<span class="number">1</span>&#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.count)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// promise 处理异步</span></span><br><span class="line">  setStateAsync(state) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.setState(state, resolve)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;setState 是同步还是异步&lt;/h1&gt;</span><br><span class="line">        &lt;p&gt;&#123;<span class="built_in">this</span>.state.count&#125;&lt;/p&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="built_in">this</span>.handleButton.bind(<span class="built_in">this</span>)&#125;&gt;count +<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> SetStateDemo</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="6、生命周期函数"><a href="#6、生命周期函数" class="headerlink" title="6、生命周期函数"></a>6、生命周期函数</h4><ul>
+<li><code>componentWillMount</code>：在组件渲染之前执行</li>
+<li><code>componentDidMount</code>：在组件渲染之后执行</li>
+<li><code>shouldComponentUpdate</code>：返回 <code>true</code> 和 <code>false</code>，<code>true</code> 代表允许改变，<code>false</code> 代表不允许改变</li>
+<li><code>componentWillUpdate</code>：数据在改变之前执行 ( <code>state</code>，<code>props</code> )</li>
+<li><code>componentDidUpdate</code>：数据修改完成 (<code>state</code>，<code>props</code> )</li>
+<li><code>componentWillReveiceProps</code>：<code>props</code> 发生改变执行</li>
+<li><code>componentWillUnmount</code>：组件卸载前执行</li>
+</ul>
+<p>贴图</p>
+<h4 id="7、条件渲染"><a href="#7、条件渲染" class="headerlink" title="7、条件渲染"></a>7、条件渲染</h4><p>React 中的条件渲染和 JavaScript 中的一样，使用 JavaScript 运算符 <code>if</code> 或者 条件运算符 去创建元素来表现当前的状态，然后让 React 根据它们来更新 UI</p>
+<p>常见应用</p>
+<ul>
+<li>根据条件进行视图切换，如：未登录 切换到 登陆</li>
+<li>做缺省值，如: 数据未加载完成，提示 “数据还在加载中…”</li>
+</ul>
+<h4 id="8、列表-amp-key"><a href="#8、列表-amp-key" class="headerlink" title="8、列表 &amp; key"></a>8、列表 &amp; key</h4><p>起因：数据量一旦变的庞大，层次结构变得复杂的时候，整个渲染就会变慢，绑定 key 也是为了解决这个问题</p>
+<p><strong>key 的概念和作用</strong></p>
+<p>前面提到 <code>setState</code> 会引起视图的<code>重绘</code>，因为你一个 <code>state</code> 的改变可能引起整个数据结构的改变（牵一发而动全身），有数组或者对象等遍历型数据的时候，<strong>外层包裹一个 <code>key</code> 属性，<code>唯一标识</code>，如果数据的索引未发生改变，UI 不会重绘，只有发生变化的部分会重绘</strong>，这样就可以使得整体的一个性能得到优化提升</p>
+<h4 id="9、表单"><a href="#9、表单" class="headerlink" title="9、表单"></a>9、表单</h4><p>受控组件：表单内的 value 值是通过 state 进行管理的（表单数据较少情况下，使用频率高）</p>
+<blockquote>
+<p><strong>Tips:</strong> 因为 <code>state</code> 的数据只能是通过 <code>setState</code> 进行修改的，所以需要绑定对应的  <code>onChange</code> 事件去进行操作</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FormDemo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="built_in">this</span>.state = &#123;</span><br><span class="line">			<span class="comment">// 表单的 value 值</span></span><br><span class="line">            value:<span class="string">&quot;&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 表单提交事件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    handleSubmit = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">        e.preventDefault();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.value);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 操作 state value 值改变的 change 事件处理函数</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    onChangeHandler = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">            value: e.target.value</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;form onSubmit=&#123;<span class="built_in">this</span>.handleSubmit&#125;&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> value=&#123; <span class="built_in">this</span>.state.value &#125; onChange=&#123; <span class="built_in">this</span>.onChangeHandler &#125;/&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;提交&quot;</span>&gt;&lt;/input&gt;</span><br><span class="line">                &lt;/form&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> FormDemo</span><br></pre></td></tr></table></figure>
+
+<p>非受控组件：表单内的 value 值通过操作 DOM 的形式进行管理（表单数据较多，处理较多的情况下）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefsForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">		<span class="comment">// 定义多个不同的 ref 进行标识操作</span></span><br><span class="line">        <span class="built_in">this</span>.username = React.createRef();</span><br><span class="line">        <span class="built_in">this</span>.password = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clickHandler = <span class="function">(<span class="params">e</span>) =&gt;</span>&#123;</span><br><span class="line">		<span class="comment">// 进行对应的 ref 操作</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.username.current.value);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.password.current.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> ref=&#123; <span class="built_in">this</span>.username &#125;/&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> ref=&#123; <span class="built_in">this</span>.password &#125;/&gt;</span><br><span class="line">				&#123; <span class="comment">/* 非受控组件：这里就只需要定义一个处理事件去操作 */</span> &#125;</span><br><span class="line">                &lt;button onClick=&#123; <span class="built_in">this</span>.clickHandler &#125;&gt;提交&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> RefsForm</span><br></pre></td></tr></table></figure>
+
+<p><code>refs and the DOM</code>：以 refs 的方式进行操作 DOM（尽量避免，少使用）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RefsAndDOM</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">		<span class="comment">// 1、创建 refs，</span></span><br><span class="line">        <span class="built_in">this</span>.myRef = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentDidMount()&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 3、访问 ref: this.ref 名称.current</span></span><br><span class="line"><span class="comment">		 * current: 被访问当前节点属性对象</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">        <span class="built_in">this</span>.myRef.current.style.color = <span class="string">&quot;red&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">				&#123; <span class="comment">/* 2、通过 ref 属性附加到 React 元素 */</span> &#125;</span><br><span class="line">                &lt;div ref=&#123; <span class="built_in">this</span>.myRef &#125;&gt;</span><br><span class="line">                    Hello</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> RefsAndDOM</span><br></pre></td></tr></table></figure>
+
+<h4 id="10、状态提升"><a href="#10、状态提升" class="headerlink" title="10、状态提升"></a>10、状态提升</h4><p>前面学习了 <code>父子组件传值</code> ，那么简单点说，就是兄弟组件之间以父组件进行建立联系、通信</p>
+<p>具体详情，请异步 <a href="https://react.docschina.org/docs/lifting-state-up.html">官方文档</a></p>
+<h4 id="11、组合-VS-继承"><a href="#11、组合-VS-继承" class="headerlink" title="11、组合 VS 继承"></a>11、组合 VS 继承</h4><p>组合：为了考虑到组件更好的复用性，采取 <code>组件套组件</code> 的形式，实现组件的复用</p>
+<p>被套组件内容读取形式：<code>this.props.children</code></p>
+<p><strong>官方说：能用 组合 不用 继承</strong>，所以继承介绍的少</p>
+<h3 id="React-Router"><a href="#React-Router" class="headerlink" title="React-Router"></a>React-Router</h3><p>官方文档（英文）：<a href="https://reactrouter.com/web/guides/quick-start">https://reactrouter.com/web/guides/quick-start</a></p>
+<p>对于路由这东西，多查查文档会比较好</p>
+<h3 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h3><p>Redux 是 JavaScript 状态容器（说白了就是数据仓库，管理数据的），让人觉得一脸懵逼的 <a href="https://www.redux.org.cn/">中文文档</a></p>
+<ul>
+<li><p>安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cnpm install --save-dev redux</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基本使用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/counters&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1、创建 store 仓库（主函数中）</span></span><br><span class="line"><span class="comment"> *  - 方式：createStore(&#x27;参数是一个函数&#x27;)</span></span><br><span class="line"><span class="comment"> * subscribe：监听数据的改变</span></span><br><span class="line"><span class="comment"> *  - 参数：Function</span></span><br><span class="line"><span class="comment"> * getState：获取到 state 数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(reducer)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 2、对应组件中定义事件并分发 action</span></span><br><span class="line"><span class="comment"> * onIncrement: 加 1 事件</span></span><br><span class="line"><span class="comment"> * onIncrement: 减 1 事件</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * dispatch：store 的方法，分发 action，触发 state 的变化（唯一途径）</span></span><br><span class="line"><span class="comment"> *  - 参数：action，是一个描述应用变化的普通对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reder = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  ReactDOM.render(</span><br><span class="line">    &lt;App </span><br><span class="line">      onIncrement = &#123; <span class="function">() =&gt;</span> store.dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;INCREMENT&quot;</span> &#125;)&#125;</span><br><span class="line">      onDecrement = &#123; <span class="function">() =&gt;</span> store.dispatch(&#123; <span class="attr">type</span>: <span class="string">&quot;DECREMENT&quot;</span> &#125;)&#125;</span><br><span class="line">      value = &#123; store.getState() &#125;</span><br><span class="line">    /&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reder();</span><br><span class="line">store.subscribe(reder)</span><br><span class="line"></span><br><span class="line"><span class="comment">// App.js</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">&quot;App&quot;</span>&gt;</span><br><span class="line">        &#123;<span class="comment">/**</span></span><br><span class="line"><span class="comment">          * 4、子组件接收并触发事件</span></span><br><span class="line"><span class="comment">          */</span>&#125;</span><br><span class="line">        &lt;h1&gt;&#123; <span class="built_in">this</span>.props.value &#125;&lt;/h1&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.props.onIncrement &#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">        &lt;button onClick=&#123; <span class="built_in">this</span>.props.onDecrement &#125;&gt;<span class="number">-1</span>&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br><span class="line"></span><br><span class="line"><span class="comment">// reducer.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 3、定义 action.type，不同的类型做不同的操作</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>state 仓库中所存储的数据状态（数据）</span></span><br><span class="line"><span class="comment"> *  - state = 0：数据初始化（ES6 写法）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>action 改变数据状态（数据）的方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>action.type 不同的值可以做不同的修改</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * INCREMENT：代表类型操作为 + 1</span></span><br><span class="line"><span class="comment"> * DECREMENT：代表类型操作为 - 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state = <span class="number">0</span>,action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;INCREMENT&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;DECREMENT&quot;</span>:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> reducer</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>React</tag>
+        <tag>前端框架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题汇总</title>
+    <url>/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><h3 id="主流框架"><a href="#主流框架" class="headerlink" title="主流框架"></a>主流框架</h3><h3 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h3><p><strong>更多详情，请收藏本博主，持续更新……谢谢！</strong></p>
+<p>当然，如果您觉得此篇对您有所帮助，想请博主喝杯咖啡，请点击下方按钮，打开您的手机扫一扫，感谢您对本博主的赏识，博主感激不尽！</p>
+]]></content>
+      <categories>
+        <category>面试题</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>前端面试题</tag>
       </tags>
   </entry>
 </search>
